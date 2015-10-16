@@ -4,37 +4,77 @@
 <link rel="stylesheet" href="css/jquery.mobile.min.css" />
   <link rel="stylesheet" href="css/themes/BlackRedYellow.min.css" />
   <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  <style>
+  #messages
+  {height:50px;padding:2px;border:2px solid #FF0000;}
+  </style>
 <script src="phonegap.js"></script>
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="js/jquery.mobile.min.js"></script>
 <script>
-   function onSuccess(data, status)
+   function onSuccess(data, status, jqXHR)
    {
-      alert("Messaggio inviato con successo");
-      console.log("Messaggio inviato con successo");
+      alert("Success!");
+      console.log("Success!");
+      console.log(JSON.stringify(data));
+      document.getElementById("messages").innerHTML = "Messaggio inviato con successo!: "+data.msg;
    }
    function onError(data, status)
    {
-      alert("Messaggio NON inviato!!!");
-      console.log("Messaggio NON inviato!!!");
-   }        
+      alert("Error!");
+      console.log("Error!");
+      console.log(JSON.stringify(data));
+      console.log(JSON.stringify(status));
+      document.getElementById("messages").innerHTML = "Errore invio messaggio!: "+data.msg;
+      //myJsonMethod(data);
+   }
    $(document).ready(function() {
       $("#submit").click(function(){
          console.log(callAjaxForm);
-               var formData = $("#callAjaxForm").serialize();
-               console.log(formData);
+         var formData = $("#callAjaxForm").serialize();
+         console.log(formData);
+         var URL="http://service.cloudmup.com/GOALocale/prova.php";
+         //var URL="http://medley.cloudmup.com/GLMobileIF/GetPOIList?callback=?";
+         //formData="tabId=1&latW=41.8259138&lonW=12.4877777";
+         //console.log(formData);
+         //var URL="http://echo.jsontest.com/key/value/one/two";
+         //var URLcompleta=URL+"?tabId=1&latW=41.8259138&lonW=12.4877777";
          $.ajax({
-            type: "POST",
-            url: "https://mathiasbynens.be/demo/ip", //change with send.php...
-            cache: false,
+            type: "GET",
+            url: URL,
+            cache: true,
             dataType: "jsonp",
+            contentType: "application/json",
             data: formData,
             success: onSuccess,
             error: onError
-         });
+         }); 
          return false;
       });
    });
+   
+   /*
+00609A 5994/40:49 RM-EUR 5994/40:49|V. DI VIGNA MURATA 50|ROMA|41.82562|12.48820|Distributore|47
+00608E 47/9 RM-ARDEATINA 47/9|V. DI VIGNA MURATA 318|ROMA|41.82562|12.48820|Distributore|47
+00608E 11/15:19-54 RM-ARDEATINA 11/15:19-54|V. SIMONE MARTINI 143|ROMA|41.82627|12.48747|Distributore|47
+00608E 11/2D2-3:11 RM-ARDEATINA 11/2D2-3:11|V. SIMONE MARTINI 135|ROMA|41.82636|12.48763|Distributore|51
+00608F 3233997 POLE| ||41.82547|12.48738|Palo|59
+00608F 3233993 POLE| ||41.82536|12.48785|Palo|61
+00608E 11/23:25 RM-ARDEATINA 11/23:25|V. SIMONE MARTINI 136/SCA|ROMA|41.82645|12.48756|Distributore|62
+00608E 18/41D2 RM-ARDEATINA 18/41D2|V. DI VIGNA MURATA 90|ROMA|41.82531|12.48797|Distributore|68
+00608F 3234001 POLE| ||41.82551|12.48704|Palo|75
+00608E 11/20:22 RM-ARDEATINA 11/20:22|V. SIMONE MARTINI 136/SCC|ROMA|41.82581|12.48686|Distributore|76
+00608E 11/53 RM-ARDEATINA 11/53|V. SIMONE MARTINI 143|ROMA|41.82659|12.48744|Distributore|80
+00608E 11/30:39 RM-ARDEATINA 11/30:39|V. SIMONE MARTINI 127|ROMA|41.82659|12.48744|Distributore|80
+00608E 11/26:29 RM-ARDEATINA 11/26:29|V. SIMONE MARTINI 136/SCB|ROMA|41.82641|12.48704|Distributore|82
+00608E 11/40:44 RM-ARDEATINA 11/40:44|V. SIMONE MARTINI 133/SCB|ROMA|41.82665|12.48756|Distributore|83
+00608F 3233987 POLE| ||41.82560|12.48674|Palo|92
+00608E 10/35:39 RM-ARDEATINA 10/35:39|V. SIMONE MARTINI 125/FR3|ROMA|41.82668|12.48838|Distributore|98
+00608E 11/12:14 RM-ARDEATINA 11/12:14|V. SIMONE MARTINI 135|ROMA|41.82671|12.48723|Distributore|99
+00608E 10/5:9 RM-ARDEATINA 10/5:9|V. SIMONE MARTINI 125/FA1|ROMA|41.82684|12.48765|Distributore|103
+00608F 3233988 POLE| ||41.82498|12.48795|Palo|104
+00608F 3234003 POLE| ||41.82576|12.48650|Palo|106
+   */
 </script>
 </head>
 <body>
@@ -62,6 +102,9 @@
          <input type="submit" data-inline="true" value="Invia" id="submit" type="submit">
       </form>
       
+        <label>Messages:</label>
+        <div id="messages"></div>
+        
        <a href="index.html" data-icon="back" data-role="button" data-theme="b">Indietro</a>
 	</div>
 </div>
