@@ -7,27 +7,60 @@
 <script src="phonegap.js"></script>
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="js/jquery.mobile.min.js"></script>
+<script>
+$('#closeApp').click(function() {
+   navigator.app.exitApp();
+});
+</script>
 </head>
 <body>
 <!-- Home -->
 <div data-role="page" id="pagina" >
   <div data-role="header" id="testata" style="min-height: 56px;height: 56px;line-height: 56px;" >
     <img src='pics/geonav_small.png' align='left' id='logo_small' />&nbsp;&nbsp;&nbsp;Cerca POI
+    <img src="css/themes/images/icons-png/delete-black.png" style="float: right; margin:10px;" id="closeApp" />
   </div>
   <div data-role="content" id="contenuto" style="color:#ED1C24;">
   	<center><br><a href="menu.html"><img src="pics/geonav_big_trasp.png" border=0 id="logo_big" /></a><br><br>
 <form id="cercaAjaxForm">
-<label for="tipologia"><b>Inserire Tipologia POI</b></label>
-<input type="text" name="tipologia" id="tipologia" class="input_custom" placeholder="Tipologia POI" />
+
+<fieldset class="ui-corner-all ui-controlgroup ui-controlgroup-vertical" data-role="controlgroup">
+   <div role="heading" class="ui-controlgroup-label"><b>Scegliere Tipologia POI</b></div>
+   <div class="ui-controlgroup-controls">
+
+   <div class="ui-checkbox"><input name="checkbox-1a" id="checkbox-1a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-corner-top ui-btn-up-c ui-checkbox-off" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-1a"><span class="ui-btn-inner ui-corner-top"><span class="ui-btn-text">Apparato</span><img src="pics/apparato.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-off">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-2a" id="checkbox-2a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-2a"><span class="ui-btn-inner"><span class="ui-btn-text">APS</span><img src="pics/aps.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-3a" id="checkbox-3a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-3a"><span class="ui-btn-inner"><span class="ui-btn-text">Armadio</span><img src="pics/armadio.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-4a" id="checkbox-4a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-4a"><span class="ui-btn-inner"><span class="ui-btn-text">BTS</span><img src="pics/bts.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-5a" id="checkbox-5a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-5a"><span class="ui-btn-inner"><span class="ui-btn-text">Distributore</span><img src="pics/distributore.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-6a" id="checkbox-6a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-6a"><span class="ui-btn-inner"><span class="ui-btn-text">PPU</span><img src="pics/ppu.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-7a" id="checkbox-7a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-7a"><span class="ui-btn-inner"><span class="ui-btn-text">Sede</span><img src="pics/sede.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-8a" id="checkbox-8a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-on ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-8a"><span class="ui-btn-inner"><span class="ui-btn-text">Sito</span><img src="pics/sito.png" style="float: right;" /><span class="ui-icon ui-icon-shadow ui-icon-checkbox-on">&nbsp;</span></span></label></div>
+
+   <div class="ui-checkbox"><input name="checkbox-9a" id="checkbox-9a" class="custom" type="checkbox"><label class="ui-btn ui-btn-icon-left ui-checkbox-off ui-corner-bottom ui-controlgroup-last ui-btn-up-c" data-theme="c" data-icon="checkbox-off" data-wrapperels="span" data-iconshadow="true" data-shadow="false" data-corners="true" for="checkbox-9a"><span class="ui-btn-inner ui-corner-bottom ui-controlgroup-last"><span class="ui-btn-text">Terra</span><img src="pics/terra.png" style="float: right;" /><span class="ui-icon ui-icon-checkbox-off ui-icon-shadow">&nbsp;</span></span></label></div>
+
+</div></fieldset>
+
 <br><label for="poi_vicino"><b>Cerca POI vicino a</b></label>
 <input type="text" name="poi_vicino" id="poi_vicino" class="input_custom" placeholder="POI vicino a" /><br>
   <div id="result"></div>  
-<a href="risultato_poi.html" id="btn_cerca" class="ui-btn ui-btn-b ui-icon-search ui-btn-icon-left ui-shadow ui-corner-all" 
-data-icon="search" data-theme="b" data-form="ui-btn-up-b" >Cerca POI</a>
+<a href="risultato_poi.html" id="btn_cerca" class="ui-btn ui-btn-c ui-icon-bullets ui-btn-icon-left ui-shadow ui-corner-all" 
+data-icon="bullets" data-theme="c" data-form="ui-btn-up-c" >Visualizza su Lista</a>
+<a href="risultato_poi.html" id="btn_cerca" class="ui-btn ui-btn-c ui-icon-location ui-btn-icon-left ui-shadow ui-corner-all" 
+data-icon="location" data-theme="c" data-form="ui-btn-up-c" >Visualizza su Mappa</a>
 </form></center>
-<a href="index.html" id="btn_logout" class="ui-btn ui-btn-b ui-icon-delete ui-btn-icon-left ui-shadow ui-corner-all" 
-   data-icon="delete" data-theme="b" data-form="ui-btn-up-b" >Logout</a><br></center>
-
+<a href="menu.html" id="btn_logout" class="ui-btn ui-btn-a ui-icon-arrow-l ui-btn-icon-left ui-shadow ui-corner-all" 
+   data-icon="arrow-l" data-theme="a" data-form="ui-btn-up-a" >Indietro</a>
+<br>
+<a href="index.html" id="btn_logout" class="ui-btn ui-btn-b ui-icon-power ui-btn-icon-left ui-shadow ui-corner-all" 
+   data-icon="power" data-theme="b" data-form="ui-btn-up-b" >Logout</a><br></center>
 
   </div>
 </div>
