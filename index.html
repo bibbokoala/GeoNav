@@ -27,41 +27,23 @@
     border: 1px solid #CCC;
     border-radius: 4px;
 }
+#map {
+  width: 100%;
+  height: 100%;
+}
 </style>
 <script src="phonegap.js"></script>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
 <script>
-  /*** vecchia pagina di menu sostituita con lo splash...
   //TESTATA MENU
-  var testata = '<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
-  // COSTRUISCE IL MENU DELL' APPLICAZIONE
-  var contenuto='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
-                '<button id="imp_indirizzo" type="button" class="btn btn-default btn-lg bottone" > '+
-                '<span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Imposta Indirizzo '+
-                '</button>'+
-                '<br>'+
-                '<button id="cerca_poi" type="button" class="btn btn-default btn-lg bottone" > '+
-                '<span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span>Cerca e Visualizza POI '+
-                '</button>'+
-                '<br>'+
-                '<br>'+
-                '<br>'+
-                '<button id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
-                '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
-                '</button>'+
-                '<br>'+
-                '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
-                '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
-                '</button>';
-  ***/
   var testata   = '<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
-  var contenuto = '<img src="pics/splash.jpg" width="100%"" id="splash" />';
+  var contenuto = '<img src="pics/splash.jpg" width="100%"" id="splash" border=0 />';
 
   //TESTATA Imposta Indirizzo
   var t_indirizzo='<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
   // COSTRUISCE LA PAGINA Imposta Indirizzo
-  var c_indirizzo='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
+  var c_indirizzo='<center>'+
                   '<form id="impostaAjaxForm" > '+
                   '    <label for="city"><b>Citt&agrave;</b></label> '+
                   '    <input type="text" name="citta" id="city"  class="form-control-custom" required=true placeholder="Citt&agrave;" /><br> '+
@@ -75,20 +57,11 @@
                   '</button>'+
                   '</form>'+
                   '<br>';
-                  /* hanno richiesto di togliere i bottoni di navigazione...
-                  '<a id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
-                  '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
-                  '</a>'+
-                  '<br>'+
-                  '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
-                  '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
-                 '</button>';
-                 */
 
   //TESTATA Ricerca / Visualizza POI
   var t_cerca_poi='<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
   // COSTRUISCE LA PAGINA Cerca e Visualizza POI
-  var c_cerca_poi='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
+  var c_cerca_poi='<center>'+
                   '<form id="cercaAjaxForm">'+
                   '  <label id="apparato" class="checkbox form-control-custom text-left"><input type="checkbox" name="apparato" onchange="statecheck(\'apparato\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" /></label>'+
                   '  <label id="aps" class="checkbox form-control-custom text-left"><input type="checkbox" name="aps" onchange="statecheck(\'aps\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APS<img src="pics/aps.png" class="pull-right" /></label>'+
@@ -104,88 +77,82 @@
 
                   '<input type="text" name="poi_vicino" id="poi_vicino" class="form-control-custom" required=true placeholder="POI vicino a indirizzo..." /><br>'+
                   '  <div id="result"></div>  '+
-                  '<button id="poi_lista" type="button" class="btn btn-success btn-lg bottone" > '+
+                  '<button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > '+
                   '<span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista '+
                   '</button>'+
                   '<br>'+
-                  '<button id="poi_mappa" type="button" class="btn btn-warning btn-lg bottone" > '+
+                  '<button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > '+
                   '<span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa '+
                   '</button>'+
                   '</form>'+
                   '<br>';
-                  /* hanno richiesto di togliere i bottoni di navigazione...
-                  '<a id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
-                  '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
-                  '</a>'+
-                  '<br>'+
-                  '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
-                  '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
-                  '</button><br><br>';
-                  */
-  //TESTATA Lista POI
-//  <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>
   
+  //TESTATA Lista POI
   var t_lista_poi = t_cerca_poi;
-  var c_lista_poi = '<h2>Lista POI</h2>'+
+  var c_lista_poi = '<center><h2>Lista POI</h2>'+
                     '<ul class="list-group">'+
-                    '  <li style="text-align:center;" class="list-group-item list-group-item-success">'+
-                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-default">'+
+                    '    <a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
                     '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Info'+
                     '    </a>'+
-                    '    Primo Risultato '+
-                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    POI 1 '+
+                    '    <a class="btn btn-default btn-sm pull-right" >'+
                     '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Naviga'+
                     '    </a>'+
                     '  </li>'+
-                    '  <li style="text-align:center;" class="list-group-item list-group-item-info">'+
-                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-default">'+
+                    '    <a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
                     '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Info'+
                     '    </a>'+
-                    '    Secondo Risultato '+
-                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    POI 2 '+
+                    '    <a class="btn btn-default btn-sm pull-right" >'+
                     '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Naviga'+
                     '    </a>'+
                     '  </li>'+
-                    '  <li style="text-align:center;" class="list-group-item list-group-item-warning">'+
-                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-default">'+
+                    '    <a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
                     '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Info'+
                     '    </a>'+
-                    '    Terzo Risultato '+
-                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    POI 3 '+
+                    '    <a class="btn btn-default btn-sm pull-right" >'+
                     '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Naviga'+
                     '    </a>'+
                     '  </li>'+
-                    '  <li style="text-align:center;" class="list-group-item list-group-item-danger">'+
-                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-default">'+
+                    '    <a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
                     '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Info'+
                     '    </a>'+
-                    '    Quarto Risultato '+
-                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    POI 4 '+
+                    '    <a class="btn btn-default btn-sm pull-right" >'+
                     '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
                     '    &nbsp;&nbsp;Naviga'+
                     '    </a>'+
                     '  </li>'+
-                    '</ul>';
+                    '</ul></center>';
 
   //TESTATA Mappa POI
   var t_mappa_poi = t_cerca_poi;
+  var c_mappa_poi = '<div id="map"></div>';
+  /*
   var c_mappa_poi = '<center>'+
-                    '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190028.25709261835!2d12.395911931490556!3d41.9102414882659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6196f9928ebb%3A0xb90f770693656e38!2sRoma!5e0!3m2!1sit!2sit!4v1445435750243" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>'+
+                    '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190028.25709261835!2d12.395911931490556!3d41.9102414882659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6196f9928ebb%3A0xb90f770693656e38!2sRoma!5e0!3m2!1sit!2sit!4v1445435750243" width="100%" height="100%" frameborder="0" %style="border:0" ></iframe>'+
                     '</center>';
-
+  */
   function onSuccess(data, status)
   {
     localStorage.setItem("matricola", data.matricola);
     localStorage.setItem("password", data.password);
     localStorage.setItem("login", "ok");
-    localStorage.setItem("link", "menu");
+    //localStorage.setItem("link", "menu");
+    //richiesta di Maurizio dopo il login vai du pagina ricerca_poi...
+    localStorage.setItem("link", "poi");
     window.location.reload();
   }
   function onError(data, status)
@@ -258,6 +225,9 @@
         console.log("lista ul: "+lista);
         document.getElementById("testata").innerHTML = t_mappa_poi;
         document.getElementById("contenuto").innerHTML = c_mappa_poi;
+        //view: mappa  cambiare il max-width di fluido in 100%
+        $('#fluido').css("max-width", "");
+        console.log("c_mappa_poi: " + c_mappa_poi);
       }
     }
       
@@ -378,30 +348,58 @@
 </head>
 <body style="color:#ED1C24;font-size: 16px;">
       <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
           </button>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
           </div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a id="link_home" >Home</a></li>
-            <li><a id="imp_indirizzo">Indirizzo</a></li>
-            <li><a id="cerca_poi">Ricerca POI</a></li>
-            <li><a id="btn_logout">Logout</a></li>
+          <ul class="nav navbar-nav navbar-right" id="menu" >
+            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
+            <li id="I" ><a id="imp_indirizzo" style="color: #FFF;" >Indirizzo</a></li>
+            <li id="P" ><a id="cerca_poi" style="color: #FFF;" >Ricerca POI</a></li>
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li>
           </ul> 
+          <script>
+            var check_login = localStorage.getItem("login");
+            if (check_login == "ok")
+              $("#menu").show();
+            else
+              $("#menu").hide();
+            var check_link = localStorage.getItem("link");
+            if (check_link == "menu")
+            {
+              $( "#H" ).addClass( "active" );
+              $( "#link_home" ).css( "color", "#DE0019");
+            }
+            if (check_link == "indirizzo")
+            {
+              $( "#I" ).addClass( "active" );
+              $( "#imp_indirizzo" ).css( "color", "#DE0019");
+            }
+            if (check_link == "poi")
+            {
+              $( "#P" ).addClass( "active" );
+              $( "#cerca_poi" ).css( "color", "#DE0019");
+            }
+            if (check_link == null)
+            {
+              $( "#L" ).addClass( "active" );
+              $( "#btn_logout" ).css( "color", "#DE0019");
+            }
+          </script>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div class="container-fluid" style="max-width: 540px;" >
+    <div class="container-fluid" style="max-width: 540px;" id="fluido" >
       <div class="row">
         <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main" id="contenuto" >
           <center><!-- <a href='index.html' ><img src="pics/geonav.png" height="112px" border=0 id="logo_big" /></a><br><br> -->
@@ -446,5 +444,87 @@
        };
     }
     </script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nome POI</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>Apparato 123456xy</b>
+          &egrave; un apparecchio macchinoso, complesso o grandioso oppure un insieme di soggetti singoli quali macchine, organi, 
+          persone o idee, che insieme concorrono ad ottenere un unico scopo.</p>
+          Immagine Allegata:<br>
+          <img src="pics/apparato.jpg" alt="..." class="img-thumbnail">
+          <p>Attributi, <a href="https://it.wikipedia.org/wiki/Apparato">
+          https://it.wikipedia.org/wiki/Apparato</a> 
+          (Ultima visita 22 giugno 2015).</p>
+          <a class="btn btn-default btn-sm pull-left" >
+            <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>
+            &nbsp;&nbsp;Naviga
+          </a>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FINE MODAL -->
+
+<script>
+function initMap() {
+  var point = {lat: 41.854880, lng: 12.458359};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: point
+  });
+
+  var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">APPARATO</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Apparato 123456xy</b> ' +
+      '&egrave; un apparecchio macchinoso, complesso o grandioso oppure un insieme di soggetti singoli quali macchine, organi, persone o idee, che insieme concorrono ad ottenere un unico scopo.</p>'+
+      'Immagine Allegata:<br>'+
+      '<img src="pics/apparato.jpg" alt="..." class="img-thumbnail">'+
+      '<p>Attribution: Uluru, <a href="https://it.wikipedia.org/wiki/Apparato">'+
+      'https://it.wikipedia.org/wiki/Apparato</a> '+
+      '(Ultima visita 22 giugno 2015).</p>'+
+        '<a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
+        '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
+        '    &nbsp;&nbsp;Info'+
+        '    </a>'+
+        '    <a class="btn btn-default btn-sm pull-right" >'+
+        '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
+        '    &nbsp;&nbsp;Naviga'+
+        '    </a>'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  var marker = new google.maps.Marker({
+    position: point,
+    map: map,
+    icon: 'pics/apparato.png',
+    title: 'Apparato'
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+  console.log("initMap");
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&callback=initMap"></script>
 </body>
 </html>
