@@ -1,47 +1,450 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="css/jquery.mobile.min.css" />
-<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
-<link rel="stylesheet" href="css/themes/GeoNavTheme.min.css" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="css/Supernice.min.css" rel="stylesheet">    -->
+<style>
+.btn-default{color:#eee;background-color:#838383;border-color:#666}
+.btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default{
+  color:#eee;background-color:#6f6f6f;border-color:#474747}
+.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default{background-image:none}
+.btn-default.disabled,.btn-default[disabled],fieldset[disabled] .btn-default,.btn-default.disabled:hover,.btn-default[disabled]:hover,fieldset[disabled] .btn-default:hover,.btn-default.disabled:focus,.btn-default[disabled]:focus,fieldset[disabled] .btn-default:focus,.btn-default.disabled:active,.btn-default[disabled]:active,fieldset[disabled] .btn-default:active,.btn-default.disabled.active,.btn-default[disabled].active,fieldset[disabled] .btn-default.active{background-color:#838383;border-color:#666}
+.btn-default .badge{color:#838383;background-color:#eee}
+.bottone{
+  display: block; 
+  width: 100%; 
+  border-color: #464646; 
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);"
+}
+.form-control-custom {
+    display: block;
+    width: 100%;
+    height: 45px;
+    padding: 6px 12px;
+    font-size: 16px;
+    color: #ED1C24;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+</style>
 <script src="phonegap.js"></script>
-<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
-<script src="js/jquery.mobile.min.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="js/jquery.min.js"></script>
+<script>
+  /*** vecchia pagina di menu sostituita con lo splash...
+  //TESTATA MENU
+  var testata = '<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
+  // COSTRUISCE IL MENU DELL' APPLICAZIONE
+  var contenuto='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
+                '<button id="imp_indirizzo" type="button" class="btn btn-default btn-lg bottone" > '+
+                '<span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Imposta Indirizzo '+
+                '</button>'+
+                '<br>'+
+                '<button id="cerca_poi" type="button" class="btn btn-default btn-lg bottone" > '+
+                '<span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span>Cerca e Visualizza POI '+
+                '</button>'+
+                '<br>'+
+                '<br>'+
+                '<br>'+
+                '<button id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
+                '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
+                '</button>'+
+                '<br>'+
+                '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
+                '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
+                '</button>';
+  ***/
+  var testata   = '<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
+  var contenuto = '<img src="pics/splash.jpg" width="100%"" id="splash" />';
+
+  //TESTATA Imposta Indirizzo
+  var t_indirizzo='<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
+  // COSTRUISCE LA PAGINA Imposta Indirizzo
+  var c_indirizzo='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
+                  '<form id="impostaAjaxForm" > '+
+                  '    <label for="city"><b>Citt&agrave;</b></label> '+
+                  '    <input type="text" name="citta" id="city"  class="form-control-custom" required=true placeholder="Citt&agrave;" /><br> '+
+                  '    <label for="address"><b>Indirizzo</b></label> '+
+                  '    <input type="text" name="indirizzo" id="address" class="form-control-custom" required=true placeholder="Indirizzo" /><br> '+
+                  '    <label for="cap"><b>CAP</b></label> '+
+                  '    <input type="text" name="cap" id="cap" class="form-control-custom" required=true placeholder="CAP" /><br> '+
+                  '  <div id="result"></div>  '+
+                  '<button id="imposta" type="button" class="btn btn-default btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-save pull-left" aria-hidden="true"></span>Imposta Indirizzo '+
+                  '</button>'+
+                  '</form>'+
+                  '<br>';
+                  /* hanno richiesto di togliere i bottoni di navigazione...
+                  '<a id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
+                  '</a>'+
+                  '<br>'+
+                  '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
+                 '</button>';
+                 */
+
+  //TESTATA Ricerca / Visualizza POI
+  var t_cerca_poi='<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
+  // COSTRUISCE LA PAGINA Cerca e Visualizza POI
+  var c_cerca_poi='<center><img src="pics/geonav.png" height="56px" border=0 id="logo_big" /><br><br>'+
+                  '<form id="cercaAjaxForm">'+
+                  '  <label id="apparato" class="checkbox form-control-custom text-left"><input type="checkbox" name="apparato" onchange="statecheck(\'apparato\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" /></label>'+
+                  '  <label id="aps" class="checkbox form-control-custom text-left"><input type="checkbox" name="aps" onchange="statecheck(\'aps\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APS<img src="pics/aps.png" class="pull-right" /></label>'+
+                  '  <label id="armadio" class="checkbox form-control-custom text-left"><input type="checkbox" name="armadio" onchange="statecheck(\'armadio\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Armadio<img src="pics/armadio.png" class="pull-right" /></label>'+
+
+                  '  <label id="bts" class="checkbox form-control-custom text-left"><input type="checkbox" name="bts" onchange="statecheck(\'bts\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BTS<img src="pics/bts.png" class="pull-right" /></label>'+
+                  '  <label id="distributore" class="checkbox form-control-custom text-left"><input type="checkbox" name="distributore" onchange="statecheck(\'distributore\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distributore<img src="pics/distributore.png" class="pull-right" /></label>'+
+                  '  <label id="ppu" class="checkbox form-control-custom text-left"><input type="checkbox" name="ppu" onchange="statecheck(\'ppu\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PPU<img src="pics/ppu.png" class="pull-right" /></label>'+
+
+                  '  <label id="sede" class="checkbox form-control-custom text-left"><input type="checkbox" name="sede" onchange="statecheck(\'sede\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede<img src="pics/sede.png" class="pull-right" /></label>'+
+                  '  <label id="sito" class="checkbox form-control-custom text-left"><input type="checkbox" name="sito" onchange="statecheck(\'sito\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sito<img src="pics/sito.png" class="pull-right" /></label>'+
+                  '  <label id="terra" class="checkbox form-control-custom text-left"><input type="checkbox" name="terra" onchange="statecheck(\'terra\')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" /></label>'+
+
+                  '<input type="text" name="poi_vicino" id="poi_vicino" class="form-control-custom" required=true placeholder="POI vicino a indirizzo..." /><br>'+
+                  '  <div id="result"></div>  '+
+                  '<button id="poi_lista" type="button" class="btn btn-success btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista '+
+                  '</button>'+
+                  '<br>'+
+                  '<button id="poi_mappa" type="button" class="btn btn-warning btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa '+
+                  '</button>'+
+                  '</form>'+
+                  '<br>';
+                  /* hanno richiesto di togliere i bottoni di navigazione...
+                  '<a id="home" type="button" class="btn btn-primary btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-home pull-left" aria-hidden="true"></span>Homepage '+
+                  '</a>'+
+                  '<br>'+
+                  '<button id="btn_logout" type="button" class="btn btn-danger btn-lg bottone" > '+
+                  '<span class="glyphicon glyphicon-log-out pull-left" aria-hidden="true"></span>Logout '+
+                  '</button><br><br>';
+                  */
+  //TESTATA Lista POI
+//  <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>
+  
+  var t_lista_poi = t_cerca_poi;
+  var c_lista_poi = '<h2>Lista POI</h2>'+
+                    '<ul class="list-group">'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-success">'+
+                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Info'+
+                    '    </a>'+
+                    '    Primo Risultato '+
+                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Naviga'+
+                    '    </a>'+
+                    '  </li>'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-info">'+
+                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Info'+
+                    '    </a>'+
+                    '    Secondo Risultato '+
+                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Naviga'+
+                    '    </a>'+
+                    '  </li>'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-warning">'+
+                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Info'+
+                    '    </a>'+
+                    '    Terzo Risultato '+
+                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Naviga'+
+                    '    </a>'+
+                    '  </li>'+
+                    '  <li style="text-align:center;" class="list-group-item list-group-item-danger">'+
+                    '    <a class="btn btn-info btn-sm pull-left" >'+
+                    '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Info'+
+                    '    </a>'+
+                    '    Quarto Risultato '+
+                    '    <a class="btn btn-danger btn-sm pull-right" >'+
+                    '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
+                    '    &nbsp;&nbsp;Naviga'+
+                    '    </a>'+
+                    '  </li>'+
+                    '</ul>';
+
+  //TESTATA Mappa POI
+  var t_mappa_poi = t_cerca_poi;
+  var c_mappa_poi = '<center>'+
+                    '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190028.25709261835!2d12.395911931490556!3d41.9102414882659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6196f9928ebb%3A0xb90f770693656e38!2sRoma!5e0!3m2!1sit!2sit!4v1445435750243" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>'+
+                    '</center>';
+
+  function onSuccess(data, status)
+  {
+    localStorage.setItem("matricola", data.matricola);
+    localStorage.setItem("password", data.password);
+    localStorage.setItem("login", "ok");
+    localStorage.setItem("link", "menu");
+    window.location.reload();
+  }
+  function onError(data, status)
+  {
+    var htmlString = "<p>ERRORE Login!</p>";
+    localStorage.setItem("link", "menu");
+    localStorage.setItem("login", "NOK!");
+    document.getElementById("result").innerHTML = htmlString;
+  }   
+
+  function onSuccessImposta(data, status, jqXHR)
+  {
+    console.log("Success!");
+    console.log(JSON.stringify(data));
+    localStorage.setItem("link", "indirizzo");
+    document.getElementById("result").innerHTML = "Indirizzo impostato con successo!";
+  }
+  function onErrorImposta(data, status)
+  {
+    console.log(JSON.stringify(data));
+    console.log(JSON.stringify(status));
+    localStorage.setItem("link", "indirizzo");
+    document.getElementById("result").innerHTML = "ERRORE Indirizzo NON impostato!";
+  }  
+
+  $(document).ready(function() {
+    var login = localStorage.getItem("login");
+    console.log("login: "+login);
+
+    var link = localStorage.getItem("link");
+    console.log("link: "+link);
+
+    var view = localStorage.getItem("view");
+    console.log("view: "+view);
+
+    if ( (login=="ok") && (link=="menu") ) 
+    {
+      $('#testata').html(testata);
+      $('#contenuto').html(contenuto);
+      localStorage.setItem("link", "menu");
+    }
+
+    var matricola = localStorage.getItem("matricola");
+    console.log("matricola: "+matricola);
+
+    var password = localStorage.getItem("password");
+    console.log("password: "+password);
+
+    if (link == "indirizzo")
+    {
+      document.getElementById("testata").innerHTML = t_indirizzo;
+      document.getElementById("contenuto").innerHTML = c_indirizzo;
+      //alert(c_indirizzo);
+    }
+
+    if (link == "poi")
+    {
+      document.getElementById("testata").innerHTML = t_cerca_poi;
+      document.getElementById("contenuto").innerHTML = c_cerca_poi;
+      if (view == "lista")
+      {
+        var lista = localStorage.getItem("lista");
+        console.log("lista ul: "+lista);
+        document.getElementById("testata").innerHTML = t_lista_poi;
+        document.getElementById("contenuto").innerHTML = c_lista_poi;
+      }
+      if (view == "mappa")
+      {
+        var lista = localStorage.getItem("lista");
+        console.log("lista ul: "+lista);
+        document.getElementById("testata").innerHTML = t_mappa_poi;
+        document.getElementById("contenuto").innerHTML = c_mappa_poi;
+      }
+    }
+      
+    $('#home').click(function() {
+      localStorage.setItem("link", "menu");
+      window.location.href = 'index.html';
+    });
+      
+    $('#logo_small, #logo_big, #link_home').click(function() {
+      localStorage.setItem("link", "menu");
+      window.location.href = 'index.html';
+    });
+
+    $("#btn_logout").click(function(){
+      //alert("btn_logout");
+      localStorage.clear();
+      console.log("btn_logout: "+localStorage.getItem("login"));
+      window.location.href = 'index.html';
+      window.location.reload();
+    });
+
+    $("#poi_lista").click(function(){
+      var formData = $("#cercaAjaxForm").serialize();
+      console.log(formData);
+      //alert("poi_lista: "+formData);
+      localStorage.setItem("view", "lista");
+      window.location.href = 'index.html';
+    });
+
+    $("#poi_mappa").click(function(){
+      var formData = $("#cercaAjaxForm").serialize();
+      console.log(formData);
+      //alert("poi_mappa: "+formData);
+      localStorage.setItem("view", "mappa");
+      window.location.href = 'index.html';
+    });
+
+    $("#btn_login").click(function(){
+      console.log(callAjaxForm);
+      var formData = $("#callAjaxForm").serialize();
+      console.log(formData);
+      $.ajax({
+        type: "POST",
+        url: "http://service.cloudmup.com/GOALocale/geonavdemo.php", //change with send.php...
+        cache: false,
+        dataType: "jsonp",
+        data: formData,
+        success: onSuccess,
+        error: onError
+      });
+      //return false;
+    });
+      
+    $('#imp_indirizzo').click(function() {
+      localStorage.setItem("link", "indirizzo");
+      window.location.reload();
+    });
+      
+    $('#cerca_poi').click(function() {
+      localStorage.setItem("link", "poi");
+      localStorage.setItem("view", null);
+      window.location.reload();
+    });
+
+    $("#imposta").click(function(){
+      console.log(impostaAjaxForm);
+      var formData = $("#impostaAjaxForm").serialize();
+      console.log(formData);
+      var URL="http://service.cloudmup.com/GOALocale/geonavdemoprova.php";
+      $.ajax({
+        type: "GET",
+        url: URL,
+        cache: true,
+        dataType: "jsonp",
+        contentType: "application/json",
+        data: formData,
+        success: onSuccessImposta,
+        error: onErrorImposta
+      }); 
+      //return false;
+    });
+
+    function renderList(response) {
+      var arr = JSON.parse(response);
+      var i;
+      var lista = '<ul data-role="listview" data-divider-theme="b" data-inset="true">\n';
+      for(i = 0; i < arr.length; i++) {
+        lista += '<li><a class="ui-icon-arrow-r ui-btn-icon-right" data-icon="arrow-r" href="#' + arr[i].id + '" data-rel="popup" >\n' + 
+        arr[i].id +' '+
+        arr[i].lat +' '+
+        arr[i].lon +
+        '</a></li>\n';
+        lista += '<div data-role="popup" id="' + arr[i].id + '" data-theme="a">Latitudine: ' + arr[i].lat + ' - Longitudine: ' + arr[i].lon + '</div>';
+      }
+      lista += '</ul>\n';
+      alert(lista);
+      document.getElementById("result").innerHTML = lista;
+      localStorage.setItem("link", "poi");
+      localStorage.setItem("view", "lista");
+      localStorage.setItem("lista", lista);
+    }
+
+    $("#btn_cerca").click(function(){
+      var xmlhttp = new XMLHttpRequest();
+      var url="http://service.cloudmup.com/GOALocale/geonavdemolistapoi.php";
+
+      xmlhttp.onreadystatechange=function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              renderList(xmlhttp.responseText);
+          }
+      }
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    });
+
+  });  
+</script>
 </head>
-<body>
-<!-- Home -->
-<div data-role="page" id="pagina" >
-  <div data-role="header" id="testata" style="min-height: 56px;height: 56px;line-height: 56px;" >
-    <img src="pics/geonav_small.png" align="left" id="logo_small" />&nbsp;&nbsp;&nbsp;Login
-  </div>
-  <div data-role="content" id="contenuto" style="color:#ED1C24;">
-    <center>
-    <form id="callAjaxForm">
-      <br><a href='index.html' ><img src="pics/geonav_big_trasp.png" border=0 id="logo_big" /></a><br><br>
-           <label for="matricola"><b>Inserire Matricola</b></label>
-           <input type="text" name="matricola" id="matricola" value="" placeholder="Matricola" class="required" />
-        <br>
-           <label for="password"><b>Inserire Password LDAP</b></label>
-           <input type="password" name="password" id="password" value="" placeholder="Password" class="required" />
-        <br>
-           <fieldset data-role="controlgroup">
-           <label for="psw_in_chiaro">Password in chiaro</label>
-           <input type="checkbox" name="psw_in_chiaro" id="psw_in_chiaro" class="custom" />
-           </fieldset>
-        <br>
-           <fieldset data-role="controlgroup">
-           <label for="credenziali">Salva credenziali</label>
-           <input type="checkbox" name="credenziali" id="credenziali" class="custom" />
-           </fieldset>
-        <br>
-        <div id="result"></div> 
-        <br>
-        <a href="./menu.html" id="btn_login" class="ui-btn ui-btn-b ui-icon-lock ui-btn-icon-left ui-shadow ui-corner-all" 
-           data-icon="lock" data-theme="b" data-form="ui-btn-up-b" >Accedi</a>
-    </form>
-    </center>
-  </div>
-</div>
-    
+<body style="color:#ED1C24;font-size: 16px;">
+      <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-header" style="line-height: 56px;" id="testata" >
+            <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+          </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a id="link_home" >Home</a></li>
+            <li><a id="imp_indirizzo">Indirizzo</a></li>
+            <li><a id="cerca_poi">Ricerca POI</a></li>
+            <li><a id="btn_logout">Logout</a></li>
+          </ul> 
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container-fluid" style="max-width: 540px;" >
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main" id="contenuto" >
+          <center><!-- <a href='index.html' ><img src="pics/geonav.png" height="112px" border=0 id="logo_big" /></a><br><br> -->
+          <form id="callAjaxForm">
+           <label for='matricola'><b>Inserire Matricola</b></label>
+           <input type=text id='matricola' name='matricola' placeholder='Matricola' class='form-control-custom' required='true' >
+           <br>
+           <label for='password'>Inserire Password LDAP</label>
+           <input type=password id='password' name='password' placeholder='Password' class='form-control-custom' required='true' >
+           <br>
+           <label id="chiaro" class="checkbox form-control-custom text-left"><input type="checkbox" value="checkbox" onchange="statecheck('chiaro')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password in chiaro</label>
+           <label id="cred" class="checkbox form-control-custom text-left"><input type="checkbox" value="checkbox" onchange="statecheck('cred')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salva credenziali</label>
+           <br>
+           <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' >
+             <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Accedi
+           </button>
+           </form></center>
+        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+      </div> <!-- close div row --> 
+    </div> <!-- close div container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    function statecheck(layer) {
+       var myLayer = document.getElementById(layer);
+       var input = myLayer.childNodes[0];
+       if(input.checked == true){
+          myLayer.style.backgroundColor = "#bff0a1";
+          if (layer =="chiaro")
+          {
+             var password = document.getElementById("password");
+             password.type="text";
+          }
+       } 
+       else {
+          myLayer.style.backgroundColor = "#fff";
+          if (layer =="chiaro")
+          {
+             var password = document.getElementById("password");
+             password.type="password";
+          }
+       };
+    }
+    </script>
 </body>
 </html>
