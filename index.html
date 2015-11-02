@@ -176,9 +176,16 @@
     console.log(JSON.stringify(status));
     localStorage.setItem("link", "indirizzo");
     document.getElementById("result").innerHTML = "ERRORE Indirizzo NON impostato!";
-  }  
+  }
 
   $(document).ready(function() {
+
+    $('#btn_exit').click(function() {
+      if (confirm("Chiudere l'applicazione?")) {
+        navigator.app.exitApp();
+      }
+    });
+
     var login = localStorage.getItem("login");
     console.log("login: "+login);
 
@@ -366,8 +373,9 @@
             <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
             <li id="I" ><a id="imp_indirizzo" style="color: #FFF;" >Indirizzo</a></li>
             <li id="P" ><a id="cerca_poi" style="color: #FFF;" >Ricerca POI</a></li>
-            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li>
-          </ul> 
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
+            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
+          </ul>
           <script>
             var check_login = localStorage.getItem("login");
             if (check_login == "ok")
