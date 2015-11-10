@@ -219,7 +219,10 @@ html {
       $('#testata').html(testata);
       $('#contenuto').html(contenuto);
       localStorage.setItem("link", "menu");
+      $('#my_footer').show();
     }
+    else
+      $('#my_footer').hide();
 
     var matricola = localStorage.getItem("matricola");
     console.log("matricola: "+matricola);
