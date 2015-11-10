@@ -4,7 +4,7 @@
    <link href="css/bootstrap.min.css" rel="stylesheet">
 <!--    <link href="css/Supernice.min.css" rel="stylesheet">    -->
 <style>
-body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
+body{color:#E58E96;font-size: 16px;background-color:f3f3f3;}
 .btn-default{color:#eee;background-color:#838383;border-color:#666}
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default{
   color:#eee;background-color:#6f6f6f;border-color:#474747}
@@ -23,7 +23,7 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
     height: 45px;
     padding: 6px 12px;
     font-size: 16px;
-    color: #ED1C24;
+    color: #838383;
     background-color: #FFF;
     border: 1px solid #CCC;
     border-radius: 4px;
@@ -32,6 +32,18 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
   width: 100%;
   height: 100%;
 }
+/* SERVE PER IL FOOTER DEL MENU */
+html {
+  position: relative;
+  min-height: 100%;
+}
+#my_footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+/********************************/
+
 </style>
 <script src="phonegap.js"></script>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
@@ -39,7 +51,12 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
 <script>
   //TESTATA MENU
   var testata   = '<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
-  var contenuto = '<img src="pics/splash.jpg" width="100%"" id="splash" border=0 />';
+  var contenuto = '<a id="imp_indirizzo_b" class="btn btn-default btn-lg bottone">'+
+                  '<span class="glyphicon glyphicon-save pull-left" aria-hidden="true"></span>'+
+                  '&nbsp;&nbsp;&nbsp;&nbsp;IMPOSTA INDIRIZZO</a>'+
+                  '<a id="cerca_poi_b" class="btn btn-default btn-lg bottone">'+
+                  '<span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span>'+
+                  '&nbsp;&nbsp;&nbsp;&nbsp;CERCA ELEMETO DI RETE</a>';
 
   //TESTATA Imposta Indirizzo
   var t_indirizzo='<img src="pics/geonav.png" height="56px" align="left" id="logo_small" />';
@@ -151,9 +168,10 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
     localStorage.setItem("matricola", data.matricola);
     localStorage.setItem("password", data.password);
     localStorage.setItem("login", "ok");
-    //localStorage.setItem("link", "menu");
+    //Surace ha richiesto che dopo il login si vada al menu...
+    localStorage.setItem("link", "menu");
     //richiesta di Maurizio dopo il login vai du pagina ricerca_poi...
-    localStorage.setItem("link", "poi");
+    //localStorage.setItem("link", "poi");
     window.location.reload();
   }
   function onError(data, status)
@@ -249,7 +267,7 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
       window.location.href = 'index.html';
     });
 
-    $("#btn_logout").click(function(){
+    $("#btn_logout, #btn_logout_f").click(function(){
       //alert("btn_logout");
       localStorage.clear();
       console.log("btn_logout: "+localStorage.getItem("login"));
@@ -289,12 +307,12 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
       //return false;
     });
       
-    $('#imp_indirizzo').click(function() {
+    $('#imp_indirizzo, #imp_indirizzo_b').click(function() {
       localStorage.setItem("link", "indirizzo");
       window.location.reload();
     });
       
-    $('#cerca_poi').click(function() {
+    $('#cerca_poi, #cerca_poi_b').click(function() {
       localStorage.setItem("link", "poi");
       localStorage.setItem("view", null);
       window.location.reload();
@@ -359,12 +377,14 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
     <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
       <div class="container">
         <div class="navbar-header">
+          <div id="bottone_menu" >
           <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar" style="background-color: #FFF;"></span>
             <span class="icon-bar" style="background-color: #FFF;"></span>
             <span class="icon-bar" style="background-color: #FFF;"></span>
           </button>
+          </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
           </div>
@@ -380,9 +400,9 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
           <script>
             var check_login = localStorage.getItem("login");
             if (check_login == "ok")
-              $("#menu").show();
+               $('#bottone_menu').show();
             else
-              $("#menu").hide();
+               $('#bottone_menu').hide();
             var check_link = localStorage.getItem("link");
             if (check_link == "menu")
             {
@@ -413,45 +433,55 @@ body{color:#ED1C24;font-size: 16px;background-color:f3f3f3;}
         <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main" id="contenuto" >
           <center>
             <a href='index.html' ><img src="pics/logo.png" height="112px" border=0 id="logo_big" /></a><br><br>
+          </center>
           <form id="callAjaxForm">
-           <label for='matricola'><b>Inserire Matricola</b></label>
+           <label for='matricola'>Inserire Matricola</label>
            <input type=text id='matricola' name='matricola' placeholder='Matricola' class='form-control-custom' required='true' >
            <br>
            <label for='password'>Inserire Password LDAP</label>
            <input type=password id='password' name='password' placeholder='Password' class='form-control-custom' required='true' >
            <br>
-           <label id="chiaro" class="checkbox form-control-custom text-left"><input type="checkbox" value="checkbox" onchange="statecheck('chiaro')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password in chiaro</label>
-           <label id="cred" class="checkbox form-control-custom text-left"><input type="checkbox" value="checkbox" onchange="statecheck('cred')" style="margin-left:1px;margin-top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salva credenziali</label>
+           <br>
+           <br>
+           <label for='chiaro'>Password in chiaro</label>
+           <input id='chiaro' class="pull-right" type="checkbox" value="checkbox" onchange="statecheck(this)" style="margin-left:1px;margin-top:5px;" />
+           <br>
+           <label for='cred'>Salva credenziali</label>
+           <input id='cred' class="pull-right" type="checkbox" value="checkbox" style="margin-left:1px;margin-top:5px;" />
+           <br>
+           <br>
            <br>
            <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' >
              <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Accedi
            </button>
-           </form></center>
+           </form>
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+
+        <div id="my_footer" class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0" >
+          <button id="btn_logout_f" type="button" class='btn btn-danger btn-lg bottone' >
+            <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Logout
+          </button>
+        </div>
+
       </div> <!-- close div row --> 
     </div> <!-- close div container-fluid -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-    function statecheck(layer) {
-       var myLayer = document.getElementById(layer);
-       var input = myLayer.childNodes[0];
-       if(input.checked == true){
-          myLayer.style.backgroundColor = "#bff0a1";
-          if (layer =="chiaro")
-          {
-             var password = document.getElementById("password");
-             password.type="text";
-          }
-       } 
-       else {
-          myLayer.style.backgroundColor = "#fff";
-          if (layer =="chiaro")
-          {
-             var password = document.getElementById("password");
-             password.type="password";
-          }
-       };
+    function statecheck(checkbox)
+    {
+        if (checkbox.checked)
+        {
+            //DEBUG alert("checked");
+            var password = document.getElementById("password");
+            password.type="text";
+        }
+        else
+        {
+            //DEBUG alert("NOT checked");
+            var password = document.getElementById("password");
+            password.type="password";
+        }
     }
     </script>
 
