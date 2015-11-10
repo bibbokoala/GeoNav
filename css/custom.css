@@ -34,6 +34,6 @@ html {
 #my_footer{
   position: absolute;
   bottom: 0;
-  width: 100%;
+  max-width: 540px;
 }
 /******* FOOTER DEL MENU ********/
