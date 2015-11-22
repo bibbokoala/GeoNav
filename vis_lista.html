@@ -153,5 +153,23 @@
     </div> <!-- close div container-fluid -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <!-- TOGGLE MENU -->
+    <script>
+      $(document).ready(function() {
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.sidebar-offcanvas').toggleClass('active', 1000);
+      });
+    });
+    </script>
+    <script>
+    function statecheck(x, _this) {
+       if (_this.checked) {
+          $('#'+x).css('background-color','#bff0a1');
+       } 
+       else  {
+          $('#'+x).css('background-color','#ffffff');
+       }
+    }
+    </script>
   </body>
 </html>
