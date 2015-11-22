@@ -1,0 +1,157 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+
+   <!-- CSS FOR TOGGLE LEFT MENU -->
+     <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
+     <link href="css/navbar-static-top.css" rel="stylesheet">
+     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   <!-- END CSS FOR TOGGLE LEFT MENU -->
+
+   <link href="css/custom.css" rel="stylesheet">
+   <style>
+   .tabella_elementi table, th, tr, td {
+     border: 2px solid #F3F3F3;
+     border-collapse: collapse;
+     font-size:10px;
+     text-align: left;
+     padding-left:5px;
+     padding-right:5px;
+   }
+   .tabella_elementi th{
+     background-color:#666666;
+     color:#FFFFFF;
+   }
+   .tabella_elementi tr{
+     height:50px;
+     background-color:#FFFFFF;
+     color:#333333;
+   }
+   </style>
+
+<script src="phonegap.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/menu.js"></script>
+</head>
+<body>
+      <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
+      <div class="container">
+        <div class="navbar-header">
+          <div id="bottone_menu" >
+
+      <!-- BUTTON FOR TOGGLE LEFT MENU -->
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+      </button>
+      <!--
+          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+          </button>
+        -->
+          </div>
+          <div class="navbar-header" style="line-height: 56px;" id="testata" >
+            <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+          </div>
+        </div>
+        <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" id="menu" >
+            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
+            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
+            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
+            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
+          </ul>
+          <script>
+            var check_login = localStorage.getItem("login");
+            if (check_login == "ok")
+               $('#bottone_menu').show();
+            else
+               $('#bottone_menu').hide();
+            var check_link = localStorage.getItem("link");
+            if (check_link == "menu")
+            {
+              $( "#H" ).addClass( "active" );
+              $( "#link_home" ).css( "color", "#DE0019");
+            }
+            if (check_link == "indirizzo")
+            {
+              $( "#I" ).addClass( "active" );
+              $( "#link_indirizzo" ).css( "color", "#DE0019");
+            }
+            if (check_link == "elemento")
+            {
+              $( "#P" ).addClass( "active" );
+              $( "#link_elemento" ).css( "color", "#DE0019");
+            }
+            if (check_link == null)
+            {
+              $( "#L" ).addClass( "active" );
+              $( "#btn_logout" ).css( "color", "#DE0019");
+            }
+          </script>
+        </div>
+      </div>
+      -->
+    </nav>
+    <div class="container-fluid" id="fluido" >
+      <div class="row">
+      <!-- sidebar LEFT MENU -->      <!-- sidebar -->
+      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+            <li> <a href="menu.html"> <i class="fa fa-home"></i> Home</a></li>
+            <li><a href="ric_indirizzo.html"> <i class="fa fa-search"></i> CERCA PER INDIRIZZO</a></li>
+            <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
+            <li><a href="#"><br><br><br><br><br><br></a></li>
+            <li><a href="impostazioni.html"> <i class="fa fa-cogs"></i> Impostazioni</a></li>
+            <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+      </div>
+      <!-- content -->
+      <div class="col-xs-12  col-sm-8 col-md-9 content">
+          <table class="tabella_elementi" align=center width=100%>
+            <tr>
+              <th>Tipo</th>
+              <th>Nome elemento</th>
+              <th>Indirizzo</th>
+              <th>Distanza</th>
+              <th> &nbsp; </th>
+            </tr>
+            <tr>
+              <td><img src="pics/apparato.png" class="pull-right" /></td>
+              <td>HA0001</td>
+              <td>Via Vittorio Veneto 3 <br>Cologno Monzese</td>
+              <td>100 m</td>
+              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
+            </tr>
+            <tr>
+              <td><img src="pics/aps.png" class="pull-right" /></td>
+              <td>HA0002</td>
+              <td>Via Vittorio Veneto 56 <br>Cologno Monzese</td>
+              <td>130 m</td>
+              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
+            </tr>
+            <tr>
+              <td><img src="pics/terra.png" class="pull-right" /></td>
+              <td>HA0003</td>
+              <td>Via Vittorio Veneto 112 <br>Cologno Monzese</td>
+              <td>150 m</td>
+              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
+            </tr>
+          </table>
+
+        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+      </div> <!-- close div row --> 
+    </div> <!-- close div container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

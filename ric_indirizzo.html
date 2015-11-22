@@ -1,0 +1,198 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+
+   <!-- CSS FOR TOGGLE LEFT MENU -->
+     <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
+     <link href="css/navbar-static-top.css" rel="stylesheet">
+     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   <!-- END CSS FOR TOGGLE LEFT MENU -->
+
+   <link href="css/custom.css" rel="stylesheet">
+
+<script src="phonegap.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/menu.js"></script>
+</head>
+<body>
+      <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
+      <div class="container">
+        <div class="navbar-header">
+          <div id="bottone_menu" >
+
+      <!-- BUTTON FOR TOGGLE LEFT MENU -->
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+      </button>
+      <!--
+          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+          </button>
+        -->
+          </div>
+          <div class="navbar-header" style="line-height: 56px;" id="testata" >
+            <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+          </div>
+        </div>
+        <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" id="menu" >
+            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
+            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
+            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
+            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
+          </ul>
+          <script>
+            var check_login = localStorage.getItem("login");
+            if (check_login == "ok")
+               $('#bottone_menu').show();
+            else
+               $('#bottone_menu').hide();
+            var check_link = localStorage.getItem("link");
+            if (check_link == "menu")
+            {
+              $( "#H" ).addClass( "active" );
+              $( "#link_home" ).css( "color", "#DE0019");
+            }
+            if (check_link == "indirizzo")
+            {
+              $( "#I" ).addClass( "active" );
+              $( "#link_indirizzo" ).css( "color", "#DE0019");
+            }
+            if (check_link == "elemento")
+            {
+              $( "#P" ).addClass( "active" );
+              $( "#link_elemento" ).css( "color", "#DE0019");
+            }
+            if (check_link == null)
+            {
+              $( "#L" ).addClass( "active" );
+              $( "#btn_logout" ).css( "color", "#DE0019");
+            }
+          </script>
+        </div>
+      </div>
+      -->
+    </nav>
+    <div class="container-fluid" id="fluido" >
+      <div class="row">
+      <!-- sidebar LEFT MENU -->      <!-- sidebar -->
+      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+            <li> <a href="menu.html"> <i class="fa fa-home"></i> Home</a></li>
+            <li><a href="ric_indirizzo.html"> <i class="fa fa-search"></i> CERCA PER INDIRIZZO</a></li>
+            <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
+            <li><a href="#"><br><br><br><br><br><br></a></li>
+            <li><a href="impostazioni.html"> <i class="fa fa-cogs"></i> Impostazioni</a></li>
+            <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+      </div>
+      <!-- content -->
+      <div class="col-xs-12  col-sm-8 col-md-9 content">
+    <font color="#838383">Inserisci l'indirizzo da cercare</font>
+
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
+      <input id="pac-input" type="text" class="form-control input-lg" placeholder="Indirizzo..." aria-describedby="basic-addon1">
+    </div>
+
+    <script>
+    function initAutocomplete() {
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      var searchBox = new google.maps.places.SearchBox(input);
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+          return;
+        }
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          console.log("place.name: "+place.name);
+          console.log("place.geometry.location: "+place.geometry.location);
+        });
+        map.fitBounds(bounds);
+      });
+    }
+    </script>
+    <script async defer 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
+    </script>
+        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+      </div> <!-- close div row --> 
+
+      <div class="row">
+        <div id="my_footer" class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0" >
+          
+          <p id="demo"></p>
+          <a onclick="getLocation()" type="button" class='btn btn-default btn-lg bottone' >
+            <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Usa la mia posizione
+          </a>
+          <br>
+          <button id="btn_cerca_ind" type="button" class='btn btn-default btn-lg bottone' >
+            <span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span>Cerca indirizzo
+          </button>
+          <br>
+        </div>
+
+      </div> <!-- close div row --> 
+    </div> <!-- close div container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- TOGGLE MENU -->
+    <script>
+      $(document).ready(function() {
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.sidebar-offcanvas').toggleClass('active', 1000);
+      });
+    });
+    </script>
+
+<script>
+var x = document.getElementById("demo");
+function getLocation() {
+  console.log("getLocation");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+  var address = '';
+  console.log("showPosition");
+  localStorage.setItem("lat", position.coords.latitude);
+  localStorage.setItem("lon", position.coords.longitude);
+  var geocoder = new google.maps.Geocoder();
+  var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
+  console.log("latlng: "+latlng);
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      address = results[1].formatted_address;
+      console.log("Indirizzo: "+address);
+      localStorage.setItem("address", results[1].formatted_address);
+      //console.log("results: "+results[0].formatted_address);
+      //console.log("results: "+results[2].formatted_address);
+      //console.log("results: "+results[3].formatted_address);
+    } 
+    else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+        x.innerHTML = "Latitudine: " + localStorage.getItem("lat") +
+        "<br>Longitudine: " + localStorage.getItem("lon") +
+        "<br>Indirizzo: " + localStorage.getItem("address");
+}
+</script>
+
+</body>
+</html>

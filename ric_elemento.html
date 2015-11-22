@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+
+   <!-- CSS FOR TOGGLE LEFT MENU -->
+     <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
+     <link href="css/navbar-static-top.css" rel="stylesheet">
+     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   <!-- END CSS FOR TOGGLE LEFT MENU -->
+
+   <link href="css/custom.css" rel="stylesheet">
+
+<script src="phonegap.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/menu.js"></script>
+</head>
+<body>
+      <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
+      <div class="container">
+        <div class="navbar-header">
+          <div id="bottone_menu" >
+
+      <!-- BUTTON FOR TOGGLE LEFT MENU -->
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+      </button>
+      <!--
+          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+          </button>
+        -->
+          </div>
+          <div class="navbar-header" style="line-height: 56px;" id="testata" >
+            <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+          </div>
+        </div>
+        <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" id="menu" >
+            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
+            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
+            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
+            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
+          </ul>
+          <script>
+            var check_login = localStorage.getItem("login");
+            if (check_login == "ok")
+               $('#bottone_menu').show();
+            else
+               $('#bottone_menu').hide();
+            var check_link = localStorage.getItem("link");
+            if (check_link == "menu")
+            {
+              $( "#H" ).addClass( "active" );
+              $( "#link_home" ).css( "color", "#DE0019");
+            }
+            if (check_link == "indirizzo")
+            {
+              $( "#I" ).addClass( "active" );
+              $( "#link_indirizzo" ).css( "color", "#DE0019");
+            }
+            if (check_link == "elemento")
+            {
+              $( "#P" ).addClass( "active" );
+              $( "#link_elemento" ).css( "color", "#DE0019");
+            }
+            if (check_link == null)
+            {
+              $( "#L" ).addClass( "active" );
+              $( "#btn_logout" ).css( "color", "#DE0019");
+            }
+          </script>
+        </div>
+      </div>
+      -->
+    </nav>
+    <div class="container-fluid" id="fluido" >
+      <div class="row">
+      <!-- sidebar LEFT MENU -->      <!-- sidebar -->
+      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+            <li> <a href="menu.html"> <i class="fa fa-home"></i> Home</a></li>
+            <li><a href="ric_indirizzo.html"> <i class="fa fa-search"></i> CERCA PER INDIRIZZO</a></li>
+            <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
+            <li><a href="#"><br><br><br><br><br><br></a></li>
+            <li><a href="impostazioni.html"> <i class="fa fa-cogs"></i> Impostazioni</a></li>
+            <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+      </div>
+      <!-- content -->
+      <div class="col-xs-12  col-sm-8 col-md-9 content">
+
+          <center>
+                  <form id="elementoForm">
+                    <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a>
+                    <p id="demo"></p>
+                    <label id="apparato" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" />
+                    </label>
+                    <label id="aps" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="aps" onchange="statecheck('aps', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APS<img src="pics/aps.png" class="pull-right" />
+                    </label>
+                    <label id="armadio" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="armadio" onChange="statecheck('armadio', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Armadio<img src="pics/armadio.png" class="pull-right" />
+                    </label>
+                    <label id="bts" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="bts" onchange="statecheck('bts', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BTS<img src="pics/bts.png" class="pull-right" />
+                    </label>
+                    <label id="distributore" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="distributore" onchange="statecheck('distributore', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distributore<img src="pics/distributore.png" class="pull-right" />
+                    </label>
+                    <label id="ppu" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="ppu" onchange="statecheck('ppu', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PPU<img src="pics/ppu.png" class="pull-right" />
+                    </label>
+                    <label id="sede" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="sede" onchange="statecheck('sede', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede<img src="pics/sede.png" class="pull-right" />
+                    </label>
+                    <label id="sito" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="sito" onchange="statecheck('sito', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sito<img src="pics/sito.png" class="pull-right" />
+                    </label>
+                    <label id="terra" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="terra" onchange="statecheck('terra', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" />
+                    </label>
+
+                  <input type="text" name="poi_vicino" id="poi_vicino" class="form-control-custom" required=true placeholder="POI vicino a indirizzo..." /><br>
+                    <div id="result"></div>  
+                  <a href="vis_lista.html" id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
+                  <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
+                  </a>
+                  <br>
+                  <a href="vis_mappa.html" id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
+                  <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa 
+                  </a>
+                  </form>
+                  <br>
+
+        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+      </div> <!-- close div row --> 
+    </div> <!-- close div container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- TOGGLE MENU -->
+    <script>
+      $(document).ready(function() {
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.sidebar-offcanvas').toggleClass('active', 1000);
+      });
+    });
+    </script>
+    <script>
+    function statecheck(x, _this) {
+       if (_this.checked) {
+          $('#'+x).css('background-color','#bff0a1');
+       } 
+       else  {
+          $('#'+x).css('background-color','#ffffff');
+       }
+    }
+    </script>
+
+<!--
+<script>
+var x = document.getElementById("demo");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+    x.innerHTML = "Latitudine: " + position.coords.latitude +
+    "<br>Longitudine: " + position.coords.longitude;
+}
+</script>
+-->
+  <script>
+var x = document.getElementById("demo");
+function getLocation() {
+  console.log("getLocation");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+  var address = '';
+  console.log("showPosition");
+  localStorage.setItem("lat", position.coords.latitude);
+  localStorage.setItem("lon", position.coords.longitude);
+  var geocoder = new google.maps.Geocoder();
+  var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
+  console.log("latlng: "+latlng);
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      address = results[1].formatted_address;
+      console.log("Indirizzo: "+address);
+      localStorage.setItem("address", results[1].formatted_address);
+      //console.log("results: "+results[0].formatted_address);
+      //console.log("results: "+results[2].formatted_address);
+      //console.log("results: "+results[3].formatted_address);
+    } 
+    else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+        x.innerHTML = "Latitudine: " + localStorage.getItem("lat") +
+        "<br>Longitudine: " + localStorage.getItem("lon") +
+        "<br>Indirizzo: " + localStorage.getItem("address");
+}
+</script>
+    <script async defer 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=showPosition">
+    </script>
+
+  </body>
+</html>

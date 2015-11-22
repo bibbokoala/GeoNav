@@ -1,0 +1,143 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="css/custom.css" rel="stylesheet">
+<script src="phonegap.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/before_functions.js"></script>
+</head>
+<body>
+      <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
+      <div class="container">
+        <div class="navbar-header">
+          <div id="bottone_menu" >
+          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+            <span class="icon-bar" style="background-color: #FFF;"></span>
+          </button>
+          </div>
+          <div class="navbar-header" style="line-height: 56px;" id="testata" >
+            <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+          </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" id="menu" >
+            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
+            <li id="I" ><a id="imp_indirizzo" style="color: #FFF;" >Indirizzo</a></li>
+            <li id="P" ><a id="cerca_poi" style="color: #FFF;" >Ricerca POI</a></li>
+            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
+            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
+          </ul>
+          <script>
+            var check_login = localStorage.getItem("login");
+            if (check_login == "ok")
+               $('#bottone_menu').show();
+            else
+               $('#bottone_menu').hide();
+            var check_link = localStorage.getItem("link");
+            if (check_link == "menu")
+            {
+              $( "#H" ).addClass( "active" );
+              $( "#link_home" ).css( "color", "#DE0019");
+            }
+            if (check_link == "indirizzo")
+            {
+              $( "#I" ).addClass( "active" );
+              $( "#imp_indirizzo" ).css( "color", "#DE0019");
+            }
+            if (check_link == "poi")
+            {
+              $( "#P" ).addClass( "active" );
+              $( "#cerca_poi" ).css( "color", "#DE0019");
+            }
+            if (check_link == null)
+            {
+              $( "#L" ).addClass( "active" );
+              $( "#btn_logout" ).css( "color", "#DE0019");
+            }
+          </script>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container-fluid" style="max-width: 540px;" id="fluido" >
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main" id="contenuto" >
+          <center>
+            <a href='index.html' ><img src="pics/logo.png" height="112px" border=0 id="logo_big" /></a><br><br>
+          </center>
+          <form id="callAjaxForm">
+           <label for='matricola'>Inserire Matricola</label>
+           <input type=text id='matricola' name='matricola' placeholder='Matricola' class='form-control-custom' required='true' >
+           <br>
+           <label for='password'>Inserire Password LDAP</label>
+           <input type=password id='password' name='password' placeholder='Password' class='form-control-custom' required='true' >
+           <br>
+           <br>
+           <br>
+           <label for='chiaro'>Password in chiaro</label>
+           <input id='chiaro' class="pull-right" type="checkbox" value="checkbox" onchange="password_in_chiaro(this)" style="margin-left:1px;margin-top:5px;" />
+           <br>
+           <label for='cred'>Salva credenziali</label>
+           <input id='cred' class="pull-right" type="checkbox" value="checkbox" style="margin-left:1px;margin-top:5px;" />
+           <br>
+           <br>
+           <br>
+           <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' >
+             <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Accedi
+           </button>
+           </form>
+        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+
+        <div id="my_footer" class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 " >
+          <button id="btn_logout_f" type="button" class='btn btn-danger btn-lg bottone' >
+            <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Logout
+          </button>
+        </div>
+
+      </div> <!-- close div row --> 
+    </div> <!-- close div container-fluid -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/post_functions.js"></script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nome POI</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>Apparato 123456xy</b>
+          &egrave; un apparecchio macchinoso, complesso o grandioso oppure un insieme di soggetti singoli quali macchine, organi, 
+          persone o idee, che insieme concorrono ad ottenere un unico scopo.</p>
+          Immagine Allegata:<br>
+          <img src="pics/apparato.jpg" alt="..." class="img-thumbnail">
+          <p>Attributi, <a href="https://it.wikipedia.org/wiki/Apparato">
+          https://it.wikipedia.org/wiki/Apparato</a> 
+          (Ultima visita 22 giugno 2015).</p>
+          <a class="btn btn-default btn-sm pull-left" >
+            <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>
+            &nbsp;&nbsp;Naviga
+          </a>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FINE MODAL -->
+
+<script src="js/maps_functions.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&callback=initMap"></script>
+</body>
+</html>
