@@ -25,7 +25,7 @@
     .ux-mood li{margin-bottom: 10px}
     .upper{text-transform: uppercase; font-weight: bold}
 /* collapsed sidebar styles */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1281px) {
 	.affix {position: static;}
 	#affix{width: 100%;}
   	.sidebar-offcanvas{-webkit-transition: all 0.3s ease-in-out;
