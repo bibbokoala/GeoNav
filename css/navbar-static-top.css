@@ -33,17 +33,18 @@
 		-ms-transition: all 0.3s ease-in-out;
 		-o-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
-		width:98%;
-		background-color: #DE0019;
+		width:90%;
+		background-color: #323232;
+		/* background-color: #DE0019; */
 		z-index: 51;
 		margin: 0; padding: 0;
 		position: fixed;
 		top:50px;
-		left: -98%;
+		left: -90%;
 	}
 	.sidebar-offcanvas ul li{margin:0}
-	.sidebar-offcanvas ul li a{color:#fff;padding: 15px 20px;margin:0;font-size: 15px;border-bottom: 1px solid #d6474d}
-	.sidebar-offcanvas ul li a:hover{background:#54303a;border:none; border-radius:0}
+	.sidebar-offcanvas ul li a{color:#fff;padding: 15px 20px;margin:0;font-size: 15px;border-bottom: 1px solid #505050} /* solid #d6474d */
+	.sidebar-offcanvas ul li a:hover{background:#616161;border:none; border-radius:0} /* background:#54303a; */
 	.nav{margin-top: 0px;}
 	.nav > li > a:hover, 
 	.nav > li > a:focus{background-color: #ff625f}
