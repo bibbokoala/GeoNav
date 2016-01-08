@@ -1,8 +1,12 @@
   console.log("ELEMENTI DI NAVIGAZIONE:");
-  console.log("matricola: "+localStorage.getItem("matricola"));
-  console.log("password: "+localStorage.getItem("password"));
+  //console.log("matricola: "+localStorage.getItem("matricola"));
+  //console.log("password: "+localStorage.getItem("password"));
+  console.log("auth: "+localStorage.getItem("auth"));
+  console.log("token: "+localStorage.getItem("token"));
   console.log("login: "+localStorage.getItem("login"));
   console.log("link: "+localStorage.getItem("link"));
+  console.log("lista: "+localStorage.getItem("lista"));
+  
 
   $(document).ready(function() {
 
@@ -35,5 +39,15 @@
         navigator.app.exitApp();
       }
     });
+
+    if (localStorage.getItem("auth") != null) {
+      var auth=localStorage.getItem("auth");
+      if (auth.localeCompare("KO")==0)
+      {
+        var htmlString = "<p>ERRORE Login!</p>";
+        document.getElementById("result").innerHTML = htmlString;
+      }
+    }
+    
 
   });  

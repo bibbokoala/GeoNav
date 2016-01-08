@@ -8,29 +8,62 @@
    <script src="js/jquery.min.js"></script>
    <script src="js/menu.js"></script>
 <script>
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '"');
+        } else {
+            o[this.name] = this.value || '"';
+        }
+    });
+    return o;
+};
   function onSuccess(data, status)
   {
-    localStorage.setItem("matricola", data.matricola);
-    localStorage.setItem("password", data.password);
-    localStorage.setItem("login", "ok");
-    localStorage.setItem("link", "menu");
-    window.location = "menu.html";
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
+    localStorage.setItem("auth", data.auth);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("login", data.auth);
+    if (data.auth.localeCompare("OK")==0)
+    {
+       localStorage.setItem("link", "menu");
+       window.location = "menu.html";
+    }
+    else
+    {
+       window.location = "index.html";
+    }
   }
   function onError(data, status)
   {
-    var htmlString = "<p>ERRORE Login!</p>";
+    //var htmlString = "<p>ERRORE Login!</p>";
+    //document.getElementById("result").innerHTML = htmlString;
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
     localStorage.setItem("link", "menu");
     localStorage.setItem("login", "NOK!");
-    document.getElementById("result").innerHTML = htmlString;
   }   
   $(document).ready(function() {
     $("#btn_login").click(function(){
       console.log(callAjaxForm);
       var formData = $("#callAjaxForm").serialize();
+      //var formData = JSON.stringify($('#callAjaxForm').serializeObject())
       console.log(formData);
+      //http://medley.cloudmup.com/GeoLocREST/GNLogin?JSON={"matricola":"37210890","password":"xxx"}
+      //var url = "http://medley.cloudmup.com/GeoLocREST/GNLogin?JSON="+formData
+      //var url = "http://medley.cloudmup.com/GeoLocREST/GNLogin";
+      var url = "http://service.cloudmup.com/GOALocale/GeoNavLogin.php";
+      console.log(url);
       $.ajax({
-        type: "POST",
-        url: "http://service.cloudmup.com/GOALocale/geonavdemo.php", //change with send.php...
+        type: "GET",
+        url: url,
         cache: false,
         dataType: "jsonp",
         data: formData,
@@ -39,6 +72,7 @@
       });
       //return false;
     });
+
   });  
 </script>
 </head>
@@ -68,7 +102,7 @@
            <label for='password'>Inserire Password LDAP</label>
            <input type=password id='password' name='password' placeholder='Password' class='form-control-custom' required='true' >
            <br>
-           <br>
+           <div id="result"></div>
            <br>
            <label for='chiaro'>Password in chiaro</label>
            <input id='chiaro' class="pull-right" type="checkbox" value="checkbox" onchange="password_in_chiaro(this)" style="margin-left:1px;margin-top:5px;" />

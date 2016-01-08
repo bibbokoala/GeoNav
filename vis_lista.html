@@ -31,9 +31,17 @@
    </style>
 
 <script src="phonegap.js"></script>
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
    <script src="js/menu.js"></script>
+
+   <script>
+  $(document).ready(function() {
+    //la lista elementi arriva valorizzta dalla pagina ric_elemento.html
+    var lista = localStorage.getItem("lista");
+    document.getElementById("result").innerHTML = lista;
+  });  
+</script>
+
 </head>
 <body>
       <!-- Static navbar -->
@@ -48,64 +56,16 @@
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
       </button>
-      <!--
-          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-          </button>
-        -->
           </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
           </div>
         </div>
-        <!--
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right" id="menu" >
-            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
-            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
-            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
-            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
-            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
-          </ul>
-          <script>
-            var check_login = localStorage.getItem("login");
-            if (check_login == "ok")
-               $('#bottone_menu').show();
-            else
-               $('#bottone_menu').hide();
-            var check_link = localStorage.getItem("link");
-            if (check_link == "menu")
-            {
-              $( "#H" ).addClass( "active" );
-              $( "#link_home" ).css( "color", "#DE0019");
-            }
-            if (check_link == "indirizzo")
-            {
-              $( "#I" ).addClass( "active" );
-              $( "#link_indirizzo" ).css( "color", "#DE0019");
-            }
-            if (check_link == "elemento")
-            {
-              $( "#P" ).addClass( "active" );
-              $( "#link_elemento" ).css( "color", "#DE0019");
-            }
-            if (check_link == null)
-            {
-              $( "#L" ).addClass( "active" );
-              $( "#btn_logout" ).css( "color", "#DE0019");
-            }
-          </script>
-        </div>
-      </div>
-      -->
     </nav>
     <div class="container-fluid" id="fluido" >
       <div class="row">
       <!-- sidebar LEFT MENU -->      <!-- sidebar -->
-      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+        <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
           <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
             <li> <a href="menu.html"> <i class="fa fa-home"></i> Home</a></li>
             <li><a href="ric_indirizzo.html"> <i class="fa fa-search"></i> CERCA PER INDIRIZZO</a></li>
@@ -114,41 +74,11 @@
             <li><a href="impostazioni.html"> <i class="fa fa-cogs"></i> Impostazioni</a></li>
             <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
           </ul>
-      </div>
-      <!-- content -->
-      <div class="col-xs-12  col-sm-8 col-md-9 content">
-          <table class="tabella_elementi" align=center width=100%>
-            <tr>
-              <th>Tipo</th>
-              <th>Nome elemento</th>
-              <th>Indirizzo</th>
-              <th>Distanza</th>
-              <th> &nbsp; </th>
-            </tr>
-            <tr>
-              <td><img src="pics/apparato.png" class="pull-right" /></td>
-              <td>HA0001</td>
-              <td>Via Vittorio Veneto 3 <br>Cologno Monzese</td>
-              <td>100 m</td>
-              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
-            </tr>
-            <tr>
-              <td><img src="pics/aps.png" class="pull-right" /></td>
-              <td>HA0002</td>
-              <td>Via Vittorio Veneto 56 <br>Cologno Monzese</td>
-              <td>130 m</td>
-              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
-            </tr>
-            <tr>
-              <td><img src="pics/terra.png" class="pull-right" /></td>
-              <td>HA0003</td>
-              <td>Via Vittorio Veneto 112 <br>Cologno Monzese</td>
-              <td>150 m</td>
-              <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>
-            </tr>
-          </table>
-
-        </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
+        </div>
+        <!-- content -->
+        <div class="col-xs-12  col-sm-8 col-md-9 content">
+          <div id="result"></div>
+        </div> <!-- class="col-xs-12  col-sm-8 col-md-9 content"> -->
       </div> <!-- close div row --> 
     </div> <!-- close div container-fluid -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->

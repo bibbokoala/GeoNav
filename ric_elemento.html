@@ -15,6 +15,82 @@
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
    <script src="js/menu.js"></script>
+<script>
+  $(document).ready(function() {
+/* TABLE EXAMPLE:
+          <table class="tabella_elementi" align=center width=100%>
+            <tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>
+            <tr><td><img src="pics/terra.png" class="pull-right" /></td><td>HA0003</td><td>Via Vittorio Veneto 112 <br>Cologno Monzese</td><td>150 m</td><td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td></tr>
+          </table>
+*/
+    function renderList(response) {
+      var arr = JSON.parse(response);
+      var i;
+      /* OLD LISTVIEW:
+      var lista = '<ul data-role="listview" data-divider-theme="b" data-inset="true">\n';
+      for(i = 0; i < arr.length; i++) {
+        lista += '<li><a class="ui-icon-arrow-r ui-btn-icon-right" data-icon="arrow-r" href="#' + arr[i].id + '" data-rel="popup" >\n' + 
+        arr[i].poi +' '+
+        arr[i].lat +' '+
+        arr[i].lon +
+        '</a></li>\n';
+        lista += '<div data-role="popup" id="' + arr[i].id + '" data-theme="a">Latitudine: ' + arr[i].lat + ' - Longitudine: ' + arr[i].lon + '</div>';
+      }
+      lista += '</ul>\n';
+      */
+      var lista = '<table class="tabella_elementi" align=center width=100%>\n'+
+                  '<tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>\n';
+      /*
+       $outp .= '{"poiType":"' .$rs["wp_type"] . '",';
+       $outp .= '"poiName":"'  .$rs["wp_code"].':'.$rs["wp_desc"]. '",';
+       $outp .= '"address":"'  .$rs["wp_address"].' '.$rs["wp_address_num"].' '.$rs["wp_city"].' ('.$rs["wp_country"].') '.$rs["wp_cap"]. '",';
+       $outp .= '"latitude":"' .$rs["wp_wgs84_lat"]. '",';
+       $outp .= '"longitude":"'.$rs["wp_wgs84_lon"]. '",';
+       $outp .= '"distance":"' .$distance. '",';
+       $outp .= '"url1":"'     .$rs["url1"]. '",';
+       $outp .= '"url2":"'     .$rs["url2"]. '",';
+       $outp .= '"url3":"'     .$rs["url3"]. '"}';
+      */
+      for(i = 0; i < arr.length; i++) {
+        lista += '<tr><td><img src="pics/terra.png" class="pull-right" />'+ arr[i].poiType +'</td>\n'+
+                 '    <td>' + arr[i].poiName + '</td>\n'+
+                 '    <td>' + arr[i].address + '</td>\n'+
+                 '    <td>' + arr[i].distance + '</td>\n'+
+                 '    <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>\n'+
+                 '</tr>\n';
+      }
+      lista += '</table>\n';
+      alert(lista);
+      //document.getElementById("result").innerHTML = lista;
+      localStorage.setItem("link", "poi");
+      localStorage.setItem("view", "lista");
+      localStorage.setItem("lista", lista);
+      window.location = "vis_lista.html";
+    }
+
+    $("#poi_lista").click(function(){
+      //DEBUG alert("#poi_lista");
+      var formData = $("#elementoForm").serialize();
+      console.log(formData);
+      /*
+      var xmlhttp = new XMLHttpRequest();
+      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
+      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
+
+      xmlhttp.onreadystatechange=function() {
+          //DEBUG alert("onreadystatechange");
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              //DEBUG alert("renderList");
+              renderList(xmlhttp.responseText);
+          }
+      }
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+      */
+    });
+
+  });  
+</script>
 </head>
 <body>
       <!-- Static navbar -->
@@ -139,12 +215,47 @@
                       <input type="checkbox" name="terra" onchange="statecheck('terra', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" />
                     </label>
-
+                  <!--
                   <input type="text" name="poi_vicino" id="poi_vicino" class="form-control-custom" required=true placeholder="POI vicino a indirizzo..." /><br>
-                    <div id="result"></div>  
-                  <a href="vis_lista.html" id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
+                    <div id="result"></div> 
+                  -->
+                    <div class="input-group">
+                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
+                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1">
+                    </div><br>
+
+    <script>
+    function initAutocomplete() {
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      var searchBox = new google.maps.places.SearchBox(input);
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+          return;
+        }
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          console.log("place.name: "+place.name);
+          console.log("place.geometry.location: "+place.geometry.location);
+        });
+        map.fitBounds(bounds);
+      });
+    }
+    </script>
+    <script async defer 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
+    </script>
+
+
+           <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
+                  <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
+           </button>
+           <!--
+                  <a id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
                   <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
                   </a>
+            -->
                   <br>
                   <a href="vis_mappa.html" id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
                   <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa 
@@ -228,9 +339,11 @@ function showPosition(position) {
         "<br>Indirizzo: " + localStorage.getItem("address");
 }
 </script>
+
+<!--
     <script async defer 
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=showPosition">
     </script>
-
+-->
   </body>
 </html>
