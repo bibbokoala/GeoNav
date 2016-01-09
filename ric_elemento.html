@@ -52,7 +52,8 @@
        $outp .= '"url3":"'     .$rs["url3"]. '"}';
       */
       for(i = 0; i < arr.length; i++) {
-        lista += '<tr><td><img src="pics/terra.png" class="pull-right" />'+ arr[i].poiType +'</td>\n'+
+        var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
+        lista += '<tr><td><center><img src="pics/'+poi_images[arr[i].poiType]+'" /></center></td>\n'+
                  '    <td>' + arr[i].poiName + '</td>\n'+
                  '    <td>' + arr[i].address + '</td>\n'+
                  '    <td>' + arr[i].distance + '</td>\n'+
@@ -60,22 +61,18 @@
                  '</tr>\n';
       }
       lista += '</table>\n';
-      alert(lista);
+      //DEBUG alert(lista);
       //document.getElementById("result").innerHTML = lista;
       localStorage.setItem("link", "poi");
       localStorage.setItem("view", "lista");
       localStorage.setItem("lista", lista);
       window.location = "vis_lista.html";
     }
-
-    $("#poi_lista").click(function(){
-      //DEBUG alert("#poi_lista");
-      //var formData = $("#elementoForm").serialize();
-      //console.log(formData);
+    function call(lat, lon){
       var xmlhttp = new XMLHttpRequest();
-      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
+      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
+      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType=&range=50";
       //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
-
       xmlhttp.onreadystatechange=function() {
           //DEBUG alert("onreadystatechange");
           if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -85,6 +82,16 @@
       }
       xmlhttp.open("GET", url, true);
       xmlhttp.send();
+    }
+    $("#poi_lista").click(function(){
+      var ind = localStorage.getItem("indirizzo");
+      var lat = localStorage.getItem("latitudine");
+      var lon = localStorage.getItem("longitudine");
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
+      if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
+         call(lat,lon);
+      else
+         alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
 
   });  
@@ -175,7 +182,7 @@
 
           <center>
                   <form id="elementoForm">
-                    <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a>
+                    <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
                     <p id="demo"></p>
                     <label id="apparato" class="checkbox form-control-custom text-left">
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
@@ -219,7 +226,7 @@
                   -->
                     <div class="input-group">
                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
-                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1">
+                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1" required="required">
                     </div><br>
 
     <script>
@@ -236,6 +243,18 @@
         places.forEach(function(place) {
           console.log("place.name: "+place.name);
           console.log("place.geometry.location: "+place.geometry.location);
+          var x = document.getElementById("demo");
+          x.innerHTML=place.name+" - "+place.geometry.location;
+          var lat = place.geometry.location.lat();
+          var lon = place.geometry.location.lng();
+          //console.log("lat: "+lat+" - lon: "+lon);
+          localStorage.setItem("indirizzo",place.name);
+          localStorage.setItem("latitudine",lat);
+          localStorage.setItem("longitudine",lon);
+          var indir = localStorage.getItem("indirizzo");
+          var latit = localStorage.getItem("latitudine");
+          var longi = localStorage.getItem("longitudine");
+          console.log("indir: "+indir+"- latit: "+latit+" - longi: "+longi);
         });
         map.fitBounds(bounds);
       });
@@ -301,6 +320,8 @@ function showPosition(position) {
 }
 </script>
 -->
+
+<!--
   <script>
 var x = document.getElementById("demo");
 function getLocation() {
@@ -337,8 +358,6 @@ function showPosition(position) {
         "<br>Indirizzo: " + localStorage.getItem("address");
 }
 </script>
-
-<!--
     <script async defer 
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=showPosition">
     </script>
