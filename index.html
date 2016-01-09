@@ -8,6 +8,7 @@
    <script src="js/jquery.min.js"></script>
    <script src="js/menu.js"></script>
 <script>
+//var db = openDatabase('GeoNavDB', '1.0', 'GeoNav App DB', 3 * 1024 * 1024);
 $.fn.serializeObject = function()
 {
     var o = {};
@@ -48,14 +49,28 @@ $.fn.serializeObject = function()
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
     localStorage.setItem("link", "menu");
-    localStorage.setItem("login", "NOK!");
+    localStorage.setItem("login", "KO");
   }   
   $(document).ready(function() {
+
+    //IN CASO DI LOGIN VALIDO NON RIEFFETTUO IL LOGIN...
+    if (localStorage.getItem("auth") != null) {
+      var auth=localStorage.getItem("auth");
+      if (auth.localeCompare("OK")==0)
+      {
+        localStorage.setItem("link", "menu");
+        window.location = "menu.html";
+      }
+    }
+
+    //BOTTONE ACCEDI PER EFFETTUARE IL LOGIN:
     $("#btn_login").click(function(){
       console.log(callAjaxForm);
       var formData = $("#callAjaxForm").serialize();
       //var formData = JSON.stringify($('#callAjaxForm').serializeObject())
       console.log(formData);
+      localStorage.setItem("matricola", $("#matricola").val());
+      localStorage.setItem("password", $("#password").val());
       //http://medley.cloudmup.com/GeoLocREST/GNLogin?JSON={"matricola":"37210890","password":"xxx"}
       //var url = "http://medley.cloudmup.com/GeoLocREST/GNLogin?JSON="+formData
       //var url = "http://medley.cloudmup.com/GeoLocREST/GNLogin";
@@ -93,7 +108,7 @@ $.fn.serializeObject = function()
       <div class="row">
         <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main" id="contenuto" >
           <center>
-            <a href='index.html' ><img src="pics/logo.png" height="112px" border=0 id="logo_big" /></a><br><br>
+            <img src="pics/logo.png" height="112px" border=0 id="logo_big" /><br><br>
           </center>
           <form id="callAjaxForm">
            <label for='matricola'>Inserire Matricola</label>

@@ -1,12 +1,11 @@
   console.log("ELEMENTI DI NAVIGAZIONE:");
-  //console.log("matricola: "+localStorage.getItem("matricola"));
-  //console.log("password: "+localStorage.getItem("password"));
+  console.log("matricola: "+localStorage.getItem("matricola"));
+  console.log("password: "+localStorage.getItem("password"));
   console.log("auth: "+localStorage.getItem("auth"));
   console.log("token: "+localStorage.getItem("token"));
   console.log("login: "+localStorage.getItem("login"));
   console.log("link: "+localStorage.getItem("link"));
-  console.log("lista: "+localStorage.getItem("lista"));
-  
+  console.log("lista: "+localStorage.getItem("lista"));  
 
   $(document).ready(function() {
 
@@ -48,6 +47,5 @@
         document.getElementById("result").innerHTML = htmlString;
       }
     }
-    
 
   });  
