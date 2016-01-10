@@ -17,58 +17,14 @@
    <script src="js/menu.js"></script>
 <script>
   $(document).ready(function() {
-/* TABLE EXAMPLE:
-          <table class="tabella_elementi" align=center width=100%>
-            <tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>
-            <tr><td><img src="pics/terra.png" class="pull-right" /></td><td>HA0003</td><td>Via Vittorio Veneto 112 <br>Cologno Monzese</td><td>150 m</td><td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td></tr>
-          </table>
-*/
-    function renderList(response) {
-      var arr = JSON.parse(response);
-      var i;
-      /* OLD LISTVIEW:
-      var lista = '<ul data-role="listview" data-divider-theme="b" data-inset="true">\n';
-      for(i = 0; i < arr.length; i++) {
-        lista += '<li><a class="ui-icon-arrow-r ui-btn-icon-right" data-icon="arrow-r" href="#' + arr[i].id + '" data-rel="popup" >\n' + 
-        arr[i].poi +' '+
-        arr[i].lat +' '+
-        arr[i].lon +
-        '</a></li>\n';
-        lista += '<div data-role="popup" id="' + arr[i].id + '" data-theme="a">Latitudine: ' + arr[i].lat + ' - Longitudine: ' + arr[i].lon + '</div>';
-      }
-      lista += '</ul>\n';
-      */
-      var lista = '<table class="tabella_elementi" align=center width=100%>\n'+
-                  '<tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>\n';
-      /*
-       $outp .= '{"poiType":"' .$rs["wp_type"] . '",';
-       $outp .= '"poiName":"'  .$rs["wp_code"].':'.$rs["wp_desc"]. '",';
-       $outp .= '"address":"'  .$rs["wp_address"].' '.$rs["wp_address_num"].' '.$rs["wp_city"].' ('.$rs["wp_country"].') '.$rs["wp_cap"]. '",';
-       $outp .= '"latitude":"' .$rs["wp_wgs84_lat"]. '",';
-       $outp .= '"longitude":"'.$rs["wp_wgs84_lon"]. '",';
-       $outp .= '"distance":"' .$distance. '",';
-       $outp .= '"url1":"'     .$rs["url1"]. '",';
-       $outp .= '"url2":"'     .$rs["url2"]. '",';
-       $outp .= '"url3":"'     .$rs["url3"]. '"}';
-      */
-      for(i = 0; i < arr.length; i++) {
-        var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
-        lista += '<tr><td><center><img src="pics/'+poi_images[arr[i].poiType]+'" /></center></td>\n'+
-                 '    <td>' + arr[i].poiName + '</td>\n'+
-                 '    <td>' + arr[i].address + '</td>\n'+
-                 '    <td>' + arr[i].distance + '</td>\n'+
-                 '    <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>\n'+
-                 '</tr>\n';
-      }
-      lista += '</table>\n';
-      //DEBUG alert(lista);
-      //document.getElementById("result").innerHTML = lista;
+    function saveListForPage(response, page) {
+      var lista = response;
       localStorage.setItem("link", "poi");
       localStorage.setItem("view", "lista");
       localStorage.setItem("lista", lista);
-      window.location = "vis_lista.html";
+      window.location = page;
     }
-    function call(lat, lon){
+    function call(lat, lon, page){
       var xmlhttp = new XMLHttpRequest();
       //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
       var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType=&range=50";
@@ -77,7 +33,7 @@
           //DEBUG alert("onreadystatechange");
           if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
               //DEBUG alert("renderList");
-              renderList(xmlhttp.responseText);
+              saveListForPage(xmlhttp.responseText, page);
           }
       }
       xmlhttp.open("GET", url, true);
@@ -89,7 +45,7 @@
       var lon = localStorage.getItem("longitudine");
       console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
-         call(lat,lon);
+         call(lat, lon, "vis_lista.html");
       else
          alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });

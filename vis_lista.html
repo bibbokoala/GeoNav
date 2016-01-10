@@ -2,13 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <link href="css/bootstrap.min.css" rel="stylesheet">
-
    <!-- CSS FOR TOGGLE LEFT MENU -->
      <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
      <link href="css/navbar-static-top.css" rel="stylesheet">
      <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
    <!-- END CSS FOR TOGGLE LEFT MENU -->
-
    <link href="css/custom.css" rel="stylesheet">
    <style>
    .tabella_elementi table, th, tr, td {
@@ -29,27 +27,37 @@
      color:#333333;
    }
    </style>
-
 <script src="phonegap.js"></script>
-   <script src="js/jquery.min.js"></script>
-   <script src="js/menu.js"></script>
-
-   <script>
+<script src="js/jquery.min.js"></script>
+<script src="js/menu.js"></script>
+<script>
   $(document).ready(function() {
-    //la lista elementi arriva valorizzta dalla pagina ric_elemento.html
-    var lista = localStorage.getItem("lista");
-    document.getElementById("result").innerHTML = lista;
+      //VISUALIZZA LA LISTA PRECEDENTEMENTE SALVATA dalle pagine: ric_elemento e ric_indirizzo
+      var response = localStorage.getItem("lista");
+      var arr = JSON.parse(response);
+      var i;
+      var lista = '<table class="tabella_elementi" align=center width=100%>\n'+
+                  '<tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>\n';
+      for(i = 0; i < arr.length; i++) {
+        var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
+        lista += '<tr><td><center><img src="pics/'+poi_images[arr[i].poiType]+'" /></center></td>\n'+
+                 '    <td>' + arr[i].poiName + '</td>\n'+
+                 '    <td>' + arr[i].address + '</td>\n'+
+                 '    <td>' + arr[i].distance + '</td>\n'+
+                 '    <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>\n'+
+                 '</tr>\n';
+      }
+      lista += '</table>\n';
+      document.getElementById("result").innerHTML = lista;
   });  
 </script>
-
 </head>
 <body>
-      <!-- Static navbar -->
+    <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
       <div class="container">
         <div class="navbar-header">
           <div id="bottone_menu" >
-
       <!-- BUTTON FOR TOGGLE LEFT MENU -->
       <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
        <span class="icon-bar"></span>

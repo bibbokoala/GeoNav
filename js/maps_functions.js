@@ -5,6 +5,8 @@ function initMap() {
     center: point
   });
 
+//ciclo  su lista per visualizzare tutti i punti sulla mappa con i relativi contenuti...
+
   var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+

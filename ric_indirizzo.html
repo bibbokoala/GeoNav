@@ -15,6 +15,45 @@
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
    <script src="js/menu.js"></script>
+
+<script>
+  $(document).ready(function() {
+    function saveListForPage(response, page) {
+      var lista = response;
+      localStorage.setItem("link", "poi");
+      localStorage.setItem("view", "lista");
+      localStorage.setItem("lista", lista);
+      window.location = page;
+    }
+    function call(lat, lon, page){
+      var xmlhttp = new XMLHttpRequest();
+      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
+      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType=&range=50";
+      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
+      xmlhttp.onreadystatechange=function() {
+          //DEBUG alert("onreadystatechange");
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              //DEBUG alert("renderList");
+              saveListForPage(xmlhttp.responseText, page);
+          }
+      }
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+    $("#poi_lista").click(function(){
+      var ind = localStorage.getItem("indirizzo");
+      var lat = localStorage.getItem("latitudine");
+      var lon = localStorage.getItem("longitudine");
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
+      if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
+         call(lat, lon, "vis_lista.html");
+      else
+         alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+    });
+
+  });  
+</script>
+
 </head>
 <body>
       <!-- Static navbar -->
@@ -58,33 +97,6 @@
     </div>
 
     <script>
-/*
-    var GTOptions = {
-      enableHighAccuracy: false,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    function GTSuccess(pos) {
-      var crd = pos.coords;
-      console.log('Your current position is:');
-      console.log('Latitude : ' + crd.latitude);
-      console.log('Longitude: ' + crd.longitude);
-      var x = document.getElementById("demo");
-      x.innerHTML="lat: " + crd.latitude + " - lon: " + crd.longitude;
-    };
-
-    function GTError(err) {
-      console.warn('ERROR(' + err.code + '): ' + err.message);
-      var x = document.getElementById("demo");
-      x.innerHTML='ERROR(' + err.code + '): ' + err.message;
-    };
-
-    function getLocation() 
-    {
-      navigator.geolocation.getCurrentPosition(GTSuccess, GTError, GTOptions);
-    }
-*/
     function getLocation() 
     {
       var demo = document.getElementById("demo");
@@ -145,14 +157,14 @@
           {
             var address = results[0].formatted_address;
             console.log("Indirizzo: "+address);
-            localStorage.setItem("address", results[0].formatted_address);
+            localStorage.setItem("indirizzo", results[0].formatted_address);
             console.log("results[0]: "+results[0].formatted_address);
             console.log("results[1]: "+results[1].formatted_address);
             console.log("results[2]: "+results[2].formatted_address);
             console.log("results[3]: "+results[3].formatted_address);
             x.innerHTML = "Latitudine: " + localStorage.getItem("lat") + "<br>" + 
                           "Longitudine: " + localStorage.getItem("lon") + "<br>" +
-                          "Indirizzo: " + localStorage.getItem("address");
+                          "Indirizzo: " + localStorage.getItem("indirizzo");
             $('#pac-input').val(results[0].formatted_address);
           } 
           else 
@@ -174,8 +186,8 @@
             <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Usa la mia posizione
           </a>
           <br>
-          <button id="btn_cerca_ind" type="button" class='btn btn-default btn-lg bottone' >
-            <span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span>Cerca indirizzo
+          <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
+            <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
           </button>
           <br>
         </div>
