@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <!-- CSS FOR TOGGLE LEFT MENU -->
+     <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
+     <link href="css/navbar-static-top.css" rel="stylesheet">
+     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   <!-- END CSS FOR TOGGLE LEFT MENU -->
+   <link href="css/custom.css" rel="stylesheet">
+   <style>
+   .tabella_elementi table, th, tr, td {
+     border: 2px solid #F3F3F3;
+     border-collapse: collapse;
+     /* font-size:10px; */
+     text-align: left;
+     padding-left:5px;
+     padding-right:5px;
+   }
+   .tabella_elementi th{
+     background-color:#666666;
+     color:#FFFFFF;
+   }
+   .tabella_elementi tr{
+     height:50px;
+     background-color:#FFFFFF;
+     color:#333333;
+   }
+   </style>
+<script src="phonegap.js"></script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+  var db = openDatabase('mydb', '1.0', 'Test DB', 3 * 1024 * 1024);
+  var msg;
+
+  function dropTable(table){
+    db.transaction(function (tx) {
+      tx.executeSql('DROP TABLE ' + table);
+    });
+  }
+
+  function insertElement(stringa){
+    db.transaction(function (tx) {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS MESSAGES (id unique, log)');
+      tx.executeSql('INSERT INTO MESSAGES select ifnull(max(id)+1,0) , "' + stringa + '" from MESSAGES ');
+    });
+  }
+
+  function deleteElement(id){
+    db.transaction(function (tx) {
+      tx.executeSql('DELETE FROM MESSAGES WHERE id='+id);
+    });
+    listElement('MESSAGES');
+  }
+
+  function listElement(table){  
+    var records=0;
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM '+table+' ', [], function (tx, results) {
+        var len = results.rows.length, i;
+        msg = "<small>Record trovati: " + len + "</small>";
+        document.querySelector('#result').innerHTML +=  msg;
+        for (i = 0; i < len; i++){
+          if(i==0)
+            msg += "<table class='tabella_elementi' align='center' width='100%'>";
+          msg += "<tr>"+
+                 "<td align=right width=5%>" + results.rows.item(i).id + "</td>" + 
+                 "<td align=center width=90%>" + results.rows.item(i).log + '</td>' +
+                 "<td align=center width=5%><button id='" + results.rows.item(i).id + "' onclick='deleteElement(this.id)' type='button' class='btn btn-danger bottone' > X </button></td>"+
+                 "</tr>";
+                 document.querySelector('#result').innerHTML =  msg;
+          if(i==len-1)
+            msg += "</table>";
+        }
+        records=len;
+      }, null);
+    });
+    if(records==0)
+    {
+      msg = "<p>Tabella <b>" + table + "</b> vuota! - Record trovati: " + records + "</p>";
+      document.querySelector('#result').innerHTML =  msg;
+    }
+	}	
+
+  $(document).ready(function() {
+
+    $("#btn_list").click(function(){
+      //alert("click - btn_list");
+      listElement('MESSAGES');
+    });
+
+    $("#btn_insert").click(function(){
+      //alert("click - btn_insert");
+      document.querySelector('#result').innerHTML = "";
+      var stringa = $('#messaggio').val();
+      if (stringa.localeCompare("")==0)
+        alert("Messaggio vuoto!");
+      else
+        insertElement(stringa);
+      listElement('MESSAGES');
+    });
+
+    $("#btn_delete").click(function(){
+      //alert("click - btn_delete");
+      var table='MESSAGES';
+      document.querySelector('#result').innerHTML = "";
+      dropTable(table);
+      listElement(table);
+    });
+
+  });  
+</script>
+		
+</head>
+	
+<body>
+      <!-- content -->
+      <div class="col-xs-12 content">
+
+  <font color=#000>
+    <div class="form-inline" role="form" >
+      <div class="form-group">
+        <input type='text' id='messaggio' name='messaggio' placeholder='Messaggio' class='form-control' required='true' autofocus size='100'>
+      </div>
+      <input id="btn_insert" type="submit" class='btn btn-success' value="+ INSERISCI" >
+    </div>
+    <br>
+    <button id="btn_list" type="button" class='btn btn-primary btn-lg bottone' >
+      <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>LISTA
+    </button>
+    <div id="result" name="result"></div>
+    <br><br>
+    <button id="btn_delete" type="button" class='btn btn-danger btn-lg bottone' >
+      <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true"></span>CANCELLA TUTTO
+    </button>
+  </font>
+      </div>
+
+</body>
+	
+</html>

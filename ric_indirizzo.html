@@ -29,59 +29,11 @@
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
       </button>
-      <!--
-          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-          </button>
-        -->
           </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
           </div>
         </div>
-        <!--
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right" id="menu" >
-            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
-            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
-            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
-            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
-            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
-          </ul>
-          <script>
-            var check_login = localStorage.getItem("login");
-            if (check_login == "ok")
-               $('#bottone_menu').show();
-            else
-               $('#bottone_menu').hide();
-            var check_link = localStorage.getItem("link");
-            if (check_link == "menu")
-            {
-              $( "#H" ).addClass( "active" );
-              $( "#link_home" ).css( "color", "#DE0019");
-            }
-            if (check_link == "indirizzo")
-            {
-              $( "#I" ).addClass( "active" );
-              $( "#link_indirizzo" ).css( "color", "#DE0019");
-            }
-            if (check_link == "elemento")
-            {
-              $( "#P" ).addClass( "active" );
-              $( "#link_elemento" ).css( "color", "#DE0019");
-            }
-            if (check_link == null)
-            {
-              $( "#L" ).addClass( "active" );
-              $( "#btn_logout" ).css( "color", "#DE0019");
-            }
-          </script>
-        </div>
-      </div>
-      -->
     </nav>
     <div class="container-fluid" id="fluido" >
       <div class="row">
@@ -106,11 +58,40 @@
     </div>
 
     <script>
-    function initAutocomplete() {
+    var GTOptions = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function GTSuccess(pos) {
+      var crd = pos.coords;
+      console.log('Your current position is:');
+      console.log('Latitude : ' + crd.latitude);
+      console.log('Longitude: ' + crd.longitude);
+      var x = document.getElementById("demo");
+      x.innerHTML="lat: " + crd.latitude + " - lon: " + crd.longitude;
+    };
+
+    function GTError(err) {
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+      var x = document.getElementById("demo");
+      x.innerHTML='ERROR(' + err.code + '): ' + err.message;
+    };
+
+    function getLocation() 
+    {
+      navigator.geolocation.getCurrentPosition(GTSuccess, GTError, GTOptions);
+    }
+
+    function initAutocomplete(position) 
+    {
+      var x = document.getElementById("demo");
       // Create the search box and link it to the UI element.
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
-      searchBox.addListener('places_changed', function() {
+      searchBox.addListener('places_changed', function() 
+      {
         var places = searchBox.getPlaces();
         if (places.length == 0) {
           return;
@@ -119,13 +100,21 @@
         places.forEach(function(place) {
           console.log("place.name: "+place.name);
           console.log("place.geometry.location: "+place.geometry.location);
+          x.innerHTML=place.name+" - "+place.geometry.location;
+          var lat = place.geometry.location.lat();
+          var lon = place.geometry.location.lng();
+          //console.log("lat: "+lat+" - lon: "+lon);
+          localStorage.setItem("indirizzo",place.name);
+          localStorage.setItem("latitudine",lat);
+          localStorage.setItem("longitudine",lon);
+          var indir = localStorage.getItem("indirizzo");
+          var latit = localStorage.getItem("latitudine");
+          var longi = localStorage.getItem("longitudine");
+          console.log("indir: "+indir+"- latit: "+latit+" - longi: "+longi);
         });
         map.fitBounds(bounds);
       });
     }
-    </script>
-    <script async defer 
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
     </script>
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
       </div> <!-- close div row --> 
@@ -156,43 +145,8 @@
       });
     });
     </script>
-
-<script>
-var x = document.getElementById("demo");
-function getLocation() {
-  console.log("getLocation");
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-function showPosition(position) {
-  var address = '';
-  console.log("showPosition");
-  localStorage.setItem("lat", position.coords.latitude);
-  localStorage.setItem("lon", position.coords.longitude);
-  var geocoder = new google.maps.Geocoder();
-  var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
-  console.log("latlng: "+latlng);
-  geocoder.geocode({'location': latlng}, function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      address = results[1].formatted_address;
-      console.log("Indirizzo: "+address);
-      localStorage.setItem("address", results[1].formatted_address);
-      //console.log("results: "+results[0].formatted_address);
-      //console.log("results: "+results[2].formatted_address);
-      //console.log("results: "+results[3].formatted_address);
-    } 
-    else {
-      window.alert('Geocoder failed due to: ' + status);
-    }
-  });
-        x.innerHTML = "Latitudine: " + localStorage.getItem("lat") +
-        "<br>Longitudine: " + localStorage.getItem("lon") +
-        "<br>Indirizzo: " + localStorage.getItem("address");
-}
-</script>
-
+    <script async defer 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
+    </script>
 </body>
 </html>
