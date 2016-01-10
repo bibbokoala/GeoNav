@@ -147,8 +147,8 @@
       else //è la vecchia showPosition
       {
         console.log("showPosition");
-        localStorage.setItem("lat", position.coords.latitude);
-        localStorage.setItem("lon", position.coords.longitude);
+        localStorage.setItem("latitudine", position.coords.latitude);
+        localStorage.setItem("longitudine", position.coords.longitude);
         var geocoder = new google.maps.Geocoder();
         var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
         console.log("latlng: "+latlng);
@@ -162,8 +162,8 @@
             console.log("results[1]: "+results[1].formatted_address);
             console.log("results[2]: "+results[2].formatted_address);
             console.log("results[3]: "+results[3].formatted_address);
-            x.innerHTML = "Latitudine: " + localStorage.getItem("lat") + "<br>" + 
-                          "Longitudine: " + localStorage.getItem("lon") + "<br>" +
+            x.innerHTML = "Latitudine: " + localStorage.getItem("latitudine") + "<br>" + 
+                          "Longitudine: " + localStorage.getItem("longitudine") + "<br>" +
                           "Indirizzo: " + localStorage.getItem("indirizzo");
             $('#pac-input').val(results[0].formatted_address);
           } 

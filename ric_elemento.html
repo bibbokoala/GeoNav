@@ -138,7 +138,7 @@
 
           <center>
                   <form id="elementoForm">
-                    <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
+                    <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a>
                     <p id="demo"></p>
                     <label id="apparato" class="checkbox form-control-custom text-left">
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
@@ -186,34 +186,82 @@
                     </div><br>
 
     <script>
-    function initAutocomplete() {
-      // Create the search box and link it to the UI element.
-      var input = document.getElementById('pac-input');
-      var searchBox = new google.maps.places.SearchBox(input);
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-        if (places.length == 0) {
-          return;
-        }
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          console.log("place.name: "+place.name);
-          console.log("place.geometry.location: "+place.geometry.location);
-          var x = document.getElementById("demo");
-          x.innerHTML=place.name+" - "+place.geometry.location;
-          var lat = place.geometry.location.lat();
-          var lon = place.geometry.location.lng();
-          //console.log("lat: "+lat+" - lon: "+lon);
-          localStorage.setItem("indirizzo",place.name);
-          localStorage.setItem("latitudine",lat);
-          localStorage.setItem("longitudine",lon);
-          var indir = localStorage.getItem("indirizzo");
-          var latit = localStorage.getItem("latitudine");
-          var longi = localStorage.getItem("longitudine");
-          console.log("indir: "+indir+"- latit: "+latit+" - longi: "+longi);
+    function getLocation() 
+    {
+      var demo = document.getElementById("demo");
+      console.log("getLocation");
+      if (navigator.geolocation) {
+          console.log("CALL initAutocomplete");
+          navigator.geolocation.getCurrentPosition(initAutocomplete);
+          console.log("END OF getCurrentPosition");
+      } else {
+          demo.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function initAutocomplete(position) 
+    {
+      var x = document.getElementById("demo");
+      console.log("initAutocomplete - position: "+position);
+      if (position==undefined) 
+      {
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        searchBox.addListener('places_changed', function() 
+        {
+          var places = searchBox.getPlaces();
+          if (places.length == 0) {
+            return;
+          }
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            console.log("place.name: "+place.name);
+            console.log("place.geometry.location: "+place.geometry.location);
+            x.innerHTML=place.name+" - "+place.geometry.location;
+            var lat = place.geometry.location.lat();
+            var lon = place.geometry.location.lng();
+            //console.log("lat: "+lat+" - lon: "+lon);
+            localStorage.setItem("indirizzo",place.name);
+            localStorage.setItem("latitudine",lat);
+            localStorage.setItem("longitudine",lon);
+            var indir = localStorage.getItem("indirizzo");
+            var latit = localStorage.getItem("latitudine");
+            var longi = localStorage.getItem("longitudine");
+            console.log("indir: "+indir+"- latit: "+latit+" - longi: "+longi);
+          });
+          map.fitBounds(bounds);
         });
-        map.fitBounds(bounds);
-      });
+      }
+      else //è la vecchia showPosition
+      {
+        console.log("showPosition");
+        localStorage.setItem("latitudine", position.coords.latitude);
+        localStorage.setItem("longitudine", position.coords.longitude);
+        var geocoder = new google.maps.Geocoder();
+        var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
+        console.log("latlng: "+latlng);
+        geocoder.geocode({'location': latlng}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) 
+          {
+            var address = results[0].formatted_address;
+            console.log("Indirizzo: "+address);
+            localStorage.setItem("indirizzo", results[0].formatted_address);
+            console.log("results[0]: "+results[0].formatted_address);
+            console.log("results[1]: "+results[1].formatted_address);
+            console.log("results[2]: "+results[2].formatted_address);
+            console.log("results[3]: "+results[3].formatted_address);
+            x.innerHTML = "Latitudine: " + localStorage.getItem("latitudine") + "<br>" + 
+                          "Longitudine: " + localStorage.getItem("longitudine") + "<br>" +
+                          "Indirizzo: " + localStorage.getItem("indirizzo");
+            $('#pac-input').val(results[0].formatted_address);
+          } 
+          else 
+          {
+            x.innerHTML = "Geocoder failed due to: "+ status;
+          }
+        });
+      }
     }
     </script>
     <script async defer 
@@ -259,64 +307,5 @@
        }
     }
     </script>
-
-<!--
-<script>
-var x = document.getElementById("demo");
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-function showPosition(position) {
-    x.innerHTML = "Latitudine: " + position.coords.latitude +
-    "<br>Longitudine: " + position.coords.longitude;
-}
-</script>
--->
-
-<!--
-  <script>
-var x = document.getElementById("demo");
-function getLocation() {
-  console.log("getLocation");
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-function showPosition(position) {
-  var address = '';
-  console.log("showPosition");
-  localStorage.setItem("lat", position.coords.latitude);
-  localStorage.setItem("lon", position.coords.longitude);
-  var geocoder = new google.maps.Geocoder();
-  var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
-  console.log("latlng: "+latlng);
-  geocoder.geocode({'location': latlng}, function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      address = results[1].formatted_address;
-      console.log("Indirizzo: "+address);
-      localStorage.setItem("address", results[1].formatted_address);
-      //console.log("results: "+results[0].formatted_address);
-      //console.log("results: "+results[2].formatted_address);
-      //console.log("results: "+results[3].formatted_address);
-    } 
-    else {
-      window.alert('Geocoder failed due to: ' + status);
-    }
-  });
-        x.innerHTML = "Latitudine: " + localStorage.getItem("lat") +
-        "<br>Longitudine: " + localStorage.getItem("lon") +
-        "<br>Indirizzo: " + localStorage.getItem("address");
-}
-</script>
-    <script async defer 
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=showPosition">
-    </script>
--->
   </body>
 </html>
