@@ -49,6 +49,16 @@
       else
          alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
+    $("#poi_mappa").click(function(){
+      var ind = localStorage.getItem("indirizzo");
+      var lat = localStorage.getItem("latitudine");
+      var lon = localStorage.getItem("longitudine");
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
+      if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
+         call(lat, lon, "vis_mappa.html");
+      else
+         alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+    });
 
   });  
 </script>
@@ -138,7 +148,10 @@
 
           <center>
                   <form id="elementoForm">
-                    <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a>
+                    <a onclick="getLocation()" type="button" class='btn btn-default btn-lg bottone' >
+                    <span class="glyphicon glyphicon-screenshot pull-left" aria-hidden="true"></span>Vuoi usare la tua posizione?
+                    </a>
+                    <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
                     <p id="demo"></p>
                     <label id="apparato" class="checkbox form-control-custom text-left">
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
@@ -270,17 +283,12 @@
 
 
            <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
-                  <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
+              <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
            </button>
-           <!--
-                  <a id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
-                  <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
-                  </a>
-            -->
-                  <br>
-                  <a href="vis_mappa.html" id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
-                  <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa 
-                  </a>
+           <br>
+           <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
+              <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa 
+           </button>
                   </form>
                   <br>
 

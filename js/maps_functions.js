@@ -1,23 +1,21 @@
 function initMap() {
-  var point = {lat: 41.854880, lng: 12.458359};
+
+  var infowindow = new google.maps.InfoWindow();
+  var lat = localStorage.getItem("latitudine");
+  var lon = localStorage.getItem("longitudine");
+  var centerMap = new google.maps.LatLng(lat, lon);
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
-    center: point
+    zoom: 18,
+    center: centerMap
   });
 
-//ciclo  su lista per visualizzare tutti i punti sulla mappa con i relativi contenuti...
-
-  var contentString = '<div id="content">'+
+  function content(poiName){
+    var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">APPARATO</h1>'+
+      '<h1 id="firstHeading" class="firstHeading">' + poiName + '</h1>'+
       '<div id="bodyContent">'+
-      '<p><b>Apparato 123456xy</b> ' +
-      '&egrave; un apparecchio macchinoso, complesso o grandioso oppure un insieme di soggetti singoli quali macchine, organi, persone o idee, che insieme concorrono ad ottenere un unico scopo.</p>'+
-      'Immagine Allegata:<br>'+
-      '<img src="pics/apparato.jpg" alt="..." class="img-thumbnail">'+
-      '<p>Attribution: Uluru, <a href="https://it.wikipedia.org/wiki/Apparato">'+
-      'https://it.wikipedia.org/wiki/Apparato</a> '+
+      '<p><b>' + poiName + '</b> ' +
       '(Ultima visita 22 giugno 2015).</p>'+
         '<a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
         '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
@@ -29,20 +27,33 @@ function initMap() {
         '    </a>'+
       '</div>'+
       '</div>';
+      return(contentString);
+  }
 
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
+  function marker(icon, title, point, content){
+    var marker = new google.maps.Marker({
+      position: point,
+      map: map,
+      icon: 'pics/' + icon,
+      title: title
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(content);
+      infowindow.open(map, this);
+    });
+  }
 
-  var marker = new google.maps.Marker({
-    position: point,
-    map: map,
-    icon: 'pics/apparato.png',
-    title: 'Apparato'
-  });
+//ciclo  su lista per visualizzare tutti i punti sulla mappa con i relativi contenuti...
+  //VISUALIZZA LA LISTA PRECEDENTEMENTE SALVATA dalle pagine: ric_elemento e ric_indirizzo
+  var lista = localStorage.getItem("lista");
+  var arr = JSON.parse(lista);
+  var i;
+  var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
+  for(i = 0; i < arr.length; i++) {
+    console.log(i + "" + arr[i].poiName);
+    var contenuto = content(arr[i].poiName);
+    var LatLng = new google.maps.LatLng(arr[i].latitude, arr[i].longitude);
+    marker(poi_images[arr[i].poiType], arr[i].poiName, LatLng, contenuto);
+  }
 
-  marker.addListener('click', function() {
-    infowindow.open(map, marker);
-  });
-  console.log("initMap");
 }
