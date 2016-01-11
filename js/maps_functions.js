@@ -9,16 +9,6 @@ function initMap() {
     center: centerMap
   });
 
-  function NavigaVerso(lat, lon) {
-    address = lat + "," + lon ;
-    window.plugins.webintent.startActivity({
-      action: window.plugins.webintent.ACTION_VIEW,
-      url: 'geo:0,0?q=' + address}, 
-      function() {alert('Indirizzo inviato al Navigatore...')}, 
-      function() {alert('Fallita apertura Navigatore!')}
-    );            
-  }
-
   function content(poiName, lat, lon){
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
@@ -33,7 +23,7 @@ function initMap() {
         '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Info'+
         '    </a>'+
-        '    <button onclick="NavigaVerso(lat, lon);" class="btn btn-default btn-sm pull-right" >'+
+        '    <button onclick="NavigaVerso('+lat+', '+lon+')" class="btn btn-default btn-sm pull-right" >'+
         '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Naviga'+
         '    </button>'+
