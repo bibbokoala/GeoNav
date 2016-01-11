@@ -74,7 +74,7 @@
           </script>  
 <script>
   function testWebIntent() {
-       address = "1600+Amphitheatre+Parkway%2C+CA" ;
+       address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;
        window.plugins.webintent.startActivity({
           action: window.plugins.webintent.ACTION_VIEW,
           url: 'geo:0,0?q=' + address}, 
