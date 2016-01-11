@@ -1,3 +1,13 @@
+function NavigaVerso(lat, lon) {
+  address = lat + "," + lon ;
+  window.plugins.webintent.startActivity({
+    action: window.plugins.webintent.ACTION_VIEW,
+    url: 'geo:0,0?q=' + address}, 
+    function() {alert('Indirizzo inviato al Navigatore...')}, 
+    function() {alert('Fallita apertura Navigatore!')}
+  );            
+}
+
 function initMap() {
 
   var infowindow = new google.maps.InfoWindow();
@@ -9,7 +19,7 @@ function initMap() {
     center: centerMap
   });
 
-  function content(poiName){
+  function content(poiName, lat, lon){
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
@@ -21,7 +31,7 @@ function initMap() {
         '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Info'+
         '    </a>'+
-        '    <a class="btn btn-default btn-sm pull-right" >'+
+        '    <a onclick="NavigaVerso(lat, lon)" class="btn btn-default btn-sm pull-right" >'+
         '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Naviga'+
         '    </a>'+
@@ -51,7 +61,7 @@ function initMap() {
   var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
   for(i = 0; i < arr.length; i++) {
     console.log(i + "" + arr[i].poiName);
-    var contenuto = content(arr[i].poiName);
+    var contenuto = content(arr[i].poiName,arr[i].latitude,arr[i].longitude);
     var LatLng = new google.maps.LatLng(arr[i].latitude, arr[i].longitude);
     marker(poi_images[arr[i].poiType], arr[i].poiName, LatLng, contenuto);
   }
