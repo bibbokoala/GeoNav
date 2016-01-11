@@ -71,19 +71,19 @@
           document.write("<tr><td>LATITUDINE: </td><td>" + localStorage.getItem("latitudine") + "</td></tr>");
           document.write("<tr><td>LONGITUDINE: </td><td>" + localStorage.getItem("longitudine") + "</td></tr>");
           document.write("</TABLE>");
-          </script>  
-<script>
-  function testWebIntent() {
-       address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;
-       window.plugins.webintent.startActivity({
-          action: window.plugins.webintent.ACTION_VIEW,
-          url: 'geo:0,0?q=' + address}, 
-          function() {alert('success')}, 
-          function() {alert('Failed to open URL via Android Intent')}
-      );            
-  }
-</script>
-<button onclick='testWebIntent()'>Test WebIntent</button>
+          function callNavigator() {
+            address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;
+            window.plugins.webintent.startActivity({
+              action: window.plugins.webintent.ACTION_VIEW,
+              url: 'geo:0,0?q=' + address}, 
+              function() {alert('Indirizzo inviato al Navigatore...')}, 
+              function() {alert('Fallita apertura Navigatore!')}
+            );            
+          }
+          </script>
+          <button onclick='callNavigator()' type="button" class="btn btn-default btn-lg bottone" > 
+            <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Naviga verso indirizzo...
+          </button>
           <!--
           <center>
           <form id="impostaAjaxForm" >
