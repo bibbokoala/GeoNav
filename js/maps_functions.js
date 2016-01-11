@@ -1,13 +1,3 @@
-function NavigaVerso(lat, lon) {
-  address = lat + "," + lon ;
-  window.plugins.webintent.startActivity({
-    action: window.plugins.webintent.ACTION_VIEW,
-    url: 'geo:0,0?q=' + address}, 
-    function() {alert('Indirizzo inviato al Navigatore...')}, 
-    function() {alert('Fallita apertura Navigatore!')}
-  );            
-}
-
 function initMap() {
 
   var infowindow = new google.maps.InfoWindow();
@@ -19,22 +9,34 @@ function initMap() {
     center: centerMap
   });
 
+  function NavigaVerso(lat, lon) {
+    address = lat + "," + lon ;
+    window.plugins.webintent.startActivity({
+      action: window.plugins.webintent.ACTION_VIEW,
+      url: 'geo:0,0?q=' + address}, 
+      function() {alert('Indirizzo inviato al Navigatore...')}, 
+      function() {alert('Fallita apertura Navigatore!')}
+    );            
+  }
+
   function content(poiName, lat, lon){
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
       '<h1 id="firstHeading" class="firstHeading">' + poiName + '</h1>'+
       '<div id="bodyContent">'+
-      '<p><b>' + poiName + '</b> ' +
+      '<p><b>' + poiName + '</b><br>' +
+      'Lat: ' + lat + '<br>' +
+      'Lon: ' + lon + '<br>' +
       '(Ultima visita 22 giugno 2015).</p>'+
         '<a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
         '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Info'+
         '    </a>'+
-        '    <a onclick="NavigaVerso(lat, lon)" class="btn btn-default btn-sm pull-right" >'+
+        '    <button onclick="NavigaVerso(lat, lon);" class="btn btn-default btn-sm pull-right" >'+
         '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Naviga'+
-        '    </a>'+
+        '    </button>'+
       '</div>'+
       '</div>';
       return(contentString);
@@ -61,7 +63,7 @@ function initMap() {
   var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
   for(i = 0; i < arr.length; i++) {
     console.log(i + "" + arr[i].poiName);
-    var contenuto = content(arr[i].poiName,arr[i].latitude,arr[i].longitude);
+    var contenuto = content(arr[i].poiName, arr[i].latitude, arr[i].longitude);
     var LatLng = new google.maps.LatLng(arr[i].latitude, arr[i].longitude);
     marker(poi_images[arr[i].poiType], arr[i].poiName, LatLng, contenuto);
   }
