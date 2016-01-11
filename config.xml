@@ -43,6 +43,10 @@
     -->
 
     <!-- Plugins -->
+    <!-- PLUGIN PER LANCIARE IL NAVIGATORE:
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="2.1.0" source="pgb" />
+     -->
+     <gap:plugin name="net.tunts.webintent" />
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.battery-status" />
