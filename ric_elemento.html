@@ -17,6 +17,30 @@
    <script src="js/menu.js"></script>
 <script>
   $(document).ready(function() {
+    function getPoiType()
+    {
+      var formDataSer = $("#elementoForm").serialize();
+      //devo valorizzare la stringa poiType per la condizione di ricerca dei poi...
+      var poiType="";
+      var tipologia = {ppu:1, apparato:2, bts:3, armadio:4, terra:5, aps:6, sede:7, distributore:8, sito:9, palo:10};
+      if (formDataSer.length>1)
+      {   
+        var poiType="";
+        var res = formDataSer.split("&");
+        for (i=0; i<res.length;i++)
+        {
+          poi = res[i].split("=");
+          poi_index = tipologia[poi[0]];
+          if (i==(res.length-1))
+            poiType += poi_index;
+          else
+            poiType += poi_index + ",";
+        }
+        console.log("poiType" + poiType);
+      }
+      return(poiType);
+    }
+
     function saveListForPage(response, page) {
       var lista = response;
       localStorage.setItem("link", "poi");
@@ -24,10 +48,10 @@
       localStorage.setItem("lista", lista);
       window.location = page;
     }
-    function call(lat, lon, page){
+    function call(lat, lon, page, poiType){
       var xmlhttp = new XMLHttpRequest();
       //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
-      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType=&range=50";
+      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range=50";
       //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
       xmlhttp.onreadystatechange=function() {
           //DEBUG alert("onreadystatechange");
@@ -40,22 +64,24 @@
       xmlhttp.send();
     }
     $("#poi_lista").click(function(){
+      var poiType = getPoiType();
       var ind = localStorage.getItem("indirizzo");
       var lat = localStorage.getItem("latitudine");
       var lon = localStorage.getItem("longitudine");
-      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + poiType);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
-         call(lat, lon, "vis_lista.html");
+         call(lat, lon, "vis_lista.html", poiType);
       else
          alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
     $("#poi_mappa").click(function(){
+      var poiType = getPoiType();
       var ind = localStorage.getItem("indirizzo");
       var lat = localStorage.getItem("latitudine");
       var lon = localStorage.getItem("longitudine");
-      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon);
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + poiType);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
-         call(lat, lon, "vis_mappa.html");
+         call(lat, lon, "vis_mappa.html", poiType);
       else
          alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
@@ -307,12 +333,16 @@
     </script>
     <script>
     function statecheck(x, _this) {
-       if (_this.checked) {
-          $('#'+x).css('background-color','#bff0a1');
-       } 
-       else  {
-          $('#'+x).css('background-color','#ffffff');
-       }
+      var tipologia = {ppu:1, apparato:2, bts:3, armadio:4, terra:5, aps:6, sede:7, distributore:8, sito:9, palo:10};
+      //document.getElementById("demo").innerHTML = person["firstName"];
+      if (_this.checked) {
+        $('#'+x).css('background-color','#bff0a1');
+        console.log(tipologia[x] + ") " + x + " cecked!");
+      } 
+      else  {
+        $('#'+x).css('background-color','#ffffff');
+        console.log(tipologia[x] + ") " + x + " NOT ceck!");
+      }
     }
     </script>
   </body>
