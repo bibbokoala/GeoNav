@@ -9,16 +9,22 @@ function initMap() {
     center: centerMap
   });
 
-  function content(poiName, lat, lon){
+  function content(poiType, poiName, address,  lat, lon, distance, url1, url2, url3){
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
       '<h1 id="firstHeading" class="firstHeading">' + poiName + '</h1>'+
       '<div id="bodyContent">'+
       '<p><b>' + poiName + '</b><br>' +
-      'Lat: ' + lat + '<br>' +
-      'Lon: ' + lon + '<br>' +
-      '(Ultima visita 22 giugno 2015).</p>'+
+      'Tipo: ' + poiType + '<br>' +
+      'indirizzo: ' + address + '<br>' +
+      'latitudine: ' + lat + '<br>' +
+      'longitudine: ' + lon + '<br>' +
+      'distanza: ' + distance + '<br>' +
+      'url1: ' + url1 + '<br>' +
+      'url2: ' + url2 + '<br>' +
+      'url3: ' + url3 + '<br>' +
+      '</p>'+
         '<a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
         '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
         '    &nbsp;&nbsp;Info'+
@@ -53,7 +59,7 @@ function initMap() {
   var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
   for(i = 0; i < arr.length; i++) {
     console.log(i + "" + arr[i].poiName);
-    var contenuto = content(arr[i].poiName, arr[i].latitude, arr[i].longitude);
+    var contenuto = content(arr[i].poiType, arr[i].poiName, arr[i].address, arr[i].latitude, arr[i].longitude, arr[i].distance, arr[i].url1, arr[i].url2, arr[i].url3)
     var LatLng = new google.maps.LatLng(arr[i].latitude, arr[i].longitude);
     marker(poi_images[arr[i].poiType], arr[i].poiName, LatLng, contenuto);
   }
