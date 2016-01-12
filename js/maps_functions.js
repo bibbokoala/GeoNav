@@ -13,25 +13,20 @@ function initMap() {
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">' + poiName + '</h1>'+
+      '<h4 id="firstHeading" class="firstHeading">' + poiName + '</h4>'+
       '<div id="bodyContent">'+
-      '<p><b>' + poiName + '</b><br>' +
+      '<p style="color: #000;" ><b>' + poiName + '</b><br>' +
       'Tipo: ' + poiType + '<br>' +
       'indirizzo: ' + address + '<br>' +
-      'latitudine: ' + lat + '<br>' +
-      'longitudine: ' + lon + '<br>' +
-      'distanza: ' + distance + '<br>' +
+      'latitudine: ' + lat + ' - longitudine: ' + lon + ' - distanza: ' + distance + '<br>' +
+      '<u>Immagini allegate:</u><br>' +
       'url1: ' + url1 + '<br>' +
       'url2: ' + url2 + '<br>' +
       'url3: ' + url3 + '<br>' +
       '</p>'+
-        '<a class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#myModal" >'+
-        '    <span class="glyphicon glyphicon-info-sign pull-left" aria-hidden="true"></span>'+
-        '    &nbsp;&nbsp;Info'+
-        '    </a>'+
-        '    <button onclick="NavigaVerso('+lat+', '+lon+')" class="btn btn-default btn-sm pull-right" >'+
+        '    <button onclick="NavigaVerso('+lat+', '+lon+')" class="btn btn-default btn-lg bottone" >'+
         '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
-        '    &nbsp;&nbsp;Naviga'+
+        '    &nbsp;&nbsp;Naviga Verso'+
         '    </button>'+
       '</div>'+
       '</div>';
