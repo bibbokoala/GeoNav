@@ -46,7 +46,8 @@
     <!-- PLUGIN PER LANCIARE IL NAVIGATORE:
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="2.1.0" source="pgb" />
      -->
-     <gap:plugin name="net.tunts.webintent" />
+    <!-- plugin per utilizzare le webintent - richieste ad applicazioni esterne -->
+    <gap:plugin name="net.tunts.webintent" />
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.battery-status" />
@@ -128,12 +129,18 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+<!-- parametri per scegliere su quale piattaforma compilare:
+<platform name="ios" />
+<platform name="android" />
+<platform name="winphone" />
+-->
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
+    <!--
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-
+    -->
 </widget>
