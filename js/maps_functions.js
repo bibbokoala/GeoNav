@@ -10,6 +10,9 @@ function initMap() {
   });
 
   function content(poiType, poiName, address,  lat, lon, distance, url1, url2, url3){
+    var image="";
+    if (url1.length<3)
+       var image = '<img src="./pics/nia.png" border=0 width=50% />';
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
@@ -20,9 +23,10 @@ function initMap() {
       'indirizzo: ' + address + '<br>' +
       'latitudine: ' + lat + ' - longitudine: ' + lon + ' - distanza: ' + distance + '<br>' +
       '<u>Immagini allegate:</u><br>' +
-      'url1: ' + url1 + '<br>' +
-      'url2: ' + url2 + '<br>' +
-      'url3: ' + url3 + '<br>' +
+      image + '<br>' +
+      //'url1: ' + url1 + '<br>' +
+      //'url2: ' + url2 + '<br>' +
+      //'url3: ' + url3 + '<br>' +
       '</p>'+
         '    <button onclick="NavigaVerso('+lat+', '+lon+')" class="btn btn-default btn-lg bottone" >'+
         '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>'+
