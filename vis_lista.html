@@ -40,16 +40,53 @@
                   '<tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>\n';
       for(i = 0; i < arr.length; i++) {
         var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
+        var image="";
+        if (arr[i].url1.length<3)
+          image = '<img src="./pics/nia.png" border=0 width=50% />';
+        else
+          image = '<img src="' + arr[i].url1 + '" border=0 width=50% />';
         lista += '<tr><td><center><img src="pics/'+poi_images[arr[i].poiType]+'" /></center></td>\n'+
                  '    <td>' + arr[i].poiName + '</td>\n'+
                  '    <td>' + arr[i].address + '</td>\n'+
                  '    <td>' + arr[i].distance + '</td>\n'+
-                 '    <td><font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font></td>\n'+
+                 '    <td width="5%"">'+
+                 '        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal" '+
+                 '          data-id="' + i + '" ' + '" >'+
+                 '          <font size=4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></font>'+
+                 '        </button>'+
+                 '    </td>\n'+
                  '</tr>\n';
       }
       lista += '</table>\n';
       document.getElementById("result").innerHTML = lista;
+
+      $('#myModal').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr('data-id');
+        var response = localStorage.getItem("lista");
+        var arr = JSON.parse(response);
+        $('#modal-title')[0].innerHTML = arr[id].poiName;
+        var image="";
+        if (arr[id].url1.length<3)
+          image = '<img src="./pics/nia.png" border=0 width=50% />';
+        else
+          image = '<img src="'+arr[id].url1+'" border=0 width=50% />';
+        var content = '<p style="color: #000;" ><b>' + arr[id].poiName + '</b><br>' +
+                      'Tipo: ' + arr[id].poiType + '<br>' +
+                      'indirizzo: ' + arr[id].address + '<br>' +
+                      'latitudine: ' + arr[id].latitude + ' - longitudine: ' + arr[id].longitude + ' - distanza: ' + arr[id].distance + '<br>' +
+                      '<u>Immagini allegate:</u><br>' +
+                      image + '<br>' +
+                      //'url1: ' + url1 + '<br>' +
+                      //'url2: ' + url2 + '<br>' +
+                      //'url3: ' + url3 + '<br>' +
+                      '</p>';
+        $('#modal-body')[0].innerHTML =content;
+        $('#modal-footer')[0].innerHTML = '<button onclick="NavigaVerso('+arr[id].latitude+', '+arr[id].longitude+')" class="btn btn-default btn-lg bottone " >'+
+        '    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>&nbsp;&nbsp;Naviga Verso</button>';
+      });
+
   });  
+
 </script>
 </head>
 <body>
@@ -109,5 +146,35 @@
        }
     }
     </script>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modal-title"></h4>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<script>
+  function NavigaVerso(lat, lon) {
+    address = lat + "," + lon ;
+    //alert("address: "+address);
+    console.log("address: "+address);
+    window.plugins.webintent.startActivity({
+      action: window.plugins.webintent.ACTION_VIEW,
+      url: 'geo:0,0?q=' + address}, 
+      function() {alert('Indirizzo inviato al Navigatore...')}, 
+      function() {alert('Fallita apertura Navigatore!')}
+    );           
+  }
+</script>
+
   </body>
 </html>

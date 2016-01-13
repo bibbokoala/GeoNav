@@ -11,8 +11,10 @@ function initMap() {
 
   function content(poiType, poiName, address,  lat, lon, distance, url1, url2, url3){
     var image="";
-    if (url1.length<3)
-       var image = '<img src="./pics/nia.png" border=0 width=50% />';
+      if (url1.length<3)
+        image = '<img src="./pics/nia.png" border=0 width=50% />';
+      else
+        image = '<img src="'+url1+'" border=0 width=50% />';
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
