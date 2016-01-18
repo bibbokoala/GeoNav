@@ -67,7 +67,7 @@
     }).resize();
     */
 
-    var hm = window.screen.availHeight - 250;
+    var hm = window.screen.availHeight - 370;
     console.log("footer_menu - hm: " +hm);
     var padding_top = hm + "px";
     console.log("footer_menu - padding-top: " +padding_top);
