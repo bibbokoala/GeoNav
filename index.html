@@ -2,12 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <link href="css/bootstrap.min.css" rel="stylesheet">
+   <!-- CSS FOR TOGGLE LEFT MENU -->
+     <link href='http://fonts.googleapis.com/css?family=Exo+2:400,600,300,900' rel='stylesheet' type='text/css'>
+     <link href="css/navbar-static-top.css" rel="stylesheet">
+     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   <!-- END CSS FOR TOGGLE LEFT MENU -->
    <link href="css/custom.css" rel="stylesheet">
-   <style>
-   body {
-     padding-top: 70px;
-   }
-   </style>
 <script src="phonegap.js"></script>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
@@ -60,8 +60,8 @@ $.fn.serializeObject = function()
     localStorage.setItem("login", data.auth);
     if (data.auth.localeCompare("OK")==0)
     {
-       localStorage.setItem("link", "menu");
-       window.location = "menu.html";
+       localStorage.setItem("link", "poi");
+       window.location = "ric_elemento.html";
     }
     else
     {
@@ -84,8 +84,8 @@ $.fn.serializeObject = function()
       var auth=localStorage.getItem("auth");
       if (auth.localeCompare("OK")==0)
       {
-        localStorage.setItem("link", "menu");
-        window.location = "menu.html";
+        localStorage.setItem("link", "poi");
+        window.location = "ric_elemento.html";
       }
     }
 
@@ -125,6 +125,11 @@ $.fn.serializeObject = function()
           <!-- solo per la pagina index.html NON ESISTE IL MENU ed il logo ha un margine di 40 pixel -->
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" style="margin-left:40px;" />
+
+            <a id="btn_exit" type="button" class='.navbar-toggle pull-right' >
+               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CLOSE&nbsp;
+            </a>
+
           </div>
         </div>
       </div>

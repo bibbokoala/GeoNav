@@ -143,11 +143,11 @@
           </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
-
+            <!--
             <a id="btn_exit" type="button" class='.navbar-toggle pull-right' >
                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CLOSE&nbsp;
             </a>
-
+            -->
           </div>
 
         </div>
@@ -210,11 +210,19 @@
 
           <center>
                   <form id="elementoForm">
-                    <a onclick="getLocation()" type="button" class='btn btn-default btn-lg bottone' >
-                    <span class="glyphicon glyphicon-screenshot pull-left" aria-hidden="true"></span>Vuoi usare la tua posizione?
+                   <table border=0 width="100%"><tr><td width="80%">
+                    <div class="input-group">
+                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
+                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1" required="required">
+                    </div>
+                   </td>
+                   <td><a onclick="getLocation()" type="button" class='btn btn-default btn-lg bottone' >
+                    <span class="glyphicon glyphicon-screenshot pull-left" aria-hidden="true"></span>QUI
                     </a>
+                   </td></tr></table>
                     <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
                     <p id="demo"></p>
+                    <table border=0 width="100%"><tr><td width="50%">
                     <label id="apparato" class="checkbox form-control-custom text-left">
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" />
@@ -235,6 +243,11 @@
                       <input type="checkbox" name="distributore" onchange="statecheck('distributore', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distributore<img src="pics/distributore.png" class="pull-right" />
                     </label>
+                  </td><td>
+                    <label id="palo" class="checkbox form-control-custom text-left">
+                      <input type="checkbox" name="palo" onchange="statecheck('palo', this)" style="margin-left:1px;margin-top:5px;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Palo<img src="pics/palo.png" class="pull-right" />
+                    </label>
                     <label id="ppu" class="checkbox form-control-custom text-left">
                       <input type="checkbox" name="ppu" onchange="statecheck('ppu', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PPU<img src="pics/ppu.png" class="pull-right" />
@@ -251,14 +264,11 @@
                       <input type="checkbox" name="terra" onchange="statecheck('terra', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" />
                     </label>
+                  </td></tr></table>
                   <!--
                   <input type="text" name="poi_vicino" id="poi_vicino" class="form-control-custom" required=true placeholder="POI vicino a indirizzo..." /><br>
                     <div id="result"></div> 
                   -->
-                    <div class="input-group">
-                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
-                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1" required="required">
-                    </div><br>
 
     <script>
     function getLocation() 

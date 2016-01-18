@@ -10,6 +10,7 @@ function initMap() {
   });
 
   function content(poiType, poiName, address,  lat, lon, distance, url1, url2, url3){
+    var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
     var image="";
       if (url1.length<3)
         image = '<img src="./pics/nia.png" border=0 width=50% />';
@@ -20,8 +21,9 @@ function initMap() {
       '</div>'+
       '<h4 id="firstHeading" class="firstHeading">' + poiName + '</h4>'+
       '<div id="bodyContent">'+
-      '<p style="color: #000;" ><b>' + poiName + '</b><br>' +
-      'Tipo: ' + poiType + '<br>' +
+      '<img src="pics/'+poi_images[poiType]+'" /><br>' +
+      '<p style="color: #000;" >'+
+      '<b>' + poiName + '</b><br>' +
       'indirizzo: ' + address + '<br>' +
       'latitudine: ' + lat + ' - longitudine: ' + lon + ' - distanza: ' + distance + '<br>' +
       '<u>Immagini allegate:</u><br>' +
@@ -60,7 +62,10 @@ function initMap() {
   var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
   for(i = 0; i < arr.length; i++) {
     console.log(i + "" + arr[i].poiName);
-    var contenuto = content(arr[i].poiType, arr[i].poiName, arr[i].address, arr[i].latitude, arr[i].longitude, arr[i].distance, arr[i].url1, arr[i].url2, arr[i].url3)
+    // tolta la vitgola ai metri...
+    var metri = arr[i].distance.split(".")[0]+" mt";
+    //var contenuto = content(arr[i].poiType, arr[i].poiName, arr[i].address, arr[i].latitude, arr[i].longitude, arr[i].distance, arr[i].url1, arr[i].url2, arr[i].url3)
+    var contenuto = content(arr[i].poiType, arr[i].poiName, arr[i].address, arr[i].latitude, arr[i].longitude, metri, arr[i].url1, arr[i].url2, arr[i].url3);
     var LatLng = new google.maps.LatLng(arr[i].latitude, arr[i].longitude);
     marker(poi_images[arr[i].poiType], arr[i].poiName, LatLng, contenuto);
   }

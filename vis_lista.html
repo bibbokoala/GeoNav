@@ -40,15 +40,11 @@
                   '<tr><th>Tipo</th><th>Nome elemento</th><th>Indirizzo</th><th>Distanza</th><th> &nbsp; </th></tr>\n';
       for(i = 0; i < arr.length; i++) {
         var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
-        var image="";
-        if (arr[i].url1.length<3)
-          image = '<img src="./pics/nia.png" border=0 width=50% />';
-        else
-          image = '<img src="' + arr[i].url1 + '" border=0 width=50% />';
+        var metri = arr[i].distance.split(".")[0] + " mt";
         lista += '<tr><td><center><img src="pics/'+poi_images[arr[i].poiType]+'" /></center></td>\n'+
                  '    <td>' + arr[i].poiName + '</td>\n'+
                  '    <td>' + arr[i].address + '</td>\n'+
-                 '    <td>' + arr[i].distance + '</td>\n'+
+                 '    <td>' + metri + '</td>\n'+
                  '    <td width="5%"">'+
                  '        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal" '+
                  '          data-id="' + i + '" ' + '" >'+
@@ -57,6 +53,8 @@
                  '    </td>\n'+
                  '</tr>\n';
       }
+      if (i==0)
+         lista += '<tr><td colspan=5>NESSUN ELEMENTO TROVATO.</td></tr>';
       lista += '</table>\n';
       document.getElementById("result").innerHTML = lista;
 
@@ -65,15 +63,18 @@
         var response = localStorage.getItem("lista");
         var arr = JSON.parse(response);
         $('#modal-title')[0].innerHTML = arr[id].poiName;
+        var poi_images = ["", "ppu.png", "apparato.png", "bts.png", "armadio.png", "terra.png", "aps.png", "sede.png", "distributore.png", "sito.png", "palo.png"]; 
         var image="";
         if (arr[id].url1.length<3)
           image = '<img src="./pics/nia.png" border=0 width=50% />';
         else
           image = '<img src="'+arr[id].url1+'" border=0 width=50% />';
-        var content = '<p style="color: #000;" ><b>' + arr[id].poiName + '</b><br>' +
-                      'Tipo: ' + arr[id].poiType + '<br>' +
+        var metri = arr[id].distance.split(".")[0] + " mt";
+        var content = '<p style="color: #000;" >'+
+                      '<img src="pics/'+poi_images[arr[id].poiType]+'" /><br>' +
+                      '<b>' + arr[id].poiName + '</b><br>' +
                       'indirizzo: ' + arr[id].address + '<br>' +
-                      'latitudine: ' + arr[id].latitude + ' - longitudine: ' + arr[id].longitude + ' - distanza: ' + arr[id].distance + '<br>' +
+                      'latitudine: ' + arr[id].latitude + ' - longitudine: ' + arr[id].longitude + '<br>distanza: ' + metri + '<br>' +
                       '<u>Immagini allegate:</u><br>' +
                       image + '<br>' +
                       //'url1: ' + url1 + '<br>' +
@@ -105,8 +106,8 @@
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
 
-            <a id="btn_exit" type="button" class='.navbar-toggle pull-right' >
-               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CLOSE&nbsp;
+            <a href="vis_mappa.html" type="button" class='.navbar-toggle pull-right' >
+               <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> MAPPA&nbsp;
             </a>
 
           </div>

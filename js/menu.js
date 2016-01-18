@@ -9,12 +9,13 @@
 
   $(document).ready(function() {
 
-    // leggo la versione del SOFTWARE:
+    /* leggo la versione del SOFTWARE:
     $.get("config.xml", function(data){
-      //alert($(data).find('widget').attr('version'));
       var version = $(data).find('widget').attr('version');
       localStorage.setItem("version",version);
     });
+    */
+    localStorage.setItem("version","2.1.1");
 
     $("#link_home").click(function(){
       //alert("link_home");
