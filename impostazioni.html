@@ -72,8 +72,12 @@
           document.write("<tr><td>LONGITUDINE: </td><td>" + localStorage.getItem("longitudine") + "</td></tr>");
           console.log("window.screen.availHeight: " + window.screen.availHeight);
           console.log("window.screen.availWidth: " + window.screen.availWidth);
-          document.write("<tr><td>RISOLUZIONE SCHERMO: </td><td>" + window.screen.availWidth + " - " + window.screen.availHeight + "</td></tr>");
-          document.write("<tr><td>MENU PADDING_TOP: </td><td>" + localStorage.getItem("padding_menu") + "</td></tr>");
+          var x = "Screen Height: " + screen.availHeight + "px";
+          var y = "Window Height: " + screen.height + "px";
+          var h = "InnerHeight: " + window.innerHeight + "px";
+          document.write("<tr><td>RISOLUZIONE: </td><td>" + x + " - " + y + " - " + h + "</td></tr>");
+          //document.write("<tr><td>RISOLUZIONE SCHERMO: </td><td>" + window.screen.availWidth + " - " + window.screen.availHeight + "</td></tr>");
+          //document.write("<tr><td>MENU PADDING_TOP: </td><td>" + localStorage.getItem("padding_menu") + "</td></tr>");
           document.write("</TABLE>");
           function callNavigator() {
             address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;

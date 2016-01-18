@@ -67,12 +67,11 @@
     }).resize();
     */
 
-    var hm = window.screen.availHeight - 500;
+    //var hm = window.screen.availHeight - 500;
     //var hm = $(window).height() - 370 ;
+    var hm = window.innerHeight -270;
     console.log("footer_menu - hm: " +hm);
     var padding_top = hm + "px";
-    console.log("footer_menu - padding-top: " +padding_top);
-    localStorage.setItem("padding_menu", padding_top);
     $( "#footer_menu" ).css( "padding-top", padding_top );
 
   });  
