@@ -10,7 +10,6 @@
    <!-- END CSS FOR TOGGLE LEFT MENU -->
 
    <link href="css/custom.css" rel="stylesheet">
-
 <script src="phonegap.js"></script>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
@@ -86,12 +85,20 @@
          alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
 
+/* spostato in menu.js
+    var hm = window.screen.availHeight - 250;
+    console.log("footer_menu - hm: " +hm);
+    var padding_top = hm + "px";
+    console.log("footer_menu - padding-top: " +padding_top);
+    $( "#footer_menu" ).css( "padding-top", padding_top );
+*/
+
   });  
 </script>
 </head>
 <body>
       <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top" style="background-color:#DE0019;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#DE0019;">
       <div class="container">
         <div class="navbar-header">
           <div id="bottone_menu" >
@@ -161,12 +168,12 @@
       <!-- sidebar LEFT MENU -->      <!-- sidebar -->
       <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
           <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
-            <li> <a href="menu.html"> <i class="fa fa-home"></i> Home</a></li>
-            <li><a href="ric_indirizzo.html"> <i class="fa fa-search"></i> CERCA PER INDIRIZZO</a></li>
             <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
-            <li><a href="#"><br><br><br><br><br><br></a></li>
-            <li><a href="impostazioni.html"> <i class="fa fa-cogs"></i> Impostazioni</a></li>
-            <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
+          <ul id="footer_menu" data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+              <li><p>Funzioni:</p></li>
+              <li><a href="impostazioni.html"> <i class="fa fa-info-circle"></i> Info</a></li>
+              <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
           </ul>
       </div>
       <!-- content -->

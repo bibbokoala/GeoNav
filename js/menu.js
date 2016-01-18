@@ -48,4 +48,29 @@
       }
     }
 
+    if (localStorage.getItem("matricola") == null) {
+       console.log("matricola is null! BACK TO INDEX!!!");
+       window.location.href = 'index.html';
+       //document.location.reload(true);
+    }
+
+    //RISOLUZIONE DELLO SCHERMO!
+    //window.screen.availHeight
+    //window.screen.availWidth
+
+    /* DIMENSIONI FINESTRA BROWSER
+    $(window).resize(function() {
+       var w = $(window).width();
+       var h = $(window).height();
+       var string ="resolution :"+ w +" - " + h;
+       console.log(string);
+    }).resize();
+    */
+
+    var hm = window.screen.availHeight - 250;
+    console.log("footer_menu - hm: " +hm);
+    var padding_top = hm + "px";
+    console.log("footer_menu - padding-top: " +padding_top);
+    $( "#footer_menu" ).css( "padding-top", padding_top );
+
   });  
