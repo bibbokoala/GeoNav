@@ -46,6 +46,11 @@
           </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
+
+            <a id="btn_exit" type="button" class='.navbar-toggle pull-right' >
+               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CLOSE&nbsp;
+            </a>
+
           </div>
         </div>
     </nav>
@@ -75,9 +80,10 @@
           var x = "Screen Height: " + screen.availHeight + "px";
           var y = "Window Height: " + screen.height + "px";
           var h = "InnerHeight: " + window.innerHeight + "px";
-          document.write("<tr><td>RISOLUZIONE: </td><td>" + x + " - " + y + " - " + h + "</td></tr>");
-          //document.write("<tr><td>RISOLUZIONE SCHERMO: </td><td>" + window.screen.availWidth + " - " + window.screen.availHeight + "</td></tr>");
-          //document.write("<tr><td>MENU PADDING_TOP: </td><td>" + localStorage.getItem("padding_menu") + "</td></tr>");
+          //document.write("<tr><td>RISOLUZIONE: </td><td>" + x + " - " + y + " - " + h + "</td></tr>");
+          document.write("<tr><td>RISOLUZIONE SCHERMO: </td><td>" + window.screen.availWidth + " - " + window.screen.availHeight + "</td></tr>");
+          document.write("<tr><td>VERSIONE SOFTWARE: </td><td>" + localStorage.getItem("version") +  "</td></tr>");
+
           document.write("</TABLE>");
           function callNavigator() {
             address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;
