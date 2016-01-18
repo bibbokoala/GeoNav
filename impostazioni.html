@@ -73,6 +73,7 @@
           console.log("window.screen.availHeight: " + window.screen.availHeight);
           console.log("window.screen.availWidth: " + window.screen.availWidth);
           document.write("<tr><td>RISOLUZIONE SCHERMO: </td><td>" + window.screen.availWidth + " - " + window.screen.availHeight + "</td></tr>");
+          document.write("<tr><td>MENU PADDING_TOP: </td><td>" + localStorage.getItem("padding_menu") + "</td></tr>");
           document.write("</TABLE>");
           function callNavigator() {
             address = localStorage.getItem("latitudine") + "," + localStorage.getItem("longitudine") ;
