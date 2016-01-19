@@ -242,44 +242,44 @@
                     <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
                     <p id="demo"></p>
                     <table border=0 width="100%"><tr><td width="50%">
-                    <label id="apparato" class="checkbox form-control-custom text-left">
+                    <label id="apparato" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" />
                     </label>
-                    <label id="aps" class="checkbox form-control-custom text-left">
+                    <label id="aps" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="aps" onchange="statecheck('aps', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APS<img src="pics/aps.png" class="pull-right" />
                     </label>
-                    <label id="armadio" class="checkbox form-control-custom text-left">
+                    <label id="armadio" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="armadio" onChange="statecheck('armadio', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Armadio<img src="pics/armadio.png" class="pull-right" />
                     </label>
-                    <label id="bts" class="checkbox form-control-custom text-left">
+                    <label id="bts" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="bts" onchange="statecheck('bts', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BTS<img src="pics/bts.png" class="pull-right" />
                     </label>
-                    <label id="distributore" class="checkbox form-control-custom text-left">
+                    <label id="distributore" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="distributore" onchange="statecheck('distributore', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distributore<img src="pics/distributore.png" class="pull-right" />
                     </label>
                   </td><td>
-                    <label id="palo" class="checkbox form-control-custom text-left">
+                    <label id="palo" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="palo" onchange="statecheck('palo', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Palo<img src="pics/palo.png" class="pull-right" />
                     </label>
-                    <label id="ppu" class="checkbox form-control-custom text-left">
+                    <label id="ppu" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="ppu" onchange="statecheck('ppu', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PPU<img src="pics/ppu.png" class="pull-right" />
                     </label>
-                    <label id="sede" class="checkbox form-control-custom text-left">
+                    <label id="sede" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="sede" onchange="statecheck('sede', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede<img src="pics/sede.png" class="pull-right" />
                     </label>
-                    <label id="sito" class="checkbox form-control-custom text-left">
+                    <label id="sito" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="sito" onchange="statecheck('sito', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sito<img src="pics/sito.png" class="pull-right" />
                     </label>
-                    <label id="terra" class="checkbox form-control-custom text-left">
+                    <label id="terra" class="checkbox form-control-custom text-left" style="font-size: 90%;">
                       <input type="checkbox" name="terra" onchange="statecheck('terra', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" />
                     </label>
@@ -372,30 +372,27 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
     </script>
 
-<span style="color: #838383;" >&nbsp;&nbsp;Range: <span id="rangeVal" style="color: #838383;" >200</span> mt</span><br>
+<span style="color: #838383; font-size: 90%;" >&nbsp;&nbsp;Range: <span id="rangeVal" style="color: #838383;" >200</span> mt</span><br>
 <input id='range' name='range' type='text'  
                   data-slider-min='50'  
                   data-slider-max='3000'  
                   data-slider-step='10'  
-                  data-slider-value='200'  /> 
-<script>
-$("#range").slider();
-$("#range").on("slide", function(slideEvt) {
-  $("#rangeVal").text(slideEvt.value);
-});
-</script>
+                  data-slider-value='200'
+                  onchange="showVal('rangeVal', this.value)" /> 
 <br>
-<span style="color: #838383;" >&nbsp;&nbsp;Elementi da visualizzare: <span id="risultatiVal"  style="color: #838383;" >20</span> </span><br>
+<span style="color: #838383; font-size: 90%;" >&nbsp;&nbsp;Elementi da visualizzare: <span id="risultatiVal"  style="color: #838383;" >20</span> </span><br>
 <input id='risultati' name='risultati' type='text'  
                   data-slider-min='10'  
                   data-slider-max='200'  
                   data-slider-step='10'  
-                  data-slider-value='20'  /> 
+                  data-slider-value='20'
+                  onchange="showVal('risultatiVal', this.value)" /> 
 <script>
+$("#range").slider();
 $("#risultati").slider();
-$("#risultati").on("slide", function(slideEvt) {
-  $("#risultatiVal").text(slideEvt.value);
-});
+function showVal(id, newVal){
+  document.getElementById(id).innerHTML=newVal;
+}
 </script>
 <br><br>
          <table border=0 width="100%" ><tr>
