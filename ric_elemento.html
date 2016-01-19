@@ -10,9 +10,12 @@
    <!-- END CSS FOR TOGGLE LEFT MENU -->
 
    <link href="css/custom.css" rel="stylesheet">
-<script src="phonegap.js"></script>
+   <link rel="stylesheet" href="css/bootstrap-slider.css" />
+   <script src="phonegap.js"></script>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="js/jquery.min.js"></script>
+   <!-- esempi di slider: http://seiyria.com/bootstrap-slider/ -->
+   <script src="js/bootstrap-slider.js"></script>
    <script src="js/menu.js"></script>
 
  <script type="text/javascript" charset="utf-8">
@@ -42,6 +45,7 @@
     function getPoiType()
     {
       var formDataSer = $("#elementoForm").serialize();
+      console.log("formDataSer: "+formDataSer);
       //devo valorizzare la stringa poiType per la condizione di ricerca dei poi...
       var poiType="";
       var tipologia = {ppu:1, apparato:2, bts:3, armadio:4, terra:5, aps:6, sede:7, distributore:8, sito:9, palo:10};
@@ -52,11 +56,20 @@
         for (i=0; i<res.length;i++)
         {
           poi = res[i].split("=");
-          poi_index = tipologia[poi[0]];
-          if (i==(res.length-1))
-            poiType += poi_index;
-          else
-            poiType += poi_index + ",";
+          var nomepoi = poi[0];
+          var valore = poi[1];
+          var confronto = 'on';
+          console.log("nomepoi: "+ nomepoi + " - valore: " + valore + " - confronto: " + confronto);
+          console.info(valore);
+          if ( valore == "on" )
+          {
+            poi_index = tipologia[nomepoi];
+            if (i==(res.length-3)) // 3 perche ultimo + range e risultati
+              poiType += poi_index;
+            else
+              poiType += poi_index + ",";
+            console.log(i + ") poiType" + poiType);
+          }
         }
         console.log("poiType" + poiType);
       }
@@ -210,14 +223,20 @@
 
           <center>
                   <form id="elementoForm">
-                   <table border=0 width="100%"><tr><td width="80%">
+                   <table border=0 width="100%"><tr><td colspan=2>
+                    <div class="input-group">
+                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-asterisk pull-left" aria-hidden="true"></span></span>
+                       <input id="nome_elemento" type="text" class="form-control " placeholder="Nome elemento..."  aria-describedby="basic-addon1" >
+                    </div><br style="line-height:10px;">
+                  </td></tr>
+                    <tr><td width="80%">
                     <div class="input-group">
                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
-                       <input id="pac-input" type="text" class="form-control input-lg" placeholder="POI vicino a indirizzo..."  aria-describedby="basic-addon1" required="required">
+                       <input id="pac-input" type="text" class="form-control " placeholder="Indirizzo..."  aria-describedby="basic-addon1" required="required">
                     </div>
                    </td>
-                   <td><a onclick="getLocation()" type="button" class='btn btn-default btn-lg bottone' >
-                    <span class="glyphicon glyphicon-screenshot pull-left" aria-hidden="true"></span>QUI
+                   <td><a onclick="getLocation()" type="button" class='btn btn-default bottone' >
+                    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>QUI
                     </a>
                    </td></tr></table>
                     <!-- <a onclick="getLocation()" class="btn btn-default btn-lg bottone" >Vuoi usare la tua posizione?</a> -->
@@ -353,16 +372,45 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
     </script>
 
-
-           <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
-              <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza su Lista 
+<span style="color: #838383;" >&nbsp;&nbsp;Range: <span id="rangeVal" style="color: #838383;" >200</span> mt</span><br>
+<input id='range' name='range' type='text'  
+                  data-slider-min='50'  
+                  data-slider-max='3000'  
+                  data-slider-step='10'  
+                  data-slider-value='200'  /> 
+<script>
+$("#range").slider();
+$("#range").on("slide", function(slideEvt) {
+  $("#rangeVal").text(slideEvt.value);
+});
+</script>
+<br>
+<span style="color: #838383;" >&nbsp;&nbsp;Elementi da visualizzare: <span id="risultatiVal"  style="color: #838383;" >20</span> </span><br>
+<input id='risultati' name='risultati' type='text'  
+                  data-slider-min='10'  
+                  data-slider-max='200'  
+                  data-slider-step='10'  
+                  data-slider-value='20'  /> 
+<script>
+$("#risultati").slider();
+$("#risultati").on("slide", function(slideEvt) {
+  $("#risultatiVal").text(slideEvt.value);
+});
+</script>
+<br><br>
+         <table border=0 width="100%" ><tr>
+          <td width="50%">
+           <button id="poi_lista" type="button" class="btn btn-default bottone" > 
+              <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza Lista 
            </button>
            <br>
-           <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
-              <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>Visualizza su Mappa 
+         </td><td>
+           <button id="poi_mappa" type="button" class="btn btn-default bottone" > 
+              <span class="glyphicon glyphicon-globe pull-left" aria-hidden="true"></span>Visualizza Mappa 
            </button>
-                  </form>
-                  <br>
+         </td>
+         <tr></table>
+         </form>
 
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
       </div> <!-- close div row --> 

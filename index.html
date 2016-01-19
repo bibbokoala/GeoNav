@@ -114,6 +114,12 @@ $.fn.serializeObject = function()
       //return false;
     });
 
+    $('#btn_exit').click(function() {
+      if (confirm("Chiudere l'applicazione?")) {
+        navigator.app.exitApp();
+      }
+    });
+
   });  
 </script>
 </head>
