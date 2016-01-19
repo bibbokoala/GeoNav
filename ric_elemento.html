@@ -42,8 +42,11 @@
 
 <script>
   $(document).ready(function() {
-    function getPoiType()
-    {
+    function getParameters() {
+      var parameters = new Object();
+      parameters['nome_elemento'] = "";
+      parameters['range'] = "";
+      parameters['risultati'] = "";
       var formDataSer = $("#elementoForm").serialize();
       console.log("formDataSer: "+formDataSer);
       //devo valorizzare la stringa poiType per la condizione di ricerca dei poi...
@@ -59,8 +62,8 @@
           var nomepoi = poi[0];
           var valore = poi[1];
           var confronto = 'on';
-          console.log("nomepoi: "+ nomepoi + " - valore: " + valore + " - confronto: " + confronto);
-          console.info(valore);
+          //console.log("nomepoi: "+ nomepoi + " - valore: " + valore + " - confronto: " + confronto);
+          //console.info(valore);
           if ( valore == "on" )
           {
             poi_index = tipologia[nomepoi];
@@ -68,14 +71,19 @@
               poiType += poi_index;
             else
               poiType += poi_index + ",";
-            console.log(i + ") poiType" + poiType);
+            //console.log(i + ") poiType" + poiType);
+          }
+          else
+          {
+            parameters[nomepoi] = valore;
           }
         }
-        console.log("poiType" + poiType);
+        //console.log("poiType: " + poiType);
       }
-      return(poiType);
+      parameters['poiType'] = poiType;
+      console.log("parameters: " + JSON.stringify(parameters) );
+      return parameters;
     }
-
     function saveListForPage(response, page) {
       var lista = response;
       localStorage.setItem("link", "poi");
@@ -83,10 +91,11 @@
       localStorage.setItem("lista", lista);
       window.location = page;
     }
-    function call(lat, lon, page, poiType){
+    function call(lat, lon, page, poiType, range, limit, name){
       var xmlhttp = new XMLHttpRequest();
-      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.706982&longitude=12.689796&poiType=&range=50";
-      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range=50";
+//var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.8548906&longitude=12.45838219999996&poiType=4,8&range=200&elements=50&name=00609E";
+      var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range="+range+"&elements="+limit+"&name="+name;
+      alert(url);
       //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
       xmlhttp.onreadystatechange=function() {
           //DEBUG alert("onreadystatechange");
@@ -99,26 +108,34 @@
       xmlhttp.send();
     }
     $("#poi_lista").click(function(){
-      var poiType = getPoiType();
+      /* params: {"nome_elemento":"simone","range":"200","risultati":"20","poiType":"2,6,7"} */
+      var params = getParameters();
       var ind = localStorage.getItem("indirizzo");
       var lat = localStorage.getItem("latitudine");
       var lon = localStorage.getItem("longitudine");
-      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + poiType);
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + params['poiType']);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
-         call(lat, lon, "vis_lista.html", poiType);
+      {
+        //function call(lat, lon, page, poiType, range, limit, name)
+        call(lat, lon, "vis_lista.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
+      }
       else
-         alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+        alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
     $("#poi_mappa").click(function(){
-      var poiType = getPoiType();
+      /* params: {"nome_elemento":"simone","range":"200","risultati":"20","poiType":"2,6,7"} */
+      var params = getParameters();
       var ind = localStorage.getItem("indirizzo");
       var lat = localStorage.getItem("latitudine");
       var lon = localStorage.getItem("longitudine");
-      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + poiType);
+      console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + params['poiType']);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
-         call(lat, lon, "vis_mappa.html", poiType);
+      {
+        //function call(lat, lon, page, poiType, range, limit, name)
+         call(lat, lon, "vis_mappa.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
+      }
       else
-         alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+        alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
     });
 
 /* spostato in menu.js
@@ -225,7 +242,7 @@
                   <form id="elementoForm">
                     <div class="input-group">
                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-asterisk pull-left" aria-hidden="true"></span></span>
-                       <input id="nome_elemento" type="text" class="form-control " placeholder="Nome elemento..."  aria-describedby="basic-addon1" >
+                       <input id="nome_elemento" name="nome_elemento" type="text" class="form-control " placeholder="Nome elemento..."  aria-describedby="basic-addon1" >
                     </div><br style="line-height:10px;">
 
                    <table border=0 width="100%"><tr><td width="80%">
