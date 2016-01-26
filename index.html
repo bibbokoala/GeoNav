@@ -14,24 +14,25 @@
    <!-- <script src="js/menu.js"></script>-->
  <script type="text/javascript" charset="utf-8">
     // Call onDeviceReady when Cordova is loaded.
-    //
     // At this point, the document has loaded but cordova-1.8.1.js has not.
     // When Cordova is loaded and talking with the native device,
     // it will call the event `deviceready`.
-    //
     function onLoad() {
         document.addEventListener("deviceready", onDeviceReady, false);
     }
     // Cordova is loaded and it is now safe to make calls Cordova methods
-    //
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
     }
     // Handle the offline event
-    //
     function onOffline() {
-       alert("You are OffLine\nThis App require the internet connection!");
+       alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
     }
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    function onBackKeyDown() {
+       alert("Handle the back button");
+    }
+
 </script>
 <script>
 //var db = openDatabase('GeoNavDB', '1.0', 'GeoNav App DB', 3 * 1024 * 1024);
@@ -120,6 +121,15 @@ $.fn.serializeObject = function()
       }
     });
 
+    $( "#matricola" ).keydown(function( event ) {
+      if ( event.which == 13 ) {
+        event.preventDefault();
+        $( "#password" ).focus();
+      }
+      console.log("Handler for .keydown() called ");
+      console.log("event: "+event.which);
+    });
+
   });  
 </script>
 </head>
@@ -162,15 +172,13 @@ $.fn.serializeObject = function()
            <label for='cred'>Salva credenziali</label>
            <input id='cred' class="pull-right" type="checkbox" value="checkbox" style="margin-left:1px;margin-top:5px;" />
            <br>
-           <br>
-           <br>
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
         <div id="my_footer" class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 " >   
-           <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' >
+           <!-- <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' style="margin-bottom:10px;" >
              <span class="glyphicon glyphicon-log-in pull-left" aria-hidden="true"></span>Accedi
-           </button>
+           </button> -->
+           <button id="btn_login" type="button" class='btn btn-default btn-lg bottone' style="margin-bottom:10px;" >Accedi</button>
            </form>
-           <br>
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->
       </div> <!-- close div row --> 
     </div> <!-- close div container-fluid -->

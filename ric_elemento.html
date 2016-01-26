@@ -20,23 +20,19 @@
 
  <script type="text/javascript" charset="utf-8">
     // Call onDeviceReady when Cordova is loaded.
-    //
     // At this point, the document has loaded but cordova-1.8.1.js has not.
     // When Cordova is loaded and talking with the native device,
     // it will call the event `deviceready`.
-    //
     function onLoad() {
         document.addEventListener("deviceready", onDeviceReady, false);
     }
     // Cordova is loaded and it is now safe to make calls Cordova methods
-    //
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
     }
     // Handle the offline event
-    //
     function onOffline() {
-       alert("You are OffLine\nThis App require the internet connection!");
+       alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
     }
 </script>
 
@@ -120,7 +116,11 @@
         call(lat, lon, "vis_lista.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
       }
       else
-        alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+      {
+        alert("VALORIZZARE INDIRIZZO DI RICERCA!");
+        $( "#pac-input" ).css('border-color', '#E58E96');
+        $( "#pac-input" ).focus();
+      }
     });
     $("#poi_mappa").click(function(){
       /* params: {"nome_elemento":"simone","range":"200","risultati":"20","poiType":"2,6,7"} */
@@ -135,16 +135,12 @@
          call(lat, lon, "vis_mappa.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
       }
       else
-        alert("VALORIZZARE INDIRIZZO DI RICERCA!!!");
+      {
+        alert("VALORIZZARE INDIRIZZO DI RICERCA!");
+        $( "#pac-input" ).css('border-color', '#E58E96');
+        $( "#pac-input" ).focus();
+      }
     });
-
-/* spostato in menu.js
-    var hm = window.screen.availHeight - 250;
-    console.log("footer_menu - hm: " +hm);
-    var padding_top = hm + "px";
-    console.log("footer_menu - padding-top: " +padding_top);
-    $( "#footer_menu" ).css( "padding-top", padding_top );
-*/
 
   });  
 </script>
@@ -242,60 +238,60 @@
                   <form id="elementoForm">
                     <div class="input-group">
                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-asterisk pull-left" aria-hidden="true"></span></span>
-                       <input id="nome_elemento" name="nome_elemento" type="text" class="form-control " placeholder="Nome elemento..."  aria-describedby="basic-addon1" >
+                       <input id="nome_elemento" name="nome_elemento" type="text" class="form-control-custom" placeholder="Nome elemento..."  aria-describedby="basic-addon1" >
                     </div><br style="line-height:10px;">
 
-                   <table border=0 width="100%"><tr><td width="80%">
+                   <table border=0 width="100%"><tr><td width="90%">
                     <div class="input-group">
                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search pull-left" aria-hidden="true"></span></span>
-                       <input id="pac-input" type="text" class="form-control " placeholder="Indirizzo..."  aria-describedby="basic-addon1" required="required">
+                       <input id="pac-input" type="text" class="form-control-custom" placeholder="Indirizzo..."  aria-describedby="basic-addon1" required="required" >
                     </div>
                    </td>
-                   <td><a onclick="getLocation()" type="button" class='btn btn-default bottone' >
-                    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>QUI
+                   <td><a onclick="getLocation()" type="button" class='btn btn-default btn-lg' >
+                    <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>QUI&nbsp;
                     </a>
                    </td></tr></table>
 
                     <p id="demo" ></p>
                     <table border=0 width="100%"><tr><td width="50%">
-                    <label id="apparato" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="apparato" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apparato<img src="pics/apparato.png" class="pull-right" />
                     </label>
-                    <label id="aps" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="aps" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="aps" onchange="statecheck('aps', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APS<img src="pics/aps.png" class="pull-right" />
                     </label>
-                    <label id="armadio" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="armadio" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="armadio" onChange="statecheck('armadio', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Armadio<img src="pics/armadio.png" class="pull-right" />
                     </label>
-                    <label id="bts" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="bts" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="bts" onchange="statecheck('bts', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BTS<img src="pics/bts.png" class="pull-right" />
                     </label>
-                    <label id="distributore" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="distributore" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="distributore" onchange="statecheck('distributore', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distributore<img src="pics/distributore.png" class="pull-right" />
                     </label>
                   </td><td>
-                    <label id="palo" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="palo" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="palo" onchange="statecheck('palo', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Palo<img src="pics/palo.png" class="pull-right" />
                     </label>
-                    <label id="ppu" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="ppu" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="ppu" onchange="statecheck('ppu', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PPU<img src="pics/ppu.png" class="pull-right" />
                     </label>
-                    <label id="sede" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="sede" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="sede" onchange="statecheck('sede', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sede<img src="pics/sede.png" class="pull-right" />
                     </label>
-                    <label id="sito" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="sito" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="sito" onchange="statecheck('sito', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sito<img src="pics/sito.png" class="pull-right" />
                     </label>
-                    <label id="terra" class="checkbox form-control-custom text-left" style="font-size: 90%;">
+                    <label id="terra" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="terra" onchange="statecheck('terra', this)" style="margin-left:1px;margin-top:5px;" />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terra<img src="pics/terra.png" class="pull-right" />
                     </label>
@@ -382,7 +378,7 @@
           else 
           {
             //x.innerHTML = "Geocoder failed due to: "+ status;
-            alert("Geocoder failed due to: "+ status);
+            alert("Prego Abilitare il GPS [errore: " + status + "]");
           }
         });
       }
@@ -392,14 +388,14 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSOthkwq0sKfWCDOCUmnfSlzeUi72r7hg&signed_in=true&libraries=places&callback=initAutocomplete">
     </script>
 
-<span style="color: #838383; font-size: 90%;" >&nbsp;&nbsp;Range: <span id="rangeVal" style="color: #838383;" >200</span> mt</span><br>
+<span style="color: #838383; font-size: 90%;" >&nbsp;&nbsp;Distanza: <span id="rangeVal" style="color: #838383;" >200</span> mt</span><br>
 <input id='range' name='range' type='text'  
                   data-slider-min='50'  
                   data-slider-max='3000'  
                   data-slider-step='10'  
                   data-slider-value='200'
                   onchange="showVal('rangeVal', this.value)" /> 
-<br>
+<br><br>
 <span style="color: #838383; font-size: 90%;" >&nbsp;&nbsp;Elementi da visualizzare: <span id="risultatiVal"  style="color: #838383;" >20</span> </span><br>
 <input id='risultati' name='risultati' type='text'  
                   data-slider-min='10'  
@@ -417,13 +413,13 @@ function showVal(id, newVal){
 <br><br>
          <table border=0 width="100%" ><tr>
           <td width="50%">
-           <button id="poi_lista" type="button" class="btn btn-default bottone" > 
-              <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span>Visualizza Lista 
+           <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
+              <!-- <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span> --> Visualizza Lista 
            </button>
            <br>
          </td><td>
-           <button id="poi_mappa" type="button" class="btn btn-default bottone" > 
-              <span class="glyphicon glyphicon-globe pull-left" aria-hidden="true"></span>Visualizza Mappa 
+           <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
+              <!-- <span class="glyphicon glyphicon-globe pull-left" aria-hidden="true"></span> --> Visualizza Mappa 
            </button>
          </td>
          <tr></table>
