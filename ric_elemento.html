@@ -219,17 +219,19 @@
       -->
     </nav>
     <div class="container-fluid" id="fluido" >
-      <div class="row">
+      <div class="row" >
       <!-- sidebar LEFT MENU -->      <!-- sidebar -->
-      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
-          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas" >
+        <div id="prova" style="width:100%;" data-toggle="offcanvas" data-target=".sidebar-nav">
+          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked" >
             <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
           </ul>
-          <ul id="footer_menu" data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
-              <li><p>Funzioni:</p></li>
+          <ul id="footer_menu" data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked" >
+              <li><p>FUNZIONI</p></li>
               <li><a href="impostazioni.html"> <i class="fa fa-info-circle"></i> Info</a></li>
               <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
           </ul>
+        </div> <!-- chiude prova -->  
       </div>
       <!-- content -->
       <div class="col-xs-12  col-sm-8 col-md-9 content">
@@ -411,18 +413,25 @@ function showVal(id, newVal){
 }
 </script>
 <br><br>
+<!--
          <table border=0 width="100%" ><tr>
           <td width="50%">
+-->
            <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
               <!-- <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span> --> Visualizza Lista 
            </button>
            <br>
+           <br style="line-height:10px;">
+<!--
          </td><td>
+-->
            <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
               <!-- <span class="glyphicon glyphicon-globe pull-left" aria-hidden="true"></span> --> Visualizza Mappa 
            </button>
+<!--
          </td>
          <tr></table>
+-->
          </form>
 
         </div> <!-- close <div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 main"> -->

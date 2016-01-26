@@ -12,7 +12,7 @@
    .tabella_elementi table, th, tr, td {
      border: 2px solid #F3F3F3;
      border-collapse: collapse;
-     font-size:10px;
+     font-size:12px;
      text-align: left;
      padding-left:5px;
      padding-right:5px;
@@ -107,7 +107,7 @@
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
 
             <a href="vis_mappa.html" type="button" class='.navbar-toggle pull-right' >
-               <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> MAPPA&nbsp;
+               <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> MAPPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </a>
 
           </div>
@@ -116,15 +116,17 @@
     <div class="container-fluid" id="fluido" >
       <div class="row">
       <!-- sidebar LEFT MENU -->      <!-- sidebar -->
-      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
-          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
+      <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas" >
+        <div id="prova" style="width:100%;" data-toggle="offcanvas" data-target=".sidebar-nav">
+          <ul data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked" >
             <li><a href="ric_elemento.html"> <i class="fa fa-eye"></i> CERCA ELEMENTO DI RETE</a></li>
           </ul>
-          <ul id="footer_menu" data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked">
-              <li><p>Funzioni:</p></li>
+          <ul id="footer_menu" data-spy="affix" data-offset-top="120" id="affix" class="nav nav-stacked" >
+              <li><p>FUNZIONI</p></li>
               <li><a href="impostazioni.html"> <i class="fa fa-info-circle"></i> Info</a></li>
               <li><a id="btn_logout"> <i class="fa fa-sign-out"></i> Logout</a></li>
           </ul>
+        </div> <!-- chiude prova -->  
       </div>
         <!-- content -->
         <div class="col-xs-12  col-sm-8 col-md-9 content">

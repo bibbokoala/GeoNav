@@ -28,9 +28,12 @@
     function onOffline() {
        alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
     }
+    // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);
     function onBackKeyDown() {
-       alert("Handle the back button");
+      if (confirm("Chiudere l'applicazione?")) {
+        navigator.app.exitApp();
+      }
     }
 
 </script>
@@ -128,6 +131,13 @@ $.fn.serializeObject = function()
       }
       console.log("Handler for .keydown() called ");
       console.log("event: "+event.which);
+    });
+
+    $( "#password" ).keydown(function( event ) {
+      if ( event.which == 13 ) {
+        event.preventDefault();
+        $("#btn_login").click();
+      }
     });
 
   });  
