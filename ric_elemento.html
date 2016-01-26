@@ -45,6 +45,22 @@
 
 <script>
   $(document).ready(function() {
+    /* IMPOSTO I SETTAGGI PRECEDENTI */
+    if (localStorage.getItem("indirizzo")!=null)
+       $( "#pac-input" ).val(localStorage.getItem("indirizzo"));
+    if (localStorage.getItem("range")!=null)
+    {
+       showVal('rangeVal', localStorage.getItem("range"));
+       $('#range').slider('setValue', Number( localStorage.getItem("range") ) );
+    }
+    if (localStorage.getItem("risultati")!=null)
+    {
+       showVal('risultatiVal', localStorage.getItem("risultati"));
+       $('#risultati').slider('setValue', Number(localStorage.getItem("risultati") ) );
+    }
+    if (localStorage.getItem("nome_elemento")!=null)
+       $( "#nome_elemento" ).val(localStorage.getItem("nome_elemento"));
+
     function getParameters() {
       var parameters = new Object();
       parameters['nome_elemento'] = "";
@@ -90,11 +106,19 @@
     function saveListForPage(response, page) {
       var lista = response;
       localStorage.setItem("link", "poi");
-      localStorage.setItem("view", "lista");
       localStorage.setItem("lista", lista);
+      if (page.localeCompare("vis_lista.html")==0)
+         localStorage.setItem("view", "lista");
+      else
+         localStorage.setItem("view", "mappa");
       window.location = page;
     }
     function call(lat, lon, page, poiType, range, limit, name){
+      localStorage.setItem("page", page );
+      localStorage.setItem("poiType", poiType );
+      localStorage.setItem("range", range );
+      localStorage.setItem("risultati", limit );
+      localStorage.setItem("nome_elemento", name);
       var xmlhttp = new XMLHttpRequest();
 //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.8548906&longitude=12.45838219999996&poiType=4,8&range=200&elements=50&name=00609E";
       var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range="+range+"&elements="+limit+"&name="+name;
