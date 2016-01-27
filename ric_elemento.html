@@ -19,39 +19,6 @@
    <script src="js/menu.js"></script>
 
  <script type="text/javascript" charset="utf-8">
-    function callGpsSettings() {
-      //var url = "ACTION_LOCATION_SOURCE_SETTINGS ";
-      var url = "android.settings.LOCATION_SOURCE_SETTINGS";
-      window.plugins.webintent.startActivity({
-          action: url
-        }, 
-        function() {alert('Prego abilitare Gps!')}, 
-        function() {alert('Fallita apertura Gps Settings!')}
-      );            
-    }
-
-// onSuccess Callback
-// This method accepts a Position object, which contains the
-// current GPS coordinates
-//
-var onSuccess = function(position) {
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n');
-};
-
-// onError Callback receives a PositionError object
-//
-function onError(error) {
-    alert('code: ' + error.code + '\n' +'message: ' + error.message + '\n');
-    callGpsSettings();
-}
-
     // Call onDeviceReady when Cordova is loaded.
     // At this point, the document has loaded but cordova-1.8.1.js has not.
     // When Cordova is loaded and talking with the native device,
@@ -62,7 +29,7 @@ function onError(error) {
     // Cordova is loaded and it is now safe to make calls Cordova methods
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
     }
     // Handle the offline event
@@ -242,65 +209,12 @@ function onError(error) {
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
       </button>
-      <!--
-          <button id="btn_menu" type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-            <span class="icon-bar" style="background-color: #FFF;"></span>
-          </button>
-        -->
           </div>
           <div class="navbar-header" style="line-height: 56px;" id="testata" >
             <img src="pics/geonav.png" height="56px" align="left" id="logo_small" />
-            <!--
-            <a id="btn_exit" type="button" class='.navbar-toggle pull-right' >
-               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CLOSE&nbsp;
-            </a>
-            -->
           </div>
 
         </div>
-        <!--
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right" id="menu" >
-            <li id="H" ><a id="link_home" style="color: #FFF;" >Home</a></li>
-            <li id="I" ><a id="link_indirizzo" style="color: #FFF;" >Ricerca per Indirizzo</a></li>
-            <li id="P" ><a id="link_elemento" style="color: #FFF;" >Ricerca per elemento di rete</a></li>
-            <li id="L" ><a id="btn_logout" style="color: #FFF;" >Logout</a></li> 
-            <li id="E" ><a id="btn_exit" style="color: #FFF;" >Exit</a></li>
-          </ul>
-          <script>
-            var check_login = localStorage.getItem("login");
-            if (check_login == "ok")
-               $('#bottone_menu').show();
-            else
-               $('#bottone_menu').hide();
-            var check_link = localStorage.getItem("link");
-            if (check_link == "menu")
-            {
-              $( "#H" ).addClass( "active" );
-              $( "#link_home" ).css( "color", "#DE0019");
-            }
-            if (check_link == "indirizzo")
-            {
-              $( "#I" ).addClass( "active" );
-              $( "#link_indirizzo" ).css( "color", "#DE0019");
-            }
-            if (check_link == "elemento")
-            {
-              $( "#P" ).addClass( "active" );
-              $( "#link_elemento" ).css( "color", "#DE0019");
-            }
-            if (check_link == null)
-            {
-              $( "#L" ).addClass( "active" );
-              $( "#btn_logout" ).css( "color", "#DE0019");
-            }
-          </script>
-        </div>
-      </div>
-      -->
     </nav>
     <div class="container-fluid" id="fluido" >
       <div class="row" >
@@ -388,19 +302,22 @@ function onError(error) {
                   -->
 
     <script>
+    function callGpsSettings() {
+      //var url = "ACTION_LOCATION_SOURCE_SETTINGS ";
+      var url = "android.settings.LOCATION_SOURCE_SETTINGS";
+      window.plugins.webintent.startActivity({
+          action: url
+        }, 
+        function() {alert('Prego abilitare Gps!')}, 
+        function() {alert('Fallita apertura Gps Settings!')}
+      );            
+    }
+
     function getLocation() 
     {
-      //var demo = document.getElementById("demo");
       console.log("getLocation");
-      //if (navigator.geolocation) {
-          //console.log("CALL initAutocomplete");
-          navigator.geolocation.getCurrentPosition(initAutocomplete);
-          console.log("END OF getCurrentPosition");
-      //} else {
-          //demo.innerHTML = "Geolocation is not supported by this browser.";
-        //  alert("Geolocation is not supported by this browser.");
-          //callGpsSettings();
-      //}
+      navigator.geolocation.getCurrentPosition(initAutocomplete);
+      console.log("END OF getCurrentPosition");
     }
 
     function initAutocomplete(position) 
