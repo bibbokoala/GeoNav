@@ -373,14 +373,14 @@
       window.plugins.webintent.startActivity({
           action: url
         }, 
-        function() {}, 
+        function() {alert('Prego abilitare Gps!')}, 
         function() {alert('Fallita apertura Gps Settings!')}
       );            
     }
 
     function initAutocomplete(position) 
     {
-      alert("position: "+position);
+      //DEBUG alert("position: "+position);
       console.log("initAutocomplete - position: "+position);
       if (position==undefined) 
       {
