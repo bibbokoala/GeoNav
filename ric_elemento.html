@@ -33,7 +33,11 @@
     }
     // Handle the offline event
     function onOffline() {
-       alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
+      $("#offline-alert").alert();
+      $("#offline-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#offline-alert").alert('close');
+      });   
+       //alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
        $('#poi_lista').addClass( "disabled" );
        $('#poi_mappa').addClass( "disabled" );
        $('#pac-input').prop('disabled', true);
@@ -41,11 +45,15 @@
     }
     // Handle the online event
     function onOnline() {
-       alert("Il dispositivo e' OnLine!");
-       $('#poi_lista').removeClass( "disabled" );
-       $('#poi_mappa').removeClass( "disabled" );
-       $('#pac-input').prop('disabled', false);
-       $('#qui').removeClass( "disabled" );
+      $("#online-alert").alert();
+      $("#online-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#online-alert").alert('close');
+      });   
+      //alert("Il dispositivo e' OnLine!");
+      $('#poi_lista').removeClass( "disabled" );
+      $('#poi_mappa').removeClass( "disabled" );
+      $('#pac-input').prop('disabled', false);
+      $('#qui').removeClass( "disabled" );
     }
     // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);
@@ -59,6 +67,8 @@
 
 <script>
   $(document).ready(function() {
+    $("#online-alert").hide();
+    $("#offline-alert").hide();
     /* IMPOSTO I SETTAGGI PRECEDENTI */
     /* */
     if (localStorage.getItem("poiType")!=null)
@@ -263,7 +273,16 @@
                     </a>
                    </td></tr></table>
 
-                    <!-- <p id="demo" ></p> -->
+                  <div class="alert alert-success" id="online-alert">
+                      <button type="button" class="close" data-dismiss="alert">x</button>
+                      Il dispositivo e' <strong>OnLine!</strong>
+                  </div>
+                  <div class="alert alert-danger" id="offline-alert">
+                      <button type="button" class="close" data-dismiss="alert">x</button>
+                      Il dispositivo e' <strong>OffLine!</strong><br>
+                      Questa App richiede una connessione internet.
+                  </div>
+
                     <table border=0 width="100%"><tr><td width="50%">
                     <label id="apparato" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
