@@ -36,14 +36,16 @@
        alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
        $('#poi_lista').addClass( "disabled" );
        $('#poi_mappa').addClass( "disabled" );
-       $('#pac-input').addClass( "disabled" );
+       $('#pac-input').prop('disabled', true);
+       $('#qui').addClass( "disabled" );
     }
     // Handle the online event
     function onOnline() {
        alert("Il dispositivo e' OnLine!");
        $('#poi_lista').removeClass( "disabled" );
        $('#poi_mappa').removeClass( "disabled" );
-       $('#pac-input').removeClass( "disabled" );
+       $('#pac-input').prop('disabled', false);
+       $('#qui').removeClass( "disabled" );
     }
     // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);
@@ -256,7 +258,7 @@
                        <input id="pac-input" type="text" class="form-control-custom" placeholder="Indirizzo..."  aria-describedby="basic-addon1" required="required" >
                     </div>
                    </td>
-                   <td><a onclick="getLocation()" type="button" class='btn btn-default btn-lg' >
+                   <td><a id="qui" onclick="getLocation()" type="button" class='btn btn-default btn-lg' >
                     <span class="glyphicon glyphicon-map-marker pull-left" aria-hidden="true"></span>QUI&nbsp;
                     </a>
                    </td></tr></table>
