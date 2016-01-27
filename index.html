@@ -19,12 +19,12 @@
     // it will call the event `deviceready`.
     function onLoad() {
         document.addEventListener("deviceready", onDeviceReady, false);
-        alert("onload");
+        //alert("onload");
     }
     // Cordova is loaded and it is now safe to make calls Cordova methods
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
-        alert("onDeviceReady");
+        //alert("onDeviceReady");
     }
     // Handle the offline event
     function onOffline() {
