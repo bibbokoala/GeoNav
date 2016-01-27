@@ -29,8 +29,6 @@
     // Cordova is loaded and it is now safe to make calls Cordova methods
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
-        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
     }
     // Handle the offline event
     function onOffline() {
@@ -357,39 +355,42 @@
       else //è la vecchia showPosition
       {
         console.log("showPosition");
-        localStorage.setItem("latitudine", position.coords.latitude);
-        localStorage.setItem("longitudine", position.coords.longitude);
-        var geocoder = new google.maps.Geocoder();
-        var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
-        console.log("latlng: "+latlng);
-        geocoder.geocode({'location': latlng}, function(results, status) {
-          if (status === google.maps.GeocoderStatus.OK) 
-          {
-            var address = results[0].formatted_address;
-            console.log("Indirizzo: "+address);
-            localStorage.setItem("indirizzo", results[0].formatted_address);
-            console.log("results[0]: "+results[0].formatted_address);
-            console.log("results[1]: "+results[1].formatted_address);
-            console.log("results[2]: "+results[2].formatted_address);
-            console.log("results[3]: "+results[3].formatted_address);
-            /*
-            x.innerHTML = "Latitudine: " + localStorage.getItem("latitudine") + "<br>" + 
-                          "Longitudine: " + localStorage.getItem("longitudine") + "<br>" +
-                          "Indirizzo: " + localStorage.getItem("indirizzo");
-            */
-            $('#pac-input').val(results[0].formatted_address);
-          } 
-          else 
-          {
-            //x.innerHTML = "Geocoder failed due to: "+ status;
-            alert("Prego Abilitare il GPS... [" + status + "]");
-            callGpsSettings();
-          }
-        });
         if (position.coords.latitude==null)  
         {
           alert("Prego Abilitare il GPS... ");
           callGpsSettings();
+        }
+        else
+        {
+          localStorage.setItem("latitudine", position.coords.latitude);
+          localStorage.setItem("longitudine", position.coords.longitude);
+          var geocoder = new google.maps.Geocoder();
+          var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
+          console.log("latlng: "+latlng);
+          geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) 
+            {
+              var address = results[0].formatted_address;
+              console.log("Indirizzo: "+address);
+              localStorage.setItem("indirizzo", results[0].formatted_address);
+              console.log("results[0]: "+results[0].formatted_address);
+              console.log("results[1]: "+results[1].formatted_address);
+              console.log("results[2]: "+results[2].formatted_address);
+              console.log("results[3]: "+results[3].formatted_address);
+              /*
+              x.innerHTML = "Latitudine: " + localStorage.getItem("latitudine") + "<br>" + 
+                            "Longitudine: " + localStorage.getItem("longitudine") + "<br>" +
+                            "Indirizzo: " + localStorage.getItem("indirizzo");
+              */
+              $('#pac-input').val(results[0].formatted_address);
+            } 
+            else 
+            {
+              //x.innerHTML = "Geocoder failed due to: "+ status;
+              alert("Prego Abilitare il GPS... [" + status + "]");
+              callGpsSettings();
+            }
+          });
         }
       }
     }
