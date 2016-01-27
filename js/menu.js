@@ -15,7 +15,7 @@
       localStorage.setItem("version",version);
     });
     */
-    localStorage.setItem("version","2.1.1");
+    localStorage.setItem("version","2.2.1");
 
     $("#link_home").click(function(){
       //alert("link_home");

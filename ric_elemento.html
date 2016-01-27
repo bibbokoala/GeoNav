@@ -310,11 +310,18 @@
         function() {alert('Fallita apertura Gps Settings!')}
       );            
     }
-
+    function onErrorGPS(error) {
+       alert('code: '    + error.code    + ' ' + 'message: ' + error.message + ' ');
+       callGpsSettings();
+    }
+    var config = {
+      enableHighAccuracy: true,
+      timeout: 500
+    }
     function getLocation() 
     {
       console.log("getLocation");
-      navigator.geolocation.getCurrentPosition(initAutocomplete);
+      navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
       console.log("END OF getCurrentPosition");
     }
 
