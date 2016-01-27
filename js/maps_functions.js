@@ -4,8 +4,37 @@ function initMap() {
   var lat = localStorage.getItem("latitudine");
   var lon = localStorage.getItem("longitudine");
   var centerMap = new google.maps.LatLng(lat, lon);
+  var zoom = 17;
+  if (localStorage.getItem("range")!=null)
+  {
+    var distanza = localStorage.getItem("range");
+    switch (true) {
+      case (distanza < 200):
+        zoom=18;
+        break;
+      case (distanza > 200 && distanza < 500):
+        zoom=17;
+        break;
+      case (distanza > 500 && distanza < 800):
+        zoom=16;
+        break;
+      case (distanza > 800 && distanza < 1500):
+        zoom=15;
+        break;
+      case (distanza > 1500 && distanza <= 2200):
+        zoom=14;
+        break;
+      case (distanza > 2200 && distanza <= 3000):
+        zoom=13;
+        break;
+      default:
+        zoom=17;
+        break;
+    }
+  }
+  console.log("distanza: " + distanza + " - zoom: "+zoom);
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 18,
+    zoom: zoom,
     center: centerMap
   });
 
