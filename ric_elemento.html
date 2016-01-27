@@ -444,6 +444,11 @@
             callGpsSettings();
           }
         });
+        cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+          alert("Location is " + (enabled ? "enabled" : "disabled"));
+          }, function(error){
+          alert("The following error occurred: "+error);
+        });
       }
     }
     </script>

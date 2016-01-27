@@ -48,6 +48,8 @@
      -->
     <!-- plugin per utilizzare le webintent - richieste ad applicazioni esterne -->
     <gap:plugin name="net.tunts.webintent" />
+    <!-- plugin per verificare lo stato dei servizi ad esempio il GPS -->
+    <gap:plugin name="cordova.plugins.diagnostic" source="npm" />
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.battery-status" />
