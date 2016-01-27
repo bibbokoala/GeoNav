@@ -19,6 +19,39 @@
    <script src="js/menu.js"></script>
 
  <script type="text/javascript" charset="utf-8">
+    function callGpsSettings() {
+      //var url = "ACTION_LOCATION_SOURCE_SETTINGS ";
+      var url = "android.settings.LOCATION_SOURCE_SETTINGS";
+      window.plugins.webintent.startActivity({
+          action: url
+        }, 
+        function() {alert('Prego abilitare Gps!')}, 
+        function() {alert('Fallita apertura Gps Settings!')}
+      );            
+    }
+
+// onSuccess Callback
+// This method accepts a Position object, which contains the
+// current GPS coordinates
+//
+var onSuccess = function(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+          'Longitude: '         + position.coords.longitude         + '\n' +
+          'Altitude: '          + position.coords.altitude          + '\n' +
+          'Accuracy: '          + position.coords.accuracy          + '\n' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          'Heading: '           + position.coords.heading           + '\n' +
+          'Speed: '             + position.coords.speed             + '\n' +
+          'Timestamp: '         + position.timestamp                + '\n');
+};
+
+// onError Callback receives a PositionError object
+//
+function onError(error) {
+    alert('code: ' + error.code + '\n' +'message: ' + error.message + '\n');
+    callGpsSettings();
+}
+
     // Call onDeviceReady when Cordova is loaded.
     // At this point, the document has loaded but cordova-1.8.1.js has not.
     // When Cordova is loaded and talking with the native device,
@@ -42,14 +75,6 @@
       if (confirm("Chiudere l'applicazione?")) {
         navigator.app.exitApp();
       }
-    }
-
-    function onSuccess(position) {
-        alert('Latitude: ' + position.coords.latitude + ' - ' + 'Longitude: ' + position.coords.longitude;
-    }
-    function onError(error) {
-      alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-      callGpsSettings();
     }
 
 </script>
@@ -363,17 +388,6 @@
                   -->
 
     <script>
-    function callGpsSettings() {
-      //var url = "ACTION_LOCATION_SOURCE_SETTINGS ";
-      var url = "android.settings.LOCATION_SOURCE_SETTINGS";
-      window.plugins.webintent.startActivity({
-          action: url
-        }, 
-        function() {alert('Prego abilitare Gps!')}, 
-        function() {alert('Fallita apertura Gps Settings!')}
-      );            
-    }
-
     function getLocation() 
     {
       var demo = document.getElementById("demo");
