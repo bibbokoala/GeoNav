@@ -29,10 +29,21 @@
     // Cordova is loaded and it is now safe to make calls Cordova methods
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
+        document.addEventListener("online", onOnline, false);
     }
     // Handle the offline event
     function onOffline() {
        alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
+       $('#poi_lista').addClass( "disabled" );
+       $('#poi_mappa').addClass( "disabled" );
+       $('#pac-input').addClass( "disabled" );
+    }
+    // Handle the online event
+    function onOnline() {
+       alert("Il dispositivo e' OnLine!");
+       $('#poi_lista').removeClass( "disabled" );
+       $('#poi_mappa').removeClass( "disabled" );
+       $('#pac-input').removeClass( "disabled" );
     }
     // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);

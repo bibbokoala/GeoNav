@@ -24,11 +24,20 @@
     // Cordova is loaded and it is now safe to make calls Cordova methods
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
+        document.addEventListener("online", onOnline, false);
         //alert("onDeviceReady");
     }
     // Handle the offline event
     function onOffline() {
        alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
+       //btn_login disabled
+       $('#btn_login').addClass( "disabled" );
+    }
+    // Handle the online event
+    function onOnline() {
+       alert("Il dispositivo e' OnLine!");
+       //btn_login enabled!
+       $('#btn_login').removeClass( "disabled" );
     }
     // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);
