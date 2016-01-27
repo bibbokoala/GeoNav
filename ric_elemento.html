@@ -368,18 +368,19 @@
 
 
     function callGpsSettings() {
+      //var url = "ACTION_LOCATION_SOURCE_SETTINGS ";
       var url = "android.settings.LOCATION_SOURCE_SETTINGS";
       window.plugins.webintent.startActivity({
           action: url
         }, 
-        function() {alert('Abilitare il GPS...')}, 
+        function() {}, 
         function() {alert('Fallita apertura Gps Settings!')}
       );            
     }
 
     function initAutocomplete(position) 
     {
-      //var x = document.getElementById("demo");
+      alert("position: "+position);
       console.log("initAutocomplete - position: "+position);
       if (position==undefined) 
       {
@@ -439,7 +440,7 @@
           else 
           {
             //x.innerHTML = "Geocoder failed due to: "+ status;
-            alert("Prego Abilitare il GPS [errore: " + status + "]");
+            alert("Prego Abilitare il GPS... [" + status + "]");
             callGpsSettings();
           }
         });
