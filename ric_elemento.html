@@ -338,7 +338,7 @@ function onError(error) {
                     </a>
                    </td></tr></table>
 
-                    <p id="demo" ></p>
+                    <!-- <p id="demo" ></p> -->
                     <table border=0 width="100%"><tr><td width="50%">
                     <label id="apparato" class="checkbox form-control-custom text-left" >
                       <input type="checkbox" name="apparato" onChange="statecheck('apparato', this)" style="margin-left:1px;margin-top:5px;" />
@@ -390,22 +390,22 @@ function onError(error) {
     <script>
     function getLocation() 
     {
-      var demo = document.getElementById("demo");
+      //var demo = document.getElementById("demo");
       console.log("getLocation");
-      if (navigator.geolocation) {
-          console.log("CALL initAutocomplete");
+      //if (navigator.geolocation) {
+          //console.log("CALL initAutocomplete");
           navigator.geolocation.getCurrentPosition(initAutocomplete);
           console.log("END OF getCurrentPosition");
-      } else {
+      //} else {
           //demo.innerHTML = "Geolocation is not supported by this browser.";
-          alert("Geolocation is not supported by this browser.");
-          callGpsSettings();
-      }
+        //  alert("Geolocation is not supported by this browser.");
+          //callGpsSettings();
+      //}
     }
 
     function initAutocomplete(position) 
     {
-      //DEBUG alert("position: "+position);
+      //alert("position: "+position);
       console.log("initAutocomplete - position: "+position);
       if (position==undefined) 
       {
@@ -469,6 +469,11 @@ function onError(error) {
             callGpsSettings();
           }
         });
+        if (position.coords.latitude==null)  
+        {
+          alert("Prego Abilitare il GPS... ");
+          callGpsSettings();
+        }
       }
     }
     </script>
