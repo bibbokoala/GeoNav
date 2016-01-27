@@ -30,6 +30,28 @@
 <script src="phonegap.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/menu.js"></script>
+ <script type="text/javascript" charset="utf-8">
+    // Call onDeviceReady when Cordova is loaded.
+    // At this point, the document has loaded but cordova-1.8.1.js has not.
+    // When Cordova is loaded and talking with the native device,
+    // it will call the event `deviceready`.
+    function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    function onDeviceReady() {
+        document.addEventListener("offline", onOffline, false);
+    }
+    // Handle the offline event
+    function onOffline() {
+       alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
+    }
+    // Handle the back browser button
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    function onBackKeyDown() {
+      window.location.href = 'ric_elemento.html';
+    }
+</script>
 <script>
   $(document).ready(function() {
       //VISUALIZZA LA LISTA PRECEDENTEMENTE SALVATA dalle pagine: ric_elemento e ric_indirizzo
