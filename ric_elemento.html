@@ -370,8 +370,8 @@
     function callGpsSettings() {
       var url = "android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS";
       window.plugins.webintent.startActivity({
-        action: window.plugins.webintent.ACTION_VIEW,
-        url: url}, 
+          action: url
+        }, 
         function() {alert('Abilitare il GPS...')}, 
         function() {alert('Fallita apertura Gps Settings!')}
       );            
