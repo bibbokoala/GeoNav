@@ -46,6 +46,23 @@
 <script>
   $(document).ready(function() {
     /* IMPOSTO I SETTAGGI PRECEDENTI */
+    /* */
+    if (localStorage.getItem("poiType")!=null)
+    {
+       var poitype = localStorage.getItem("poiType");
+       //DEBUG alert(poitype);
+       var poi = poitype.split(",");
+       var tipo = ["", "ppu", "apparato", "bts", "armadio", "terra", "aps", "sede", "distributore", "sito", "palo"];
+       for (i=0; i<poi.length;i++)
+       {
+          var id = poi[i];
+          var nomepoi = tipo[id];
+          //DEBUG alert("id: "+id +" - nome: "+nomepoi);
+          $( 'input[name="'+nomepoi+'"]' ).prop( "checked", true );
+          $('#'+nomepoi).css('background-color','#bff0a1');
+       }
+    }
+    /* */
     if (localStorage.getItem("indirizzo")!=null)
        $( "#pac-input" ).val(localStorage.getItem("indirizzo"));
     if (localStorage.getItem("range")!=null)
@@ -481,7 +498,6 @@ function showVal(id, newVal){
     <script>
     function statecheck(x, _this) {
       var tipologia = {ppu:1, apparato:2, bts:3, armadio:4, terra:5, aps:6, sede:7, distributore:8, sito:9, palo:10};
-      //document.getElementById("demo").innerHTML = person["firstName"];
       if (_this.checked) {
         $('#'+x).css('background-color','#bff0a1');
         console.log(tipologia[x] + ") " + x + " cecked!");
