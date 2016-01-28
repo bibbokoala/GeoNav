@@ -343,8 +343,10 @@
       );            
     }
     function onErrorGPS(error) {
-       alert('code: '    + error.code    + ' ' + 'message: ' + error.message + ' ');
-       callGpsSettings();
+       //alert('code: '    + error.code    + ' ' + 'message: ' + error.message + ' ');
+      if (confirm("Gps non abilitato.\nL'app richiede il Gps attivo.\nVuoi attivarlo?")) {
+        callGpsSettings();
+      }
     }
     var config = {
       enableHighAccuracy: true,
