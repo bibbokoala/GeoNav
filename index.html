@@ -29,15 +29,23 @@
     }
     // Handle the offline event
     function onOffline() {
-       alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
-       //btn_login disabled
-       $('#btn_login').addClass( "disabled" );
+      $("#offline-alert").alert();
+      $("#offline-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#offline-alert").alert('close');
+      });   
+      //alert("Il dispositivo e' OffLine\nQuesta App richiede una connessione internet!");
+      //btn_login disabled
+      $('#btn_login').addClass( "disabled" );
     }
     // Handle the online event
     function onOnline() {
-       alert("Il dispositivo e' OnLine!");
-       //btn_login enabled!
-       $('#btn_login').removeClass( "disabled" );
+      $("#online-alert").alert();
+      $("#online-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#online-alert").alert('close');
+      });   
+      //alert("Il dispositivo e' OnLine!");
+      //btn_login enabled!
+      $('#btn_login').removeClass( "disabled" );
     }
     // Handle the back browser button
     document.addEventListener("backbutton", onBackKeyDown, false);
@@ -86,13 +94,14 @@ $.fn.serializeObject = function()
   function onError(data, status)
   {
     //var htmlString = "<p>ERRORE Login!</p>";
-    //document.getElementById("result").innerHTML = htmlString;
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
     localStorage.setItem("link", "menu");
     localStorage.setItem("login", "KO");
   }   
   $(document).ready(function() {
+    $("#online-alert").hide();
+    $("#offline-alert").hide();
 
     //IN CASO DI LOGIN VALIDO NON RIEFFETTUO IL LOGIN...
     if (localStorage.getItem("auth") != null) {
@@ -182,10 +191,20 @@ $.fn.serializeObject = function()
            <label for='matricola'>Inserire Matricola</label>
            <input type=text id='matricola' name='matricola' placeholder='Matricola' class='form-control-custom' required='true' >
            <br>
+
+                  <div class="alert alert-success" id="online-alert">
+                      <button type="button" class="close" data-dismiss="alert">x</button>
+                      Il dispositivo e' <strong>OnLine!</strong>
+                  </div>
+                  <div class="alert alert-danger" id="offline-alert">
+                      <button type="button" class="close" data-dismiss="alert">x</button>
+                      Il dispositivo e' <strong>OffLine!</strong><br>
+                      Questa App richiede una connessione internet.
+                  </div>
+
            <label for='password'>Inserire Password LDAP</label>
            <input type=password id='password' name='password' placeholder='Password' class='form-control-custom' required='true' >
            <br>
-           <div id="result"></div>
            <br><br><br>
            <label for='chiaro'>Password in chiaro</label>
            <input id='chiaro' class="pull-right" type="checkbox" value="checkbox" onchange="password_in_chiaro(this)" style="margin-left:1px;margin-top:5px;" />
