@@ -25,6 +25,13 @@
     function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
+        if (device.model!=null)
+        {
+          localStorage.setItem("duuid", device.uuid);
+          localStorage.setItem("dmodel", device.model);
+          localStorage.setItem("dplatform", device.platform);
+          localStorage.setItem("dversion", device.version);
+        }
         //alert("onDeviceReady");
     }
     // Handle the offline event
@@ -117,8 +124,23 @@ $.fn.serializeObject = function()
     $("#btn_login").click(function(){
       console.log(callAjaxForm);
       var formData = $("#callAjaxForm").serialize();
-      //var formData = JSON.stringify($('#callAjaxForm').serializeObject())
       console.log(formData);
+      //var formData = JSON.stringify($('#callAjaxForm').serializeObject())
+      // TO DO: agganciare a formData i campi uuid ecc ecc [uuid, model, platform, version] 
+      //        letti dal dispositivo con il plugin <plugin name="cordova-plugin-device" spec="1.0.1" source="pgb" />
+      if (localStorage.getItem("duuid") != null) 
+      {
+        var uuid     = localStorage.getItem("duuid");
+        var model    = localStorage.getItem("dmodel");
+        var platform = localStorage.getItem("dplatform");
+        var version  = localStorage.getItem("dversion");
+        var parametri = formData + "&uuid=" + uuid + "&model=" + model + "&platform=" + platform + "&version=" + version;
+      }
+      else
+      {
+        var parametri = formData;
+      }
+      console.log(parametri);
       localStorage.setItem("matricola", $("#matricola").val());
       localStorage.setItem("password", $("#password").val());
       //http://medley.cloudmup.com/GeoLocREST/GNLogin?JSON={"matricola":"37210890","password":"xxx"}
@@ -131,7 +153,7 @@ $.fn.serializeObject = function()
         url: url,
         cache: false,
         dataType: "jsonp",
-        data: formData,
+        data: parametri,
         success: onSuccess,
         error: onError
       });
