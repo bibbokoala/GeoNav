@@ -149,9 +149,16 @@
       localStorage.setItem("link", "poi");
       localStorage.setItem("lista", lista);
       if (page.localeCompare("vis_lista.html")==0)
+      {
          localStorage.setItem("view", "lista");
+         var btn = $("#poi_lista");
+      }
       else
+      {
          localStorage.setItem("view", "mappa");
+         var btn = $("#poi_mappa");
+      }
+      btn.button('reset'); 
       window.location = page;
     }
     function call(lat, lon, page, poiType, range, limit, name){
@@ -184,6 +191,8 @@
       console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + params['poiType']);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
       {
+        var btn = $(this);
+        btn.button('loading');
         //function call(lat, lon, page, poiType, range, limit, name)
         call(lat, lon, "vis_lista.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
       }
@@ -203,6 +212,8 @@
       console.log("ind: "+ind+"- lat: "+lat+" - lon: "+lon+" - poiType: " + params['poiType']);
       if ( (ind!=null) && (lat!=null) && (lon!=null) ) 
       {
+         var btn = $(this);
+         btn.button('loading');
         //function call(lat, lon, page, poiType, range, limit, name)
          call(lat, lon, "vis_mappa.html", params['poiType'], params['range'], params['risultati'], params['nome_elemento']);
       }
@@ -470,17 +481,13 @@ function showVal(id, newVal){
          <table border=0 width="100%" ><tr>
           <td width="50%">
 -->
-           <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > 
-              <!-- <span class="glyphicon glyphicon-list pull-left" aria-hidden="true"></span> --> Visualizza Lista 
-           </button>
+           <button id="poi_lista" type="button" class="btn btn-default btn-lg bottone" > Visualizza Lista </button>
            <br>
            <br style="line-height:10px;">
 <!--
          </td><td>
 -->
-           <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > 
-              <!-- <span class="glyphicon glyphicon-globe pull-left" aria-hidden="true"></span> --> Visualizza Mappa 
-           </button>
+           <button id="poi_mappa" type="button" class="btn btn-default btn-lg bottone" > Visualizza Mappa </button>
 <!--
          </td>
          <tr></table>
