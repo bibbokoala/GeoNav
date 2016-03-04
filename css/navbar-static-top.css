@@ -41,6 +41,7 @@ body {
 		height:100%;
 		/* background-color: #323232; */
 		background-color: #6F6F6F;
+		/* background-color: #73A5A5; */
 		/* background-color: #DE0019; */
 		z-index: 51;
 		margin: 0; padding: 0;
@@ -48,7 +49,8 @@ body {
 		top:56px;
 		left: -100%;
 	}
-	.sidebar-offcanvas ul {width:90%; background-color: #323232;}
+	/*.sidebar-offcanvas ul {width:90%; background-color: #323232;} */
+	.sidebar-offcanvas ul {width:90%; background-color: #73A5A5;}
 	.sidebar-offcanvas ul li{margin:0}
 	.sidebar-offcanvas ul li p{padding: 15px 20px;margin:0;border-bottom: 1px solid #505050} /* color:#fff; font-size: 15px; solid #d6474d */
 	.sidebar-offcanvas ul li a{color:#fff;padding: 15px 20px;margin:0;border-bottom: 1px solid #505050} /* font-size: 15px; solid #d6474d */
@@ -57,4 +59,11 @@ body {
 	.nav > li > a:hover, 
 	.nav > li > a:focus{background-color: #ff625f}
 	.active {left: 0;}
+}
+
+.gradienti {
+    background: -webkit-linear-gradient(#FFFFFF, #BBBDBC); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#FFFFFF, #BBBDBC); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#FFFFFF, #BBBDBC); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#FFFFFF, #BBBDBC); /* Standard syntax (must be last) */
 }
