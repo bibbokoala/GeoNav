@@ -413,9 +413,9 @@
       {
         clearInterval(interval);
         console.log('<br />END - time elapsed: '+ time/1000+' seconds');
-        alert("Problemi ricezione GPS\nrecarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
         $('#qui').addClass( "disabled" );
         $("#gps-off").hide();
+        alert("Problemi ricezione GPS\nrecarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
       }
       console.log('<br />time elapsed: '+ time/1000+' seconds');
       navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
