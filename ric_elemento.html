@@ -157,7 +157,10 @@
     function saveListForPage(response, page) {
       var lista = response;
       var appoggio = JSON.parse(lista);
-      var metri = appoggio[0].distance;
+      if (appoggio.length>0)
+        var metri = appoggio[0].distance;
+      else
+        var metri = 0;
       localStorage.setItem("metri", metri);
       localStorage.setItem("link", "poi");
       localStorage.setItem("lista", lista);
@@ -180,13 +183,10 @@
       localStorage.setItem("range", range );
       localStorage.setItem("risultati", limit );
       localStorage.setItem("nome_elemento", name);
-      //alert(name);
-      //alert(decodeURIComponent(name));
       var xmlhttp = new XMLHttpRequest();
 //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.8548906&longitude=12.45838219999996&poiType=4,8&range=200&elements=50&name=00609E";
       var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range="+range+"&elements="+limit+"&name="+name;
-      //alert(url);
-      //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php";
+      console.log("url:"+url);
       xmlhttp.onreadystatechange=function() {
           //DEBUG alert("onreadystatechange");
           if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -194,7 +194,7 @@
               saveListForPage(xmlhttp.responseText, page);
           }
       }
-      xmlhttp.open("POST", url, true);
+      xmlhttp.open("GET", url, true);
       xmlhttp.send();
     }
     $("#poi_lista").click(function(){
@@ -416,6 +416,8 @@
         $('#qui').addClass( "disabled" );
         $("#gps-off").hide();
         alert("Problemi ricezione GPS\nrecarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
+        $( "#pac-input" ).css('border-color', '#E58E96');
+        $( "#pac-input" ).focus();
       }
       console.log('<br />time elapsed: '+ time/1000+' seconds');
       navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
