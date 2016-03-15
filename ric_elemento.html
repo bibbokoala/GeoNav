@@ -69,6 +69,7 @@
   $(document).ready(function() {
     $("#online-alert").hide();
     $("#offline-alert").hide();
+    $("#gps-off").hide();
     /* IMPOSTO I SETTAGGI PRECEDENTI */
     /* */
     if (localStorage.getItem("poiType")!=null)
@@ -100,7 +101,16 @@
        $('#risultati').slider('setValue', Number(localStorage.getItem("risultati") ) );
     }
     if (localStorage.getItem("nome_elemento")!=null)
-       $( "#nome_elemento" ).val(localStorage.getItem("nome_elemento"));
+    {
+       var s = localStorage.getItem("nome_elemento");
+       //$( "#nome_elemento" ).val(localStorage.getItem("nome_elemento"));
+       //sostituisco il carattere + con lo spazio
+       var r = s.replace(/\+/g, " ");
+       //decodifico i caratteri dell'url
+       r=decodeURIComponent(r);
+       console.log("nome_elemento r="+r);
+       $( "#nome_elemento" ).val(r); 
+    }
 
     function getParameters() {
       var parameters = new Object();
@@ -146,6 +156,9 @@
     }
     function saveListForPage(response, page) {
       var lista = response;
+      var appoggio = JSON.parse(lista);
+      var metri = appoggio[0].distance;
+      localStorage.setItem("metri", metri);
       localStorage.setItem("link", "poi");
       localStorage.setItem("lista", lista);
       if (page.localeCompare("vis_lista.html")==0)
@@ -167,6 +180,8 @@
       localStorage.setItem("range", range );
       localStorage.setItem("risultati", limit );
       localStorage.setItem("nome_elemento", name);
+      //alert(name);
+      //alert(decodeURIComponent(name));
       var xmlhttp = new XMLHttpRequest();
 //var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude=41.8548906&longitude=12.45838219999996&poiType=4,8&range=200&elements=50&name=00609E";
       var url="http://service.cloudmup.com/GOALocale/GeoNavQuery.php?pin=test1&token=FAD4A66AB106FE&latitude="+lat+"&longitude="+lon+"&poiType="+poiType+"&range="+range+"&elements="+limit+"&name="+name;
@@ -179,7 +194,7 @@
               saveListForPage(xmlhttp.responseText, page);
           }
       }
-      xmlhttp.open("GET", url, true);
+      xmlhttp.open("POST", url, true);
       xmlhttp.send();
     }
     $("#poi_lista").click(function(){
@@ -296,6 +311,11 @@
                       Il dispositivo e' <strong>OffLine!</strong><br>
                       Questa App richiede una connessione internet.
                   </div>
+                  <div class="alert alert-default" id="gps-off">
+                      <!--<button type="button" class="close" data-dismiss="alert">x</button>-->
+                      <img src="./pics/gps_loading.gif" border=0 width="100px"/><br>
+                      Attendere la connessione GPS
+                  </div>
 
                     <table border=0 width="100%"><tr><td width="50%">
                     <label id="apparato" class="checkbox form-control-custom text-left" >
@@ -369,10 +389,24 @@
     function getLocation() 
     {
       console.log("getLocation");
-      navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
+      var i = setInterval(function() { checkGPS(); }, c);
+      //navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
       console.log("END OF getCurrentPosition");
     }
-
+    /***/
+    var c = 2000;
+    var time = 0;
+    function checkGPS() {
+      time=time+c;
+      if (time>60000)
+      {
+        clearInterval(i);
+        console.log('<br />END - time elapsed: '+ time/1000+' seconds');
+      }
+      console.log('<br />time elapsed: '+ time/1000+' seconds');
+      navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
+    }
+    /***/
     function initAutocomplete(position) 
     {
       //alert("position: "+position);
@@ -409,14 +443,16 @@
       }
       else //è la vecchia showPosition
       {
-        console.log("showPosition");
+        console.log("showPosition [called by getLocation]");
         if (position.coords.latitude==null)  
         {
-          alert("Prego Abilitare il GPS... ");
-          callGpsSettings();
+          $("#gps-off").show();
+          //alert("Prego Abilitare il GPS... ");
+          //callGpsSettings();
         }
         else
         {
+          $("#gps-off").hide();
           localStorage.setItem("latitudine", position.coords.latitude);
           localStorage.setItem("longitudine", position.coords.longitude);
           var geocoder = new google.maps.Geocoder();

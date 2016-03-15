@@ -28,7 +28,40 @@ function initMap() {
         zoom=13;
         break;
       default:
+        zoom=12;
+        break;
+    }
+  }
+  if (localStorage.getItem("metri")!=null)
+  {
+    var metri = localStorage.getItem("metri");
+    switch (true) {
+      case (metri < 200):
+        zoom=18;
+        break;
+      case (metri > 200 && metri < 500):
         zoom=17;
+        break;
+      case (metri > 500 && metri < 800):
+        zoom=16;
+        break;
+      case (metri > 800 && metri < 1500):
+        zoom=15;
+        break;
+      case (metri > 1500 && metri <= 2200):
+        zoom=14;
+        break;
+      case (metri > 2200 && metri <= 3000):
+        zoom=13;
+        break;
+      case (metri > 3000 && metri <= 5000):
+        zoom=12;
+        break;
+      case (metri > 5000 && metri <= 8000):
+        zoom=12;
+        break;
+      default:
+        zoom=10;
         break;
     }
   }
