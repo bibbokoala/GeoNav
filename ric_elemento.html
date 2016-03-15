@@ -384,7 +384,7 @@
     }
     function onErrorGPS(error) {
        //alert('code: '    + error.code    + ' ' + 'message: ' + error.message + ' ');
-      if (time<=0)
+      if (time<=3000)
       {  
         if (confirm("Gps non abilitato.\nL'app richiede il Gps attivo.\nVuoi attivarlo?")) {
           callGpsSettings();
