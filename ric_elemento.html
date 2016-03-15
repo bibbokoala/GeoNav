@@ -447,7 +447,9 @@
         console.log("showPosition [called by getLocation]");
         if (position.coords.latitude==null)  
         {
-          $("#gps-off").show();
+          $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
+            //$("#offline-alert").alert('close');
+          });
           $('#qui').addClass( "disabled" );
           //alert("Prego Abilitare il GPS... ");
           //callGpsSettings();
