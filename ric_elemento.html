@@ -372,7 +372,13 @@
       window.plugins.webintent.startActivity({
           action: url
         }, 
-        function() {alert('Prego abilitare Gps!')}, 
+        function() {
+          //alert('Prego abilitare Gps!')
+          $("#gps-off").alert();
+          $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
+            $("#gps-off").alert('close');
+          });
+        }, 
         function() {alert('Fallita apertura Gps Settings!')}
       );            
     }
@@ -449,11 +455,9 @@
         if (position.coords.latitude==null)  
         {
           $("#gps-off").alert();
-          /*
           $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
             $("#gps-off").alert('close');
           });
-          */
           $('#qui').addClass( "disabled" );
           //alert("Prego Abilitare il GPS... ");
           //callGpsSettings();
@@ -488,8 +492,8 @@
             else 
             {
               //x.innerHTML = "Geocoder failed due to: "+ status;
-              alert("Prego Abilitare il GPS... [" + status + "]");
-              callGpsSettings();
+              alert("ERRORE GPS... [" + status + "]");
+              //callGpsSettings();
             }
           });
         }
