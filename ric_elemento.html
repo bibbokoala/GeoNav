@@ -387,10 +387,11 @@
       timeout: 2500
     }
     var c = 2500;
+    var interval = 0;
     function getLocation() 
     {
       console.log("getLocation");
-      var i = setInterval(function() { checkGPS(); }, c);
+      interval = setInterval(function() { checkGPS(); }, c);
       //navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
       console.log("END OF getCurrentPosition");
     }
@@ -400,7 +401,7 @@
       time=time+c;
       if (time>60000)
       {
-        clearInterval(i);
+        clearInterval(interval);
         console.log('<br />END - time elapsed: '+ time/1000+' seconds');
         alert("Problemi ricezione GPS\n recarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
       }
@@ -448,7 +449,7 @@
         if (position.coords.latitude==null)  
         {
           $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
-            //$("#offline-alert").alert('close');
+            $("#gps-off").alert('close');
           });
           $('#qui').addClass( "disabled" );
           //alert("Prego Abilitare il GPS... ");
@@ -458,6 +459,7 @@
         {
           $("#gps-off").hide();
           $('#qui').addClass( "enabled" );
+          clearInterval(interval);
           localStorage.setItem("latitudine", position.coords.latitude);
           localStorage.setItem("longitudine", position.coords.longitude);
           var geocoder = new google.maps.Geocoder();
