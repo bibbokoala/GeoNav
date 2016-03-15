@@ -384,9 +384,17 @@
     }
     function onErrorGPS(error) {
        //alert('code: '    + error.code    + ' ' + 'message: ' + error.message + ' ');
-      if (confirm("Gps non abilitato.\nL'app richiede il Gps attivo.\nVuoi attivarlo?")) {
-        callGpsSettings();
-      }
+      if (time==0)
+      {  
+        if (confirm("Gps non abilitato.\nL'app richiede il Gps attivo.\nVuoi attivarlo?")) {
+          callGpsSettings();
+        }
+      }  
+      $("#gps-off").alert();
+      $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
+        //$("#gps-off").alert('close');
+      });
+      $('#qui').addClass( "disabled" );
     }
     var config = {
       enableHighAccuracy: true,
@@ -456,7 +464,7 @@
         {
           $("#gps-off").alert();
           $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
-            $("#gps-off").alert('close');
+            //$("#gps-off").alert('close');
           });
           $('#qui').addClass( "disabled" );
           //alert("Prego Abilitare il GPS... ");
