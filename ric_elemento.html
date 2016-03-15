@@ -375,12 +375,7 @@
         function() {
           //alert('Prego abilitare Gps!')
           $("#gps-off").fadeIn( "slow" );
-          /*
-          $("#gps-off").alert();
-          $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
-            $("#gps-off").alert('close');
-          });
-          */
+          $('#qui').addClass( "disabled" );
         }, 
         function() {alert('Fallita apertura Gps Settings!')}
       );            
@@ -395,12 +390,6 @@
         }
       }  
       $("#gps-off").fadeIn( "slow" );
-      /*
-      $("#gps-off").alert();
-      $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
-        $("#gps-off").alert('close');
-      });
-      */
       $('#qui').addClass( "disabled" );
     }
     var config = {
@@ -424,7 +413,9 @@
       {
         clearInterval(interval);
         console.log('<br />END - time elapsed: '+ time/1000+' seconds');
-        alert("Problemi ricezione GPS\n recarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
+        alert("Problemi ricezione GPS\nrecarsi in un posto aperto\noppure scrivere manualmente l'indirizzo!");
+        $('#qui').addClass( "disabled" );
+        $("#gps-off").hide();
       }
       console.log('<br />time elapsed: '+ time/1000+' seconds');
       navigator.geolocation.getCurrentPosition(initAutocomplete, onErrorGPS, config);
@@ -470,12 +461,6 @@
         if (position.coords.latitude==null)  
         {
           $("#gps-off").fadeIn( "slow" );
-          /*
-          $("#gps-off").alert();
-          $("#gps-off").fadeTo(2000, 500).slideUp(500, function(){
-            $("#gps-off").alert('close');
-          });
-          */
           $('#qui').addClass( "disabled" );
           //alert("Prego Abilitare il GPS... ");
           //callGpsSettings();
